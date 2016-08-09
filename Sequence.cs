@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -7,37 +8,19 @@ using System.Windows.Documents;
 namespace Bioinformatics_Suite
 {
     public class Sequence
-
-        //These Constructors must be modified to accept:
-        // single strings, list of strings, text file of sequences, text file of FASTA format sequences.
     {
-        public Sequence(string sequence)
+        public Sequence(string parsedSequence)
         {
-            if (sequence.StartsWith(">"))
-            {
-                string[] fasta = sequence.Split('\n');
-                FastaSequences.Add(fasta[0], fasta[1]);
-            }
-            else
-            {
-                this.Sequence = sequence;
-            }
+            this.ParsedSequence = parsedSequence;
         }
 
-        public Sequence(FileInfo fileInfo)
+        public Sequence(Dictionary<string,string> fastaSeqeuences)
         {
-            string sequence = File.ReadAllText(fileInfo.FullName);
-            this.Sequence = string.IsNullOrEmpty(sequence) ? string.Empty : Regex.Replace(sequence, @"\s", "");
+            this.FastaSequences = fastaSeqeuences;
         }
 
-        public Sequence(List<string> SequenceList)
-        {
-            this.SequenceList = SequenceList;
-        }
-
-        public string Sequence;
-        public List<string> SequenceList;
-        public Dictionary<string, string> FastaSequences;
+        public string ParsedSequence { get; }
+        public Dictionary<string, string> FastaSequences { get; }
 
     }
 }

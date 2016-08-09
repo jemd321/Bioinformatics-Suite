@@ -9,23 +9,22 @@ namespace Bioinformatics_Suite
 {
 
     // For this file, eventually get rid of the Print methods, and split the write to file methods off into a custom dedicated class.
+    // This will become a factory class, as with Dad's main method call, instantiating a chain of classes and passing references to them.
     // When hooked up to the UI, you should be able to specifiy which particular operation you want, eg get open reading frames.
 
     public class OpenReadingFrames
     {
         static void Main(string[] args)
         {
-            Dna dna = new Dna(new FileInfo(@"rosalind_revp.txt"));
-            //ReadingFrame readingFrame = new ReadingFrame(dna);
-           // OpenReadingFrame openReadingFrame = new OpenReadingFrame(readingFrame);
-            RestrictionSiteHelper r = new RestrictionSiteHelper(dna.Sequence, dna.ReversedComplement);
-            List<string> blah = r.FindRestrictionSites();
-           // PrintOrfs(openReadingFrame.Frames);
-            PrintRestrictionSites(blah);
-          //  WriteOrfsToTxtFile(openReadingFrame.Frames);
-            WriteRestrictionSitesToTxxtFile(blah);
+            //Factory methods example
 
-            
+            //Dna dna = new Dna();
+           // ReadingFrame readingFrame = new ReadingFrame(dna);
+            //OpenReadingFrame openReadingFrame = new OpenReadingFrame(readingFrame);
+            // end example
+
+            //PrintOrfs(openReadingFrame.Frames);
+            //WriteOrfsToTxtFile(openReadingFrame.Frames);           
         }
 
         private static void PrintOrfs(List<string> orfs)
@@ -35,24 +34,11 @@ namespace Bioinformatics_Suite
             Console.ReadKey();
         }
 
-        private static void PrintRestrictionSites(List<string> restrictionSites)
-        {
-            Console.WriteLine("Restriction Sites were found at the following locations, followed by their lengths:");
-            Console.WriteLine("\n\n");
-            restrictionSites.ForEach(Console.WriteLine);
-            Console.ReadKey();
-        }
-
         private static void WriteOrfsToTxtFile(List<string> orfs)
         {
             File.WriteAllLines(@"resultOrfs.txt", orfs);
         }
-
-        private static void WriteRestrictionSitesToTxxtFile(List<string> RSites)
-        {
-            File.WriteAllLines(@"resultRSites.txt", RSites);
-        }
-        
+              
         }
 
 }

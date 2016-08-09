@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -5,11 +6,11 @@ namespace Bioinformatics_Suite
 {
     public class Protein : Sequence
     {
-        public Protein(string sequence) : base(sequence) { }
+        public Protein(string parsedSequence) : base(parsedSequence) { }
 
-        public Protein(FileInfo fileInfo) : base (fileInfo) { }
+        public Protein(Dictionary<string, string> fastaSeqeunnces) : base (fastaSeqeunnces) { }
 
-        public string Sequence { get; set; }
+        public string parsedSequence { get; }
 
     }
 }

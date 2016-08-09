@@ -11,17 +11,18 @@ namespace Bioinformatics_Suite
     {
         public InputParser(string sequence)
         {
-            this.FastaString = sequence;
-            ParseInput(this.FastaString);            
+            this.InputSequence = sequence;       
         }
 
         public InputParser(FileInfo fileInfo)
         {
-            this.FastaString = File.ReadAllText(fileInfo.FullName);
-            ParseInput(this.FastaString);
+            string sequence = File.ReadAllText(fileInfo.FullName);
+            this.InputSequence = sequence;
         }
 
-        public string FastaString { get; set; }
+        public string InputSequence { get; }
+        public string ParsedSequence => ParseSequence(this.InputSequence);
+        public Dictionary<string, string> ParsedFasta => ParseFasta(this.InputSequence);
 
         private void ParseInput(string sequence)
         {
@@ -37,7 +38,7 @@ namespace Bioinformatics_Suite
 
         private string ParseSequence(string sequence)
         {
-            return sequence = Regex.Replace(sequence, @"\s", "");
+            return sequence = Regex.Replace(sequence, "\\s", "");
         }
 
         private Dictionary<string, string> ParseFasta(string sequence)
@@ -48,23 +49,24 @@ namespace Bioinformatics_Suite
 
             StringBuilder sequenceBuilder = new StringBuilder();
 
-            string key;
-            string value;
+            string key = "";
+            string value = "";
             var loopStart = true;
 
             foreach (string line in lines)
             {
+
+
                 if (loopStart)
                 {
                     if (line.StartsWith(">"))
                     {
-                        key = line;
+                        key = Regex.Replace(line, "\\s", "");
                         loopStart = false;
                     }
                     else
                     {
-                        // refactor me later to a message informing the user it's the wrong format instead of throwing an e.
-                        // I am typing this to sound busy like I am programming something, which  frankl;y sinnple is'nt true. So there, show that up your ass and smopke it lo..for the nth time , 
+                        // refactor me later to a UI message informing the user it's the wrong format instead of throwing an e.
                         throw new Exception("Input sequences do not conform to FASTA file format!");
                     }
                 }
@@ -73,15 +75,16 @@ namespace Bioinformatics_Suite
                     value = sequenceBuilder.ToString();
                     sequenceBuilder.Clear();
 
-                    key = line;
+                    key = Regex.Replace(line, "\\s", "");
                     fastaDictionary.Add(key, value);
                 }
                 else
                 {
-                    sequenceBuilder.Append(line);
+                    sequenceBuilder.Append(Regex.Replace(line, "\\s", ""));
                 }
-
             }
+            value = sequenceBuilder.ToString();
+            fastaDictionary.Add(key, value);
             return fastaDictionary;
         }
     }

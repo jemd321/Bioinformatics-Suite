@@ -11,13 +11,13 @@ namespace Bioinformatics_Suite
     {
         // Constructors
 
-        public Dna(string sequence) : base(sequence) { }
+        public Dna(string parsedSequence) : base(parsedSequence) { }
 
-        public Dna(FileInfo fileInfo) : base (fileInfo) { }
+        public Dna(Dictionary<string, string> fastaSequences) : base (fastaSequences) { }
 
         //properties
 
-        public string Sequence { get; set; }
+        public string Sequence { get; }
 
         public string ReversedComplement => ReverseComplement(this.Sequence);
 
