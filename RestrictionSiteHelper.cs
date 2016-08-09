@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Schema;
 
-namespace Rosalind_Locating_Restriction_Sites
+namespace Bioinformatics_Suite
 {
     public class RestrictionSiteHelper
     {
@@ -81,7 +81,7 @@ namespace Rosalind_Locating_Restriction_Sites
             }
         }
 
-        private string[] GetPossibleRSitesArray(string dna, int minLength, int maxLength)
+        private static string[] GetPossibleRSitesArray(string dna, int minLength, int maxLength)
         {
             int arraySize = (maxLength - minLength) + 1;
             string[] possibleRSites = new string[arraySize];

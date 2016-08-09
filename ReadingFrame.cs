@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Rosalind_Locating_Restriction_Sites;
+using Bioinformatics_Suite;
 
-namespace Rosalind_Open_Reading_Frames
+namespace Bioinformatics_Suite
 {
     public class ReadingFrame
     {

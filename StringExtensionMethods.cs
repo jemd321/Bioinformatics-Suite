@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 
-namespace Rosalind_Locating_Restriction_Sites
+namespace Bioinformatics_Suite
 {
     public static class StringReverser
     {

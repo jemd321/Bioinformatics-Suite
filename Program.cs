@@ -4,10 +4,13 @@ using System.Data;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using Rosalind_Locating_Restriction_Sites;
 
-namespace Rosalind_Open_Reading_Frames
+namespace Bioinformatics_Suite
 {
+
+    // For this file, eventually get rid of the Print methods, and split the write to file methods off into a custom dedicated class.
+    // When hooked up to the UI, you should be able to specifiy which particular operation you want, eg get open reading frames.
+
     public class OpenReadingFrames
     {
         static void Main(string[] args)
@@ -19,7 +22,6 @@ namespace Rosalind_Open_Reading_Frames
             List<string> blah = r.FindRestrictionSites();
            // PrintOrfs(openReadingFrame.Frames);
             PrintRestrictionSites(blah);
-           // ReadBlah();
           //  WriteOrfsToTxtFile(openReadingFrame.Frames);
             WriteRestrictionSitesToTxxtFile(blah);
 
@@ -50,20 +52,7 @@ namespace Rosalind_Open_Reading_Frames
         {
             File.WriteAllLines(@"resultRSites.txt", RSites);
         }
-
-        private static void ReadBlah()
-        {
-            string path = @"resultRSites.txt";
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string wow = reader.ReadToEnd();
-                wow = wow.TrimEnd('\n');
-                wow = wow.TrimEnd('\r');
-                //wow = wow.Replace("\r", "");            
-                File.WriteAllText(@"woop.txt", wow);
-            }
-
         
         }
-    }
+
 }

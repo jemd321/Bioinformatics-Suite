@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Rosalind_Open_Reading_Frames
+namespace Bioinformatics_Suite
 {
     public class OpenReadingFrame
     {

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Rosalind_Locating_Restriction_Sites
+namespace Bioinformatics_Suite
 {
-    public class Dna
+    public class Dna : Sequence
     {
-        // In general it is better to have a class that takes a constructor then one that makes a new object and then manually set propertites. Can be Ok but usually for "optional" properties.
-        public Dna(string sequence)
-        {
-            this.Sequence = sequence;
-        }
+        // Constructors
 
-        // Making this a FileInfo as already used single string signature above for sequence. Can't have same signature twice
-        public Dna(FileInfo fileInfo)
-        {
-            string sequence = File.ReadAllText(fileInfo.FullName);
-            this.Sequence = string.IsNullOrEmpty(sequence) ? string.Empty : Regex.Replace(sequence, @"\s", "");
-        }
+        public Dna(string sequence) : base(sequence) { }
+
+        public Dna(FileInfo fileInfo) : base (fileInfo) { }
+
+        //properties
 
         public string Sequence { get; set; }
 
@@ -33,6 +29,8 @@ namespace Rosalind_Locating_Restriction_Sites
         //{
           //  RestrictionSiteHelper r = new RestrictionSiteHelper(this.Sequence, ReverseComplement);
        // } 
+
+            //Methods
             
         private static string ReverseSequence(string sequence)
         {
@@ -48,7 +46,6 @@ namespace Rosalind_Locating_Restriction_Sites
         {
             return sequence.Reverse().Complement();
         }
-
 
     }
 }
