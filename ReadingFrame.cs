@@ -24,6 +24,7 @@ namespace Bioinformatics_Suite
             // Each reading frame is trimmed if needed to ensure a multiple of 3,
             // so that it forms a list of codons with no useless bases.
 
+
             string forward1 = dna;
             var remainder = forward1.Length%3;
             if (remainder != 0)

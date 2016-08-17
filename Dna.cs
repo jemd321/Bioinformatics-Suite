@@ -25,11 +25,6 @@ namespace Bioinformatics_Suite
 
         public string ReversedSequence => ReverseSequence(this.Sequence);
 
-        //public List<string> FindRestricitionSites()
-        //{
-          //  RestrictionSiteHelper r = new RestrictionSiteHelper(this.Sequence, ReverseComplement);
-       // } 
-
             //Methods
             
         private static string ReverseSequence(string sequence)
