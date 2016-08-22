@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
@@ -11,18 +12,20 @@ namespace Bioinformatics_Suite
     {
         public InputParser(string sequence)
         {
-            this.InputSequence = sequence;       
+            this.InputSequence = sequence;  
+            ParseInput(sequence);     
         }
 
         public InputParser(FileInfo fileInfo)
         {
             string sequence = File.ReadAllText(fileInfo.FullName);
             this.InputSequence = sequence;
+            ParseInput(sequence);
         }
 
         public string InputSequence { get; }
-        public string ParsedSequence => ParseSequence(this.InputSequence);
-        public Dictionary<string, string> ParsedFasta => ParseFasta(this.InputSequence);
+        public Dictionary<string, string> ParsedSequence { get; }
+        public Dictionary<string, string> GetParsedSequences => ParsedSequence;
 
         private void ParseInput(string sequence)
         {
@@ -32,20 +35,21 @@ namespace Bioinformatics_Suite
             }
             else
             {
-                ParseSequence(sequence);
+                ParseUnlabelledSequence(sequence);
             }
         }
 
-        private string ParseSequence(string sequence)
+        private void ParseUnlabelledSequence(string sequence)
         {
-            return sequence = Regex.Replace(sequence, "\\s", "");
+            Dictionary<string, string> unlabelledSequence = new Dictionary<string, string>();
+            string parsedSequence = sequence = Regex.Replace(sequence, "\\s", "");
+            ParsedSequence.Add(">No Label" , parsedSequence);
         }
 
-        private Dictionary<string, string> ParseFasta(string sequence)
+        private void ParseFasta(string sequence)
         {
             Regex fastaParser = new Regex("\n");
             string[] lines = fastaParser.Split(sequence);
-            Dictionary<string, string> fastaDictionary = new Dictionary<string, string>();
 
             StringBuilder sequenceBuilder = new StringBuilder();
 
@@ -76,7 +80,7 @@ namespace Bioinformatics_Suite
                     sequenceBuilder.Clear();
 
                     key = Regex.Replace(line, "\\s", "");
-                    fastaDictionary.Add(key, value);
+                    ParsedSequence.Add(key, value);
                 }
                 else
                 {
@@ -84,8 +88,7 @@ namespace Bioinformatics_Suite
                 }
             }
             value = sequenceBuilder.ToString();
-            fastaDictionary.Add(key, value);
-            return fastaDictionary;
+            ParsedSequence.Add(key, value);
         }
     }
 }

@@ -11,19 +11,15 @@ namespace Bioinformatics_Suite
     {
         // Constructors
 
-        public Dna(string parsedSequence) : base(parsedSequence) { }
-
-        public Dna(Dictionary<string, string> fastaSequences) : base (fastaSequences) { }
+        public Dna(InputParser inputParser) : base(inputParser) { }
 
         //properties
 
-        public string Sequence { get; }
+        public string ReversedComplement => ReverseComplement(this.Sequences);
 
-        public string ReversedComplement => ReverseComplement(this.Sequence);
+        public string Complement => FindComplement(this.Sequences);
 
-        public string Complement => FindComplement(this.Sequence);
-
-        public string ReversedSequence => ReverseSequence(this.Sequence);
+        public string ReversedSequence => ReverseSequence(this.Sequences);
 
             //Methods
             
@@ -35,6 +31,8 @@ namespace Bioinformatics_Suite
         private static string FindComplement(string sequence)
         {
             return sequence.Complement();
+            Dna dna = new Dna(inputParser);
+            dna.Sequences
         }
 
         private static string ReverseComplement(string sequence)
