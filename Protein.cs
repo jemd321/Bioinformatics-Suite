@@ -4,13 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace Bioinformatics_Suite
 {
-    public class Protein : Sequence
+    public class Protein : LabelledSequence
     {
-        public Protein(string parsedSequence) : base(parsedSequence) { }
+        public Protein(string label, string sequence) : base(label, sequence) {}
 
-        public Protein(Dictionary<string, string> fastaSeqeunnces) : base (fastaSeqeunnces) { }
-
-        public string parsedSequence { get; }
+        public Protein(Dna dna) : base(dna) {}
 
     }
 }

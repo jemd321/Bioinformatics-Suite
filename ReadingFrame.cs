@@ -12,78 +12,88 @@ namespace Bioinformatics_Suite
              - eg. "ACTGCTA" would be f1 "ACTGCTA" f2 "CTGCTA" f3 "TGCTA" | r1 "TAGCAGT" r2 "AGCAGT" r3 "GCACT"
         */
 
-        public List<string> Frames { get; }
+            // For reading frame, rather than return a list of frames, have one reading frame object per labelled sequence containing
+            // a dictionary with each of the 6 frames labelled with the AccessionNo + the reading frame, eg. >AAG3RAF_Frame+1
 
         public ReadingFrame(Dna dna)
         {
-            this.Frames = SplitIntoFrames(dna.Sequence, dna.ReversedComplement);
+            this.Dna = dna;
+            this.Label = dna.Label;
+            this.LabelledFrames = SplitIntoFrames(dna.Sequence);
         }
 
-        private static List<string> SplitIntoFrames(string dna, string reverseComplementDna)
+        public Dna Dna;
+        public string Label;
+        public Dictionary<string, string> LabelledFrames { get; }
+
+        private Dictionary<string, string> SplitIntoFrames(string sequence)
         {
             // Each reading frame is trimmed if needed to ensure a multiple of 3,
             // so that it forms a list of codons with no useless bases.
 
-
-            string forward1 = dna;
+            string forward1 = sequence;
             var remainder = forward1.Length%3;
             if (remainder != 0)
             {
                 forward1 = TrimBases(forward1, remainder);
             }
 
-            string forward2 = dna.Substring(1);
+            string forward2 = sequence.Substring(1);
             remainder = forward2.Length%3;
             if (remainder != 0)
             {
                 forward2 = TrimBases(forward2, remainder);
             }
 
-            string forward3 = dna.Substring(2);
+            string forward3 = sequence.Substring(2);
             remainder = forward3.Length%3;
             if (remainder != 0)
             {
                 forward3 = TrimBases(forward3, remainder);
             }
 
-            string reverse1 = reverseComplementDna;
+            string reverseComplement = Dna.ReverseComplement;
+
+            string reverse1 = reverseComplement;
             remainder = reverse1.Length%3;
             if (remainder != 0)
             {
                 reverse1 = TrimBases(reverse1, remainder);
             }
 
-            string reverse2 = reverseComplementDna.Substring(1);
+            string reverse2 = reverseComplement.Substring(1);
             remainder = reverse2.Length%3;
             if (remainder != 0)
             {
                 reverse2 = TrimBases(reverse2, remainder);
             }
 
-            string reverse3 = reverseComplementDna.Substring(2);
+            string reverse3 = reverseComplement.Substring(2);
             remainder = reverse3.Length%3;
             if (remainder != 0)
             {
                 reverse3 = TrimBases(reverse3, remainder);
             }
 
-            return new List<string>
+            Dictionary<string, string> labelledFrames = new Dictionary<string, string>()
             {
-                forward1,
-                forward2,
-                forward3,
-                reverse1,
-                reverse2,
-                reverse3
+                {Label + " +1", forward1},
+                {Label + " +2", forward2},
+                {Label + " +3", forward3},
+                {Label + " -1", reverse1},
+                {Label + " -2", reverse1},
+                {Label + " -3", reverse3},
             };
+            
+            return labelledFrames;
         }
 
         private static string TrimBases(string inputDna, int numberBasesToBeTrimmed)
         {
-            int length = inputDna.Length;
-            int removalIndex = length - numberBasesToBeTrimmed;
+            var length = inputDna.Length;
+            var removalIndex = length - numberBasesToBeTrimmed;
 
-            string trimmedDna = inputDna.Remove(removalIndex, numberBasesToBeTrimmed);
+            var trimmedDna = inputDna.Remove(removalIndex, numberBasesToBeTrimmed);
             return trimmedDna;
         }
     }

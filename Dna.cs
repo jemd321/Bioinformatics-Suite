@@ -7,38 +7,45 @@ using System.Text.RegularExpressions;
 
 namespace Bioinformatics_Suite
 {
-    public class Dna : Sequence
+    public class Dna : LabelledSequence
     {
-        // Constructors
+        private string _complement;
+        private string _reverseComplement;
 
-        public Dna(InputParser inputParser) : base(inputParser) { }
+        public Dna(string label, string sequence) : base(label, sequence)  { }
 
-        //properties
-
-        public string ReversedComplement => ReverseComplement(this.Sequences);
-
-        public string Complement => FindComplement(this.Sequences);
-
-        public string ReversedSequence => ReverseSequence(this.Sequences);
-
-            //Methods
-            
-        private static string ReverseSequence(string sequence)
+        public string Complement
         {
-            return sequence.Reverse();
+            get
+            {
+                if (_complement == null)
+                {
+                    return _complement = FindComplement(this.Sequence);
+                }
+                else return _complement;
+            }
         }
 
-        private static string FindComplement(string sequence)
+        public string ReverseComplement
+        {
+            get
+            {
+                if (_reverseComplement == null)
+                {
+                    return _reverseComplement = FindReverseComplement(this.ReversedSequence);
+                }
+                else return _reverseComplement;
+            }
+        }
+
+        private string FindComplement(string sequence)
         {
             return sequence.Complement();
-            Dna dna = new Dna(inputParser);
-            dna.Sequences
         }
 
-        private static string ReverseComplement(string sequence)
+        private string FindReverseComplement(string reversedSequence)
         {
-            return sequence.Reverse().Complement();
+            return reversedSequence.Complement();
         }
-
     }
 }

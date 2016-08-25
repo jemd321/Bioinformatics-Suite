@@ -12,20 +12,19 @@ namespace Bioinformatics_Suite
     {
         public InputParser(string sequence)
         {
-            this.InputSequence = sequence;  
+            InputSequence = sequence;  
             ParseInput(sequence);     
         }
 
         public InputParser(FileInfo fileInfo)
         {
             string sequence = File.ReadAllText(fileInfo.FullName);
-            this.InputSequence = sequence;
+            InputSequence = sequence;
             ParseInput(sequence);
         }
 
         public string InputSequence { get; }
-        public Dictionary<string, string> ParsedSequence { get; }
-        public Dictionary<string, string> GetParsedSequences => ParsedSequence;
+        public Dictionary<string, string> ParsedSequences = new Dictionary<string, string>();
 
         private void ParseInput(string sequence)
         {
@@ -43,7 +42,7 @@ namespace Bioinformatics_Suite
         {
             Dictionary<string, string> unlabelledSequence = new Dictionary<string, string>();
             string parsedSequence = sequence = Regex.Replace(sequence, "\\s", "");
-            ParsedSequence.Add(">No Label" , parsedSequence);
+            ParsedSequences.Add(">No Label" , parsedSequence);
         }
 
         private void ParseFasta(string sequence)
@@ -80,7 +79,7 @@ namespace Bioinformatics_Suite
                     sequenceBuilder.Clear();
 
                     key = Regex.Replace(line, "\\s", "");
-                    ParsedSequence.Add(key, value);
+                    ParsedSequences.Add(key, value);
                 }
                 else
                 {
@@ -88,7 +87,7 @@ namespace Bioinformatics_Suite
                 }
             }
             value = sequenceBuilder.ToString();
-            ParsedSequence.Add(key, value);
+            ParsedSequences.Add(key, value);
         }
     }
 }

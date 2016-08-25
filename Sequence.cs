@@ -11,26 +11,30 @@ namespace Bioinformatics_Suite
     {
         public Sequence(InputParser inputParser)
         {
-            this.Sequences = inputParser.GetParsedSequences;
+            this.Sequences = inputParser.ParsedSequences;
         }
 
         public Dictionary<string, string> Sequences { get; }
-        public Dictionary<string, string> ReversedSequences { get; }
 
-        public Dictionary<string, string> ReverseSequences(Dictionary<string, string> Sequences)
+        private Dictionary<string, string> reversedSequences;
+
+        public Dictionary<string, string> ReversedSequences
         {
-            foreach (KeyValuePair<string, string> KVpair in Sequences)
+            get
             {
-                //set the value by looking up the key for that string and then adding it to the dictionary again.
-                // this should overide since it's a duplicate key. Double check this.
-            }   
+                ReverseSequences(this.Sequences);
+                return reversedSequences;
+            }
         }
-
-        // Add methods that ccan apply to both DNA and Protein here. For example, reversing the sequence.
-        // Add specific methods to each of the sub classes, eg. DNA will have a method that returns reverse complement,
-        // whereas, Protein may have a method that calculates the molecular weight of the protein.
-
-    
-
+        
+        public void ReverseSequences(Dictionary<string, string> forwardSequences)
+        {
+            foreach (KeyValuePair<string, string> sequencePair in forwardSequences)
+            {
+                string sequence = sequencePair.Value;
+                string reversedSequence = sequence.Reverse();
+                reversedSequences[sequencePair.Key] = reversedSequence;
+            }
+       }
     }
 }

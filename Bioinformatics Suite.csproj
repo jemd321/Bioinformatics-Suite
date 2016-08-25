@@ -59,12 +59,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="InputParser.cs" />
+    <Compile Include="MRna.cs" />
     <Compile Include="Protein.cs" />
     <Compile Include="ReadingFrame.cs" />
     <Compile Include="RestrictionSiteHelper.cs" />
     <Compile Include="RnaSplicing.cs" />
-    <Compile Include="Sequence.cs" />
+    <Compile Include="LabelledSequence.cs" />
     <Compile Include="StringExtensionMethods.cs" />
+    <Compile Include="Translator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OpenReadingFrame.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="FactoryMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

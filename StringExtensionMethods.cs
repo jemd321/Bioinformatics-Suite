@@ -24,7 +24,7 @@ namespace Bioinformatics_Suite
             }
             return complement.ToString();
         }
-    
+
         public static bool ValueEquals(this string forwardElement, string reverseElement)
         {
             if (forwardElement.Equals(reverseElement))
@@ -34,7 +34,4 @@ namespace Bioinformatics_Suite
             else return false;
         }
     }
-
-   
-
 }
