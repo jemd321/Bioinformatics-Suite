@@ -81,7 +81,7 @@ namespace Bioinformatics_Suite
                 {Label + " +2", forward2},
                 {Label + " +3", forward3},
                 {Label + " -1", reverse1},
-                {Label + " -2", reverse1},
+                {Label + " -2", reverse2},
                 {Label + " -3", reverse3},
             };
             
