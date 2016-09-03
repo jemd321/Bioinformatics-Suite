@@ -12,9 +12,6 @@ namespace Bioinformatics_Suite
              - eg. "ACTGCTA" would be f1 "ACTGCTA" f2 "CTGCTA" f3 "TGCTA" | r1 "TAGCAGT" r2 "AGCAGT" r3 "GCACT"
         */
 
-            // For reading frame, rather than return a list of frames, have one reading frame object per labelled sequence containing
-            // a dictionary with each of the 6 frames labelled with the AccessionNo + the reading frame, eg. >AAG3RAF_Frame+1
-
         public ReadingFrame(Dna dna)
         {
             this.Dna = dna;
