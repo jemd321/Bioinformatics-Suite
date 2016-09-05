@@ -22,6 +22,9 @@ namespace Bioinformatics_Suite
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
+
+            ModuleCatalog moduleCatalog = (ModuleCatalog) this.ModuleCatalog;
+            moduleCatalog.AddModule(typeof(BioinformaticsModule.BioinformaticsModule));
         }
     }
 }

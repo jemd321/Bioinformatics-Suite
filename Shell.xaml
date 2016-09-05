@@ -3,31 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://www.codeplex.com/prism"
         xmlns:local="clr-namespace:Bioinformatics_Suite"
         mc:Ignorable="d"
         Title="Shell" Height="503.974" Width="743.325">
+
     <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="370" Margin="302,56,0,0" TextWrapping="Wrap" Text="&gt;Fasta1&#xD;&#xA;ACTG&#xD;&#xA;&gt;Fasta2&#xD;&#xA;CTGA" VerticalAlignment="Top" Width="425"/>
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="727">
-            <MenuItem Header="File" Width="38"/>
-            <MenuItem Header="Edit" Width="40">
-                <MenuItem Header="Translate"></MenuItem>
-            </MenuItem>
-        </Menu>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="277" Margin="10,26,0,0">
-            <TabItem Header="Dna" Margin="-2,-2,-25.8,-1">
-                <Grid Background="#FFE5E5E5" Margin="0,0,-4.8,-157"/>
-            </TabItem>
-            <TabItem Header="mRNA" Margin="27.8,0,-42.8,-3"/>
-            <TabItem Header="Protein" HorizontalAlignment="Right" Height="20" VerticalAlignment="Top" Width="57" Margin="0,0,-43.2,0">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="Conversion" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="74" Margin="52.2,0,-52.6,0">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-        </TabControl>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="21" Margin="302,445,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="187"/>
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Height="35" Margin="637,431,0,0" VerticalAlignment="Top" Width="90"/>
-        <Button x:Name="uploadButton" Content="Upload" HorizontalAlignment="Left" Height="21" Margin="528,445,0,0" VerticalAlignment="Top" Width="94"/>
+        <Grid >
+            <ItemsControl x:Name="MainRegion" prism:RegionManager.RegionName="SequenceDisplayRegion"/>
+        </Grid>
+        <Grid >
+        <ItemsControl x:Name="NavRegion" prism:RegionManager.RegionName="NavRegion"/>
+        </Grid>
     </Grid>
+
+
+
+
 </Window>
