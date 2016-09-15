@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.DnaReadingFrameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views"
+             mc:Ignorable="d" Height="692.294" Width="676.456">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height ="Auto" MaxHeight="100"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row ="0" x:Name="SequenceBox" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text=">Fasta" VerticalAlignment="Stretch" />
+        <Border Grid.Row ="1">
+            <Label x:Name="MethodLabel" Content="Reading Frames" HorizontalAlignment="Left" Height="Auto" Margin="5,5,0,0" VerticalAlignment="Top" Width="Auto"/>
+        </Border>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button x:Name="Submit" Content="Submit" Height="Auto" Margin="0,0,10,10"  Width="Auto"/>
+            <Button x:Name="Cllear" Content="Clear"  Height="Auto" Margin="0,0,10,10"  Width="Auto"/>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
