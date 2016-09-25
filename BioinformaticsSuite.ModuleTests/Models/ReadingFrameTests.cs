@@ -1,13 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BioinformaticsSuite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BioinformaticsSuite.Module.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BioinformaticsSuite.Tests
+namespace BioinformaticsSuite.ModuleTests.Models
 {
     [TestClass()]
     public class ReadingFrameTests
@@ -36,4 +31,5 @@ namespace BioinformaticsSuite.Tests
             CollectionAssert.AreEquivalent(expectedFrames,actualFrames);
         }
     }
+    
 }

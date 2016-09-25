@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bioinformatics SuiteTests")]
+[assembly: AssemblyTitle("BioinformaticsSuite.ModuleTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Bioinformatics SuiteTests")]
+[assembly: AssemblyProduct("BioinformaticsSuite.ModuleTests")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("58fbfac3-74e6-4127-8ef1-bccb14f607df")]
+[assembly: Guid("0d69d3f6-dfa6-4e2b-a2ac-7cc0d70b1d27")]
 
 // Version information for an assembly consists of the following four values:
 //

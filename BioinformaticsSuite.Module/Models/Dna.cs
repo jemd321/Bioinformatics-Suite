@@ -1,6 +1,6 @@
 ﻿namespace BioinformaticsSuite.Module.Models
 {
-    public class Dna : LabelledSequence, IDna
+    public class Dna : LabelledSequence
     {
         private string _complement;
         private string _reverseComplement;
@@ -25,7 +25,7 @@
             {
                 if (_reverseComplement == null)
                 {
-                    return _reverseComplement = FindReverseComplement(this.ReversedSequence);
+                    return _reverseComplement = FindReverseComplement(ReversedSequence);
                 }
                 else return _reverseComplement;
             }
@@ -40,11 +40,5 @@
         {
             return reversedSequence.Complement();
         }
-    }
-
-    public interface IDna
-    {
-        string Label { get; }
-        string Sequence { get; }
     }
 }

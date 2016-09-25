@@ -1,86 +1,77 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
 using BioinformaticsSuite.Module.Models;
+using BioinformaticsSuite.Module.Services;
+using Microsoft.Win32;
+using NuGet;
+using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class DnaReadingFrameViewModel
+    public class DnaReadingFrameViewModel : SequenceViewModel
     {
-        public DnaReadingFrameViewModel()
+        private readonly IReadingFrameFactory readingFrameFactory;
+
+        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser)
         {
-            
+            this.readingFrameFactory = readingFrameFactory;
+            if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
-
-
-
-
-
-
-
-
-        /*
-        private string _textBoxInput;
-        private IReadingFrame IreadingFrame;
-
-        public string Sequence
+        public override void OnSubmit()
         {
-            get { return _textBoxInput; }
-            set
+            const SequenceType sequenceType = SequenceType.Dna;
+
+            bool isParsedSuccessfully = SequenceParser.TryParseInput(TextBoxInput, sequenceType);
+            if (isParsedSuccessfully)
             {
-                SetProperty(ref _textBoxInput, value);
+                var parsedSequences = SequenceParser.ParsedSequences;
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
+                var readingFrames = CreateReadingFrames(labelledSequences);
+                TextBoxInput = BuildDisplayString(readingFrames);
             }
+            else
+            {
+                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+            }
+            SequenceParser.ResetSequences();
         }
 
-        public SequenceViewModel(IReadingFrame IreadingFrame)
+        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
         {
-            this.IreadingFrame = IreadingFrame;
+            var readingFrames = new List<ReadingFrame>();
+            foreach (var labelledSequence in labelledSequences)
+            {
+                readingFrames.Add(readingFrameFactory.GetReadingFrames(labelledSequence as Dna));
+            }
+            return readingFrames;
         }
 
-        public void DoStuff()
+        private string BuildDisplayString(List<ReadingFrame> readingFrames)
         {
-            var parser = new InputParser(_textBoxInput);
-            var parsedInput = parser.ParsedSequences;
-            List<Dna> dnaList = new List<Dna>();
-            List<ReadingFrame> frameList = new List<ReadingFrame>();
-
-            foreach (KeyValuePair<string, string> pair in parsedInput)
-            {
-                string label = pair.Key;
-                string sequence = pair.Value;
-
-                dnaList.Add(new Dna(label, sequence));
-            }
-
-            foreach (Dna dna in dnaList)
-            {
-                frameList.Add(new ReadingFrame(dna));
-            }
-
-            StringBuilder builder = new StringBuilder();
-            foreach (ReadingFrame frames in frameList)
+            StringBuilder displayStringBuilder = new StringBuilder();
+            foreach (ReadingFrame frames in readingFrames)
             {
                 foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
                 {
-                    builder.Append(frame.Key);
-                    builder.AppendLine();
-                    builder.Append(frame.Value);
-                    builder.AppendLine();
+                    displayStringBuilder.Append(frame.Key);
+                    displayStringBuilder.AppendLine();
+                    displayStringBuilder.Append(frame.Value);
+                    displayStringBuilder.AppendLine();
                 }
             }
-
-            _textBoxInput = builder.ToString();
-            builder.Clear();
-
-
-
-
-
-            //use interface methods to set the sequence field, which the specialised dependency property will then update to reflect the new value.
-            
+            string displayString = displayStringBuilder.ToString();
+            displayStringBuilder.Clear();
+            return displayString;
         }
-        */
+
+
     }
 }

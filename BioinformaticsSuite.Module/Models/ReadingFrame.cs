@@ -2,27 +2,28 @@ using System.Collections.Generic;
 
 namespace BioinformaticsSuite.Module.Models
 {
-    public class ReadingFrame : IReadingFrame
+    public class ReadingFrame
     {
-        /*   - This class splits one DNA sequence into 6 reading frames, using the help of the DNA Converter.
+        /*   - This class splits one DNA object into a dictionary of 6 reading frames.
              - Three are forward and three are made from the reverse complement of the forward string.
              - Reverse frames are the 'reverse complement', ie. the forward string reversed and then each base 
                switched to its opposite base pair eg. A -> T , G -> C and vice-versa. 
              - eg. "ACTGCTA" would be f1 "ACTGCTA" f2 "CTGCTA" f3 "TGCTA" | r1 "TAGCAGT" r2 "AGCAGT" r3 "GCACT"
         */
 
+        private readonly Dna dna;
+
         public ReadingFrame(Dna dna)
         {
-            this.Dna = dna;
-            this.Label = dna.Label;
-            this.LabelledFrames = SplitIntoFrames(dna.Sequence);
+            this.dna = dna;
+            Label = dna.Label;
+            LabelledFrames = SplitIntoFrames(dna.Sequence);
         }
 
-        public Dna Dna;
-        public string Label;
-        public Dictionary<string, string> LabelledFrames { get; }
+        public string Label { get; }
+        public Dictionary<string, string> LabelledFrames { get; private set; }
 
-        public Dictionary<string, string> SplitIntoFrames(string sequence)
+        private Dictionary<string, string> SplitIntoFrames(string sequence)
         {
             // Each reading frame is trimmed if needed to ensure a multiple of 3,
             // so that it forms a list of codons with no useless bases.
@@ -48,7 +49,7 @@ namespace BioinformaticsSuite.Module.Models
                 forward3 = TrimBases(forward3, remainder);
             }
 
-            string reverseComplement = Dna.ReverseComplement;
+            string reverseComplement = dna.ReverseComplement;
 
             string reverse1 = reverseComplement;
             remainder = reverse1.Length%3;
@@ -92,10 +93,5 @@ namespace BioinformaticsSuite.Module.Models
             var trimmedDna = inputDna.Remove(removalIndex, numberBasesToBeTrimmed);
             return trimmedDna;
         }
-    }
-
-    public interface IReadingFrame
-    {
-        Dictionary<string, string> LabelledFrames { get; }
     }
 }

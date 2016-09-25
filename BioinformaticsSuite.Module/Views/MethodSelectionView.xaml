@@ -6,14 +6,14 @@
              xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views"
              xmlns:mvvm="http://prismlibrary.com/"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300"
              mvvm:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" MaxWidth="220" Background="AliceBlue">
             <TabItem Header="DNA">
-                
+
                 <StackPanel>
-                    <Button x:Name="DnaMethod1" Content="Reading Frames"  Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="DnaMethod1" Content="Reading Frames"  Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -21,7 +21,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="DnaMethod2" Content="Translate" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="DnaMethod2" Content="Translate" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -29,7 +29,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="DnaMethod3" Content="Dna Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="DnaMethod3" Content="Dna Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -43,7 +43,7 @@
             </TabItem>
             <TabItem Header="Protein">
                 <StackPanel>
-                    <Button x:Name="ProteinMethod1" Content="Open Reading Frames" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="ProteinMethod1" Content="Open Reading Frames" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -51,7 +51,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="ProteinMethod2" Content="Restriction Sites" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="ProteinMethod2" Content="Restriction Sites" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -59,7 +59,7 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="ProteinMethod3" Content="Protein Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="261">
+                    <Button x:Name="ProteinMethod3" Content="Protein Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
@@ -72,7 +72,7 @@
             <TabItem Header="Conversion">
                 <Grid Background="#FFFFFF"/>
             </TabItem>
-            
+
         </TabControl>
 
     </Grid>

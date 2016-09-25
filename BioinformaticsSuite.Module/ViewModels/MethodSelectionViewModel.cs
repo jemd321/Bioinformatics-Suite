@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BioinformaticsSuite.Shell;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -19,20 +18,19 @@ namespace BioinformaticsSuite.Module.ViewModels
         public MethodSelectionViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
-            this.SelectMethodCommand = new DelegateCommand<string>(this.OnSubmit);
+            this.SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);
         }
 
         public ICommand SelectMethodCommand { get; private set; }
 
-
-        private void OnSubmit(string methodName)
+        private void OnMethodSelection(string methodName)
         {
             switch (methodName)
             {
-                case "ReadingFrame":
+                case MethodNames.ReadingFrame:
                     regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaReadingFrameView, UriKind.Relative));
                     break;
-                case "Method2":
+                case MethodNames.Other:
                     break;
             }
         }

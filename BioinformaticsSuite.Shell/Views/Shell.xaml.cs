@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System;
 
 namespace BioinformaticsSuite.Shell.Views
 {
@@ -11,6 +10,6 @@ namespace BioinformaticsSuite.Shell.Views
         public Shell()
         {
             InitializeComponent();
-        }
+        }       
     }
 }

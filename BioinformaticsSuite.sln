@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioinformaticsSuite.Module"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioinformaticsSuite.Shell", "BioinformaticsSuite.Shell\BioinformaticsSuite.Shell.csproj", "{A35E46F5-F7F6-4792-9467-3C58435DC291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioinformaticsSuite.Tests", "BioinformaticsSuite.Tests\BioinformaticsSuite.Tests.csproj", "{58FBFAC3-74E6-4127-8EF1-BCCB14F607DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioinformaticsSuite.ModuleTests", "BioinformaticsSuite.ModuleTests\BioinformaticsSuite.ModuleTests.csproj", "{0D69D3F6-DFA6-4E2B-A2AC-7CC0D70B1D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A35E46F5-F7F6-4792-9467-3C58435DC291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A35E46F5-F7F6-4792-9467-3C58435DC291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A35E46F5-F7F6-4792-9467-3C58435DC291}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58FBFAC3-74E6-4127-8EF1-BCCB14F607DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58FBFAC3-74E6-4127-8EF1-BCCB14F607DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58FBFAC3-74E6-4127-8EF1-BCCB14F607DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58FBFAC3-74E6-4127-8EF1-BCCB14F607DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D69D3F6-DFA6-4E2B-A2AC-7CC0D70B1D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D69D3F6-DFA6-4E2B-A2AC-7CC0D70B1D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D69D3F6-DFA6-4E2B-A2AC-7CC0D70B1D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D69D3F6-DFA6-4E2B-A2AC-7CC0D70B1D27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

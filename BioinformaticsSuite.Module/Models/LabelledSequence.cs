@@ -10,13 +10,6 @@
             Sequence = sequence;
         }
 
-        protected LabelledSequence(Dna dna)
-        {
-            Label = dna.Label;
-            Sequence = dna.Sequence;
-            Sequence = Translate(Sequence);
-        }
-
         public string Label { get; }
         public string Sequence { get; }
 
@@ -37,6 +30,7 @@
             return sequence.Reverse();
         }
 
+        // broken, needs fixed when the translate method is implemented
         private string Translate(string dnaSequence)
         {
             var protein = Translator.TranslateDna(dnaSequence);
