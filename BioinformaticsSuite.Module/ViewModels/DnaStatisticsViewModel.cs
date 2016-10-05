@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
@@ -10,16 +11,16 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class DnaReadingFrameViewModel : SequenceViewModel
-    {        
+    public class DnaStatisticsViewModel : SequenceViewModel
+    {
         private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "Find Reading Frames";
 
-        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
+        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
             this.readingFrameFactory = readingFrameFactory;
-            if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
         public string Title

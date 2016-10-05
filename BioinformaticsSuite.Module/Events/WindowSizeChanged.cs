@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using BioinformaticsSuite.Module.Enums;
+using Prism.Events;
 
 namespace BioinformaticsSuite.Module.Events
 {

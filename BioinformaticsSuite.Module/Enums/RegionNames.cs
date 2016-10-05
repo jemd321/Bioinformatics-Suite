@@ -1,4 +1,4 @@
-﻿namespace BioinformaticsSuite.Module
+﻿namespace BioinformaticsSuite.Module.Enums
 {
     public static class RegionNames
     {

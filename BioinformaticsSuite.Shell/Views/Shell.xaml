@@ -22,7 +22,8 @@
 
             <!-- MethodRegion -->
             <Border Grid.Row="1"
-                Grid.Column="0">
+                Grid.Column="0"
+                Background="Gainsboro">
 
                 <ContentControl x:Name="MethodSelectionRegion"
                             prism:RegionManager.RegionName="MethodSelectionRegion"

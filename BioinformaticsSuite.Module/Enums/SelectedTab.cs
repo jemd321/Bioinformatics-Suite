@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BioinformaticsSuite.Module
+namespace BioinformaticsSuite.Module.Enums
 {
-    public class WindowSize
+    public enum SelectedTab
     {
-        public double Height;
-        public double Width;
+        Input, 
+        Result
     }
 }

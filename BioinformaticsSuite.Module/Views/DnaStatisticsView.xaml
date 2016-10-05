@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.DnaReadingFrameView"
+﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.DnaStatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Caclulates the 6 reading frames of DNA sequences" Margin="10,10,0,0"></TextBlock>
+        <TextBlock Text="General Statistcs about the DNA, eg Isoelectric point, number of bases etc. Not implemented." Margin="10,10,0,0"></TextBlock>
     </views:SequenceView>
 </UserControl>
-    

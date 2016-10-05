@@ -6,18 +6,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Events;
-using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Win32;
 using NuGet;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Prism.Regions;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -25,9 +23,12 @@ namespace BioinformaticsSuite.Module.ViewModels
     {  
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
+        private int selectedTextBoxIndex;
+        private SelectedTab selectedTab;
+        private string inputBoxText;
+        private string resultBoxText;
         private double textBoxHeight;
         private double textBoxWidth;
-        private string textBoxInput;
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -66,10 +67,55 @@ namespace BioinformaticsSuite.Module.ViewModels
         public ICommand OpenCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
 
-        public string TextBoxInput
+        // Dependency Property index for the selected tab, use the enum 'Selected tab' to change this.
+        public int SelectedTextBoxIndex
         {
-            get { return textBoxInput; }
-            set { SetProperty(ref textBoxInput, value); }
+            // index 0 = input tab, index 1 = result tab.
+            get { return selectedTextBoxIndex; }
+            set
+            {
+                SetProperty(ref selectedTextBoxIndex, value);
+                switch (selectedTextBoxIndex)
+                {
+                    case 0:
+                        selectedTab = SelectedTab.Input;
+                        break;
+                    case 1:
+                        selectedTab = SelectedTab.Result;
+                        break;
+                }
+            }
+        }
+
+        // Set this property when you want to change the selected tab. This avoids having to use the magic number tab index.
+        public SelectedTab SelectedTab
+        {
+            get { return selectedTab; }
+            set
+            {
+                selectedTab = value;
+                switch (selectedTab)
+                {
+                    case SelectedTab.Input:
+                        SelectedTextBoxIndex = 0;
+                        break;
+                    case SelectedTab.Result:
+                        SelectedTextBoxIndex = 1;
+                        break;
+                }
+            }
+        }
+
+        public string InputBoxText
+        {
+            get { return inputBoxText; }
+            set { SetProperty(ref inputBoxText, value); }
+        }
+
+        public string ResultBoxText
+        {
+            get { return resultBoxText; }
+            set { SetProperty(ref resultBoxText, value); }
         }
 
         public double TextBoxHeight
@@ -98,20 +144,29 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public void OnClear()
         {
-            TextBoxInput = "";
+            switch (selectedTab)
+            {
+                case SelectedTab.Input:
+                    InputBoxText = "";
+                    break;
+                case SelectedTab.Result:
+                    ResultBoxText = "";
+                    break;
+            }
         }
 
-
-        // change upload/save to WPF dialog rather than Win32 dialog, since the latter is very difficult to test properly.
+        // change open/save to WPF dialog  at some point rather than Win32 dialog, since the latter is very difficult to test properly.
         public void OnOpen()
         {
-            OpenFileDialog dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
-            var result = dialog.ShowDialog();
-            if (result == false) return;
-
-            using (Stream reader = dialog.OpenFile())
+            switch (selectedTab)
             {
-                TextBoxInput = reader.ReadToEnd();
+                case SelectedTab.Input:
+                    OpenFile();
+                    break;
+                case SelectedTab.Result:
+                    SelectedTab = SelectedTab.Input;
+                    OpenFile();
+                    break;
             }
         }
 
@@ -123,8 +178,28 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 using (StreamWriter writer = new StreamWriter(dialog.FileName))
                 {
-                    writer.WriteLine(TextBoxInput);
+                    switch (selectedTab)
+                    {
+                        case SelectedTab.Input:
+                            writer.WriteLine(InputBoxText);
+                            break;
+                        case SelectedTab.Result:
+                            writer.WriteLine(ResultBoxText);
+                            break;
+                    }
                 }
+            }
+        }
+
+        private void OpenFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
+            var result = dialog.ShowDialog();
+            if (result == false) return;
+
+            using (Stream reader = dialog.OpenFile())
+            {
+                InputBoxText = reader.ReadToEnd();
             }
         }
 

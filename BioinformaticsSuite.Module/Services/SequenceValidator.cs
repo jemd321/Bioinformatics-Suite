@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using Microsoft.Win32;
 

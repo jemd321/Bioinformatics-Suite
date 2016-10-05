@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using BioinformaticsSuite.Module;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Events;
 using Prism.Events;
 

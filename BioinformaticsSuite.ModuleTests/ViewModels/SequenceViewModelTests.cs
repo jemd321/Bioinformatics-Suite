@@ -12,12 +12,12 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         public void OnClearTest()
         {
             var mockViewModel = SetUpMock();
-            mockViewModel.TextBoxInput = "Test";
+            mockViewModel.InputBoxText = "Test";
             string expectedTextBoxInput = "";
 
             mockViewModel.OnClear();
 
-            Assert.AreEqual(expectedTextBoxInput, mockViewModel.TextBoxInput);
+            Assert.AreEqual(expectedTextBoxInput, mockViewModel.InputBoxText);
         }
 
         [TestMethod()]

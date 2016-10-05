@@ -23,6 +23,7 @@ namespace BioinformaticsSuite.Module
             return complement.ToString();
         }
 
+        // custom 'Equals' method to compare elements in a collection by value, since the bog standard collection .Equals only checks the collection references for equality.
         public static bool ValueEquals(this string forwardElement, string reverseElement)
         {
             if (forwardElement.Equals(reverseElement))

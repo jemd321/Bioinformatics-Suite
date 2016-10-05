@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 
 namespace BioinformaticsSuite.Module.Services

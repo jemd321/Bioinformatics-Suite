@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BioinformaticsSuite.Module.Enums;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;

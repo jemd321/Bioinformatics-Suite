@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Practices.Unity;
@@ -9,7 +10,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
     [TestClass()]
     public class SequenceParserTests
     {   
-        private const SequenceType SequenceType = Module.Models.SequenceType.Dna;
+        private const SequenceType SequenceType = Module.Enums.SequenceType.Dna;
 
         public ISequenceParser InstantiateParser()
         {

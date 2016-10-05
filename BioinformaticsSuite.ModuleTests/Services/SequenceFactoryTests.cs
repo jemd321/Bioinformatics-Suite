@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
