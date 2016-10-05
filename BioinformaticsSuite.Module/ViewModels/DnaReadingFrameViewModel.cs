@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Models;
@@ -10,22 +12,30 @@ using BioinformaticsSuite.Module.Services;
 using Microsoft.Win32;
 using NuGet;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaReadingFrameViewModel : SequenceViewModel
-    {
+    {        
         private readonly IReadingFrameFactory readingFrameFactory;
+        private string title = "Find Reading Frames";
 
-        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser)
+        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
             this.readingFrameFactory = readingFrameFactory;
             if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
-        public override void OnSubmit()
+        public string Title
+        {
+            get { return title; }
+            set { SetProperty(ref title, value); }
+        }
+
+        public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
 
@@ -46,14 +56,10 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
         {
-            var readingFrames = new List<ReadingFrame>();
-            foreach (var labelledSequence in labelledSequences)
-            {
-                readingFrames.Add(readingFrameFactory.GetReadingFrames(labelledSequence as Dna));
-            }
-            return readingFrames;
+            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
         }
 
+        // Concatenates labels and sequences for display in the sequence text box.
         private string BuildDisplayString(List<ReadingFrame> readingFrames)
         {
             StringBuilder displayStringBuilder = new StringBuilder();
@@ -61,17 +67,13 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
                 {
-                    displayStringBuilder.Append(frame.Key);
-                    displayStringBuilder.AppendLine();
-                    displayStringBuilder.Append(frame.Value);
-                    displayStringBuilder.AppendLine();
+                    displayStringBuilder.AppendLine(frame.Key);
+                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
                 }
             }
             string displayString = displayStringBuilder.ToString();
             displayStringBuilder.Clear();
             return displayString;
         }
-
-
     }
 }

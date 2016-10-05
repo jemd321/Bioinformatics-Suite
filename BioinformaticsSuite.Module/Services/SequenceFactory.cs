@@ -64,7 +64,7 @@ namespace BioinformaticsSuite.Module.Services
             return labelledSequences;
         }
 
-        //this doesnt really belong in this class. Move elsewhere.
+        //this doesn't really belong in this class. Move elsewhere.
         public string ImportFromTxtFile(FileInfo fileInfo)
         {
             string unparsedSequence = fileInfo.FullName;

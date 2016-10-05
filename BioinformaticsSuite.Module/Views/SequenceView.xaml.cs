@@ -12,22 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BioinformaticsSuite.Module.Events;
-using BioinformaticsSuite.Module.ViewModels;
-using Prism.Mvvm;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
-    /// Interaction logic for MethodSelectionView.xaml
+    /// Interaction logic for SequenceView.xaml
     /// </summary>
-    public partial class MethodSelectionView : UserControl
+    public partial class SequenceView : UserControl
     {
-        public MethodSelectionView(MethodSelectionViewModel viewModel)
+        public SequenceView()
         {
             InitializeComponent();
-            this.DataContext = viewModel;
         }
     }
 }

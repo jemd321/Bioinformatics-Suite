@@ -9,7 +9,6 @@ namespace BioinformaticsSuite.Module.Services
 {
     public class SequenceParser : ISequenceParser
     {
-        // Check for duplicate sequence/labels before adding to result dictionary!
         private SequenceType sequenceType;
         private Dictionary<string, string> parsedSequences = new Dictionary<string, string>();
         private readonly StringBuilder sequenceBuilder =  new StringBuilder();
@@ -21,6 +20,7 @@ namespace BioinformaticsSuite.Module.Services
         {
             this.sequenceValidator = sequenceValidator;
         }
+
         public string ErrorMessage { get; private set; }
         public Dictionary<string, string> ParsedSequences => parsedSequences;
 
@@ -52,8 +52,7 @@ namespace BioinformaticsSuite.Module.Services
             }
         }
 
-
-        //Parses a one sequence if it has no label
+        // Parses only one sequence if it has no label
         private bool ParseUnlabelledSequence(List<string> inputLines)
         {
             foreach(string line in inputLines)
@@ -90,7 +89,6 @@ namespace BioinformaticsSuite.Module.Services
                 ErrorMessage = "All labels Must Have a sequence attached";
                 return false;
             }
-
 
             string firstLine = inputLines[0];
             if (firstLine.StartsWith(">"))
@@ -160,7 +158,7 @@ namespace BioinformaticsSuite.Module.Services
             sequence = sequenceBuilder.ToString();
             if (LabelledSequenceIsDuplicate(label))
             {
-                ErrorMessage = "Duplicate sequence detected (" + label + ")";
+                ErrorMessage = "Duplicate labelled sequence detected: (" + label + ")";
             }
             else if (sequence == "")
             {
@@ -178,13 +176,13 @@ namespace BioinformaticsSuite.Module.Services
 
         private string BuildErrorMessage(int errorLineNumber, int errorCharNumber, string errorContent)
         {
-            errorMessageBuilder.Append("An error was detected on line: ");
+            errorMessageBuilder.Append("Invalid input was detected on line: ");
             errorMessageBuilder.Append(errorLineNumber + 1);
             errorMessageBuilder.Append(", at character: ");            
             errorMessageBuilder.Append(errorCharNumber + 1);
             errorMessageBuilder.Append(". An invalid character (");
             errorMessageBuilder.Append(errorContent);
-            errorMessageBuilder.Append(") was detected.");
+            errorMessageBuilder.Append(") was found.");
             string errorMessage = errorMessageBuilder.ToString();
             errorMessageBuilder.Clear();
             return errorMessage;

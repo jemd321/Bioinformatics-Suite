@@ -29,11 +29,5 @@ namespace BioinformaticsSuite.Shell
             Application.Current.MainWindow = (Window) this.Shell;
             Application.Current.MainWindow.Show();
         }
-
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
-
-        }
     }
 }

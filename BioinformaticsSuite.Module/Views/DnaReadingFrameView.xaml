@@ -4,39 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views"
-             xmlns:mvvm="http://prismlibrary.com/"
-             mvvm:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Height="Auto" Width="Auto">
-    
-    
-    
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="Auto"/> 
-        </Grid.RowDefinitions>
-
-        <TextBox Grid.Row ="0" x:Name="SequenceBox" HorizontalAlignment="Stretch" MaxHeight="{Binding Path=ScreenHeight}" MaxWidth="{Binding Path=ScreenWidth}"  TextWrapping="Wrap" Text="{Binding Path=TextBoxInput}" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" />
-        <Border Grid.Row ="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="GhostWhite">
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="0" x:Name="MethodLabel" Content="Reading Frames" FontWeight="Bold" HorizontalAlignment="Left" Height="Auto" Margin="5,5,0,0" VerticalAlignment="Top" Width="Auto"/>
-                <TextBlock Grid.Column="1" x:Name="MethodDescription" Text="Caclulates the 6 reading frames of DNA sequences" Margin="10,10,0,0"></TextBlock>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
-                    <Button x:Name="SubmitButton" Content="Submit" Command="{Binding Path=SubmitCommand}" Height="Auto" Margin="10,10,5,10" />
-                    <Button x:Name="ClearButton" Content="Clear" Command="{Binding Path=ClearCommand}" Height="Auto" Margin="5,10,10,10" />
-                    <Button x:Name="UploadButton" Content="Upload" Command="{Binding Path=UploadCommand}" Height="Auto" Margin="5,10,10,10" />
-                    <Button x:Name="SaveButton" Content="Save" Command="{Binding Path=SaveCommand}" Height="Auto" Margin="5,10,10,10" />
-
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
-    
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:services="clr-namespace:BioinformaticsSuite.Module.Services"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviours="clr-namespace:BioinformaticsSuite.Module.Behaviours"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Height="Auto" Width="Auto">
+    <local:SequenceView>
+        <TextBlock Text="Caclulates the 6 reading frames of DNA sequences" Margin="10,10,0,0"></TextBlock>
+    </local:SequenceView>
 </UserControl>
     

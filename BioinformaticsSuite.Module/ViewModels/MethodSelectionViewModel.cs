@@ -7,21 +7,30 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Mvvm;
 using Prism.Regions;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class MethodSelectionViewModel
+    public class MethodSelectionViewModel : BindableBase
     {
         private readonly IRegionManager regionManager;
 
-        public MethodSelectionViewModel(IRegionManager regionManager)
+        private bool isChecked = false;
+
+        public MethodSelectionViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             this.regionManager = regionManager;
-            this.SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);
+            SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);
         }
 
         public ICommand SelectMethodCommand { get; private set; }
+
+        public bool IsChecked
+        {
+            get { return isChecked;}
+            set { SetProperty(ref isChecked, value); }
+        }
 
         private void OnMethodSelection(string methodName)
         {

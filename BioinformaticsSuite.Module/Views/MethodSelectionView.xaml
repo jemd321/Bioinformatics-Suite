@@ -11,69 +11,218 @@
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" MaxWidth="220" Background="AliceBlue">
             <TabItem Header="DNA">
-
                 <StackPanel>
-                    <Button x:Name="DnaMethod1" Content="Reading Frames"  Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    <StackPanel.Resources>
+                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
+                            <Setter Property="Width" Value="210"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="RootElement">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup Name="CheckStates">
+                                                    <VisualState Name="Unchecked"/>
+                                                    <VisualState Name="Checked">
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
+                                                                           Storyboard.TargetProperty="Color"
+                                                                           To="LightSteelBlue"></ColorAnimation>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
 
-                    <Button x:Name="DnaMethod2" Content="Translate" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                            <Border.Background>
+                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue"/>
+                                            </Border.Background>
 
-                    <Button x:Name="DnaMethod3" Content="Dna Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                            <Grid Margin="15,5,0,5">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                </ContentPresenter>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <RadioButton x:Name="DnaMethod1" GroupName ="Methods" Content="ReadingFrame"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    </RadioButton>
+
+                    <RadioButton x:Name="DnaMethod2" GroupName ="Methods" Content="Translate"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+
+                    <RadioButton x:Name="DnaMethod3" GroupName ="Methods" Content="DNA Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
                 </StackPanel>
             </TabItem>
             <TabItem Header="mRNA">
-                <Grid Background="#FFFFFF"/>
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
+                            <Setter Property="Width" Value="210"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="RootElement">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup Name="CheckStates">
+                                                    <VisualState Name="Unchecked"/>
+                                                    <VisualState Name="Checked">
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
+                                                                           Storyboard.TargetProperty="Color"
+                                                                           To="LightSteelBlue"></ColorAnimation>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+
+                                            <Border.Background>
+                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue"/>
+                                            </Border.Background>
+
+                                            <Grid Margin="15,5,0,5">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                </ContentPresenter>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <RadioButton x:Name="MRnaMethod1" GroupName ="Methods" Content="MRna Method 1"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    </RadioButton>
+
+                    <RadioButton x:Name="MRnaMethod2" GroupName ="Methods" Content="MRna Method 2"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+
+                    <RadioButton x:Name="MRnaMethod3" GroupName ="Methods" Content="MRna Method 3"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+                </StackPanel>
+
             </TabItem>
             <TabItem Header="Protein">
                 <StackPanel>
-                    <Button x:Name="ProteinMethod1" Content="Open Reading Frames" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    <StackPanel.Resources>
+                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
+                            <Setter Property="Width" Value="210"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="RootElement">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup Name="CheckStates">
+                                                    <VisualState Name="Unchecked"/>
+                                                    <VisualState Name="Checked">
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
+                                                                           Storyboard.TargetProperty="Color"
+                                                                           To="LightSteelBlue"></ColorAnimation>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
 
-                    <Button x:Name="ProteinMethod2" Content="Restriction Sites" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                            <Border.Background>
+                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue"/>
+                                            </Border.Background>
 
-                    <Button x:Name="ProteinMethod3" Content="Protein Statistics" HorizontalAlignment="Left" Height="33" Margin="10,0,0,0" VerticalAlignment="Top" Width="Auto">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter VerticalAlignment="Center" Margin="10,0,0,0"></ContentPresenter>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                            <Grid Margin="15,5,0,5">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                </ContentPresenter>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
 
+                    <RadioButton x:Name="ProteinMethod1" GroupName ="Methods" Content="Open Reading Frames"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    </RadioButton>
+
+                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Restriction Sites"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+
+                    <RadioButton x:Name="ProteinMethod3" GroupName ="Methods" Content="Protein Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Conversion">
-                <Grid Background="#FFFFFF"/>
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
+                            <Setter Property="Width" Value="210"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="RootElement">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup Name="CheckStates">
+                                                    <VisualState Name="Unchecked"/>
+                                                    <VisualState Name="Checked">
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
+                                                                           Storyboard.TargetProperty="Color"
+                                                                           To="LightSteelBlue"></ColorAnimation>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+
+                                            <Border.Background>
+                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue"/>
+                                            </Border.Background>
+
+                                            <Grid Margin="15,5,0,5">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                </ContentPresenter>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <RadioButton x:Name="ConversionMethod1" GroupName ="Methods" Content="Conversion Method 1"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    </RadioButton>
+
+                    <RadioButton x:Name="ConversionMethod2" GroupName ="Methods" Content="Conversion Method 2"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+
+                    <RadioButton x:Name="ConversionMethod3" GroupName ="Methods" Content="Conversion Method 3"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    </RadioButton>
+                </StackPanel>
             </TabItem>
-
         </TabControl>
-
     </Grid>
 </UserControl>
