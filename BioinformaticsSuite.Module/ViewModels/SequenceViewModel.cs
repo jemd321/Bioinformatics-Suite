@@ -29,6 +29,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string resultBoxText;
         private double textBoxHeight;
         private double textBoxWidth;
+        private double maxInfoBarWidth;
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -49,9 +50,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             // Initial Max Dimensions Assignment
             const int infoAndTitleBarHeight = 80;
             const int methodSelectionBarWidth = 235;
+            const int infoBarButtonsWidth = 200;
             TextBoxHeight = Application.Current.MainWindow.ActualHeight - infoAndTitleBarHeight;
             TextBoxWidth = Application.Current.MainWindow.ActualWidth - methodSelectionBarWidth;
-
+            MaxInfoBarWidth = Application.Current.MainWindow.ActualWidth - infoBarButtonsWidth - methodSelectionBarWidth;
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
@@ -129,10 +131,17 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref textBoxWidth, value); }
         }
 
+        public double MaxInfoBarWidth
+        {
+            get { return maxInfoBarWidth; }
+            set { SetProperty(ref maxInfoBarWidth, value); }
+        }
+
         public void AdjustTextBoxHeight(WindowSize currentWindowSize)
         {
             TextBoxHeight = currentWindowSize.Height;
             TextBoxWidth = currentWindowSize.Width;
+            MaxInfoBarWidth = currentWindowSize.Width - 200;
         }
 
         public virtual void SubscribeToEvents()

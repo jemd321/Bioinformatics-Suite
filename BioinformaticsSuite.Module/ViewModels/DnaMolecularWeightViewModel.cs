@@ -11,12 +11,12 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class TranslateViewModel : SequenceViewModel
+    class DnaMolecularWeightViewModel : SequenceViewModel
     {
         private readonly IReadingFrameFactory readingFrameFactory;
-        private string title = "Find Reading Frames";
+        private string title = "DNA Molecular Weight";
 
-        public TranslateViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
+        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
             this.readingFrameFactory = readingFrameFactory;

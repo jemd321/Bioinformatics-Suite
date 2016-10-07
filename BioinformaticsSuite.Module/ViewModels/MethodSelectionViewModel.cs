@@ -37,10 +37,26 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             switch (methodName)
             {
-                case MethodNames.ReadingFrame:
+                case MethodNames.DnaFindMotif:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaFindMotifView, UriKind.Relative));
+                    break;
+                case MethodNames.DnaMolecularWeight:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaMolecularWeightView, UriKind.Relative));
+                    break;
+                case MethodNames.DnaReadingFrame:
                     regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaReadingFrameView, UriKind.Relative));
                     break;
-                case MethodNames.Other:
+                case MethodNames.DnaRestrictionDigest:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaRestrictionDigestView, UriKind.Relative));
+                    break;
+                case MethodNames.DnaStatistics:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaStatisticsView, UriKind.Relative));
+                    break;
+                case MethodNames.DnaTranscribe:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranscribeView, UriKind.Relative));
+                    break;
+                case MethodNames.DnaTranslate:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranslateView, UriKind.Relative));
                     break;
             }
         }

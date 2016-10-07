@@ -113,22 +113,38 @@
     <Compile Include="Models\ReadingFrameFactory.cs" />
     <Compile Include="Services\SequenceValidator.cs" />
     <Compile Include="StringExtensionMethods.cs" />
+    <Compile Include="ViewModels\DnaMolecularWeightViewModel.cs" />
+    <Compile Include="ViewModels\DnaRestricitionDigestViewModel.cs" />
     <Compile Include="ViewModels\DnaStatisticsViewModel.cs" />
-    <Compile Include="ViewModels\TranslateViewModel.cs" />
+    <Compile Include="ViewModels\DnaFindMotifViewModel.cs" />
+    <Compile Include="ViewModels\DnaTranscribeViewModel.cs" />
+    <Compile Include="ViewModels\DnaTranslateViewModel.cs" />
     <Compile Include="ViewModels\IntroViewModel.cs" />
     <Compile Include="Enums\MethodNames.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModel.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModel.cs" />
     <Compile Include="Enums\ViewNames.cs" />
+    <Compile Include="Views\DnaMolecularWeightView.xaml.cs">
+      <DependentUpon>DnaMolecularWeightView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DnaReadingFrameView.xaml.cs">
       <DependentUpon>DnaReadingFrameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DnaRestrictionDigestView.xaml.cs">
+      <DependentUpon>DnaRestrictionDigestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DnaStatisticsView.xaml.cs">
       <DependentUpon>DnaStatisticsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TranslateView.xaml.cs">
-      <DependentUpon>TranslateView.xaml</DependentUpon>
+    <Compile Include="Views\DnaFindMotifView.xaml.cs">
+      <DependentUpon>DnaFindMotifView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DnaTranscribeView.xaml.cs">
+      <DependentUpon>DnaTranscribeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DnaTranslateView.xaml.cs">
+      <DependentUpon>DnaTranslateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IntroView.xaml.cs">
       <DependentUpon>IntroView.xaml</DependentUpon>
@@ -141,7 +157,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DnaMolecularWeightView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DnaReadingFrameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DnaRestrictionDigestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,7 +173,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TranslateView.xaml">
+    <Page Include="Views\DnaFindMotifView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DnaTranscribeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DnaTranslateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

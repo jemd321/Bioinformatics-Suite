@@ -29,8 +29,15 @@ namespace BioinformaticsSuite.Module
         {
             // View Registration
             container.RegisterType<object, MethodSelectionView>("MethodSelectionView");
-            container.RegisterType<object, DnaReadingFrameView>("DnaReadingFrameView");
             container.RegisterType<object, IntroView>("IntroView");
+
+            container.RegisterType<object, DnaFindMotifView>("DnaFindMotifView");
+            container.RegisterType<object, DnaMolecularWeightView>("DnaMolecularWeightView");
+            container.RegisterType<object, DnaReadingFrameView>("DnaReadingFrameView");
+            container.RegisterType<object, DnaRestrictionDigestView>("DnaRestrictionDigestView");
+            container.RegisterType<object, DnaStatisticsView>("DnaStatisticsView");
+            container.RegisterType<object, DnaTranscribeView>("DnaTranscribeView");
+            container.RegisterType<object, DnaTranslateView>("DnaTranslateView");
 
             // Service Registration
             container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();

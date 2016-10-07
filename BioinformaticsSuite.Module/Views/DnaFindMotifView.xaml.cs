@@ -17,11 +17,11 @@ using BioinformaticsSuite.Module.ViewModels;
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
-    /// Interaction logic for TranslateView.xaml
+    /// Interaction logic for DnaFindMotifView.xaml
     /// </summary>
-    public partial class TranslateView : UserControl
+    public partial class DnaFindMotifView : UserControl
     {
-        public TranslateView(TranslateViewModel viewModel)
+        public DnaFindMotifView(DnaFindMotifViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
