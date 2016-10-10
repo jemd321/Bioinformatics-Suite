@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BioinformaticsSuite.Module.Models
+namespace BioinformaticsSuite.Module.Utility
 {
-    public static class Translator
+    public static class Translation
     {
         private static readonly Dictionary<string, char> AminoAcidDictionary = new Dictionary<string, char>
         {
@@ -74,10 +74,22 @@ namespace BioinformaticsSuite.Module.Models
             {"UAG", 'X'}
         };
 
-        public static string TranslateDna(string dnaSequence)
+        public static string TranslateDnaToProtein(string dnaSequence)
         {
             string rna = ConvertDnatoRna(dnaSequence);
             string protein = ConvertRnaToProtein(rna);
+            return protein;
+        }
+
+        public static string TranscribeDnaToMRna(string dnaSequence)
+        {
+            string mRna = ConvertDnatoRna(dnaSequence);
+            return mRna;
+        }
+
+        public static string TranslateMRnaToProtein(string mRNASequence)
+        {
+            string protein = ConvertRnaToProtein(mRNASequence);
             return protein;
         }
 

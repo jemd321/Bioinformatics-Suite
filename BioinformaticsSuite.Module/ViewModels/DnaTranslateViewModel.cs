@@ -7,20 +7,18 @@ using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using BioinformaticsSuite.Module.Utility;
 using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaTranslateViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "Translate DNA";
 
         public DnaTranslateViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
-            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
         public string Title
@@ -36,9 +34,15 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (isParsedSuccessfully)
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
+                var translatedSequences = new Dictionary<string, string>();
+                foreach (var labelledSequence in parsedSequences)
+                {
+                    string dnaSequence = labelledSequence.Value;
+                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
+                    translatedSequences.Add(labelledSequence.Key, proteinSequence);
+                }
+                List<LabelledSequence> labelledProteins  = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
+                ResultBoxText = BuildDisplayString(labelledProteins);
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -46,28 +50,6 @@ namespace BioinformaticsSuite.Module.ViewModels
                 MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
-        }
-
-        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
-        {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
-        }
-
-        // Concatenates labels and sequences for display in the sequence text box.
-        private string BuildDisplayString(List<ReadingFrame> readingFrames)
-        {
-            StringBuilder displayStringBuilder = new StringBuilder();
-            foreach (ReadingFrame frames in readingFrames)
-            {
-                foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
-                {
-                    displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
-                }
-            }
-            string displayString = displayStringBuilder.ToString();
-            displayStringBuilder.Clear();
-            return displayString;
         }
     }
 }

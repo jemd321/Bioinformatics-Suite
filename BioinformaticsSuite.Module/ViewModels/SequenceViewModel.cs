@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Events;
+using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Win32;
 using NuGet;
@@ -236,6 +237,19 @@ namespace BioinformaticsSuite.Module.ViewModels
             line = displayStringBuilder.ToString();
             displayStringBuilder.Clear();
             return line;
+        }
+
+        public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)
+        {
+            StringBuilder displayStringBuilder = new StringBuilder();
+            foreach (var labelledSequence in labelledSequences)
+            {
+                displayStringBuilder.AppendLine(labelledSequence.Label);
+                displayStringBuilder.AppendLine(DisplayStringSplitter(labelledSequence.Sequence));
+            }
+            string displayString = displayStringBuilder.ToString();
+            displayStringBuilder.Clear();
+            return displayString;
         }
 
         // The following events and methods are a copy of the bindable base PRISM class, which allows viewmodels to inherit the dependency

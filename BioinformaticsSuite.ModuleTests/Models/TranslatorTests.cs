@@ -1,4 +1,5 @@
 ﻿using BioinformaticsSuite.Module.Models;
+using BioinformaticsSuite.Module.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
@@ -12,7 +13,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
             string testCase = "ACTGTATTA";
             string expected = "TVL";
 
-            string actual = Translator.TranslateDna(testCase);
+            string actual = Translation.TranslateDnaToProtein(testCase);
 
             Assert.AreEqual(expected, actual);
         }
@@ -23,7 +24,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
             string testCase = "ACTGTATTAA";
             string expected = "TVL";
 
-            string actual = Translator.TranslateDna(testCase);
+            string actual = Translation.TranslateDnaToProtein(testCase);
 
             Assert.AreEqual(expected, actual);
         }

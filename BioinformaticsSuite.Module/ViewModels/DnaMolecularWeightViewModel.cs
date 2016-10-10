@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,16 +12,16 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    class DnaMolecularWeightViewModel : SequenceViewModel
+    public class DnaMolecularWeightViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory readingFrameFactory;
+        private readonly IMolecularWeightCalculator molecularWeightCalculator;
         private string title = "DNA Molecular Weight";
 
         public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
-            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+            this.molecularWeightCalculator = molecularWeightCalculator;
+            if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));
         }
 
         public string Title
@@ -37,8 +38,11 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
+                foreach (var labelledSequence in labelledSequences)
+                {
+                    molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                }   
+                ResultBoxText = BuildDisplayString(labelledSequences);
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -48,24 +52,17 @@ namespace BioinformaticsSuite.Module.ViewModels
             SequenceParser.ResetSequences();
         }
 
-        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
-        {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
-        }
-
         // Concatenates labels and sequences for display in the sequence text box.
-        private string BuildDisplayString(List<ReadingFrame> readingFrames)
+        public override string BuildDisplayString(List<LabelledSequence> labelledSequences)
         {
             StringBuilder displayStringBuilder = new StringBuilder();
-            foreach (ReadingFrame frames in readingFrames)
+            foreach (var labelledSequence in labelledSequences)
             {
-                foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
-                {
-                    displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
-                }
+                displayStringBuilder.AppendLine(labelledSequence.Label);
+                displayStringBuilder.Append(DisplayStringSplitter(labelledSequence.MolecularWeight.ToString(CultureInfo.InvariantCulture)));
+                displayStringBuilder.AppendLine(" Da");
             }
-            string displayString = displayStringBuilder.ToString();
+            var displayString = displayStringBuilder.ToString();
             displayStringBuilder.Clear();
             return displayString;
         }

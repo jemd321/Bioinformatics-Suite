@@ -1,11 +1,17 @@
-﻿namespace BioinformaticsSuite.Module.Models
+﻿using BioinformaticsSuite.Module.Enums;
+using BioinformaticsSuite.Module.Utility;
+
+namespace BioinformaticsSuite.Module.Models
 {
     public class Dna : LabelledSequence
     {
         private string _complement;
         private string _reverseComplement;
 
-        public Dna(string label, string sequence) : base(label, sequence)  { }
+        public Dna(string label, string sequence) : base(label, sequence)
+        {
+            SequenceType = SequenceType.Dna;
+        }
 
         public string Complement
         {

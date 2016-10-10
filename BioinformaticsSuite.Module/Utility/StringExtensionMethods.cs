@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text;
 
-namespace BioinformaticsSuite.Module
+namespace BioinformaticsSuite.Module.Utility
 {
     public static class StringReverser
     {

@@ -21,7 +21,7 @@ namespace BioinformaticsSuite.Module.Views
     /// </summary>
     public partial class DnaMolecularWeightView : UserControl
     {
-        public DnaMolecularWeightView(DnaReadingFrameViewModel viewModel)
+        public DnaMolecularWeightView(DnaMolecularWeightViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
