@@ -40,10 +40,7 @@
                             x:Name="Input"                       
                             ShowLineNumbers="True"
                             WordWrap="True"
-                            MinWidth="100"
-                            MinHeight="100"
-                            MaxHeight="{Binding Path=TextBoxHeight}"
-                            MaxWidth="{Binding Path=TextBoxWidth}"
+                            ClipToBounds="True"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalScrollBarVisibility="Auto"
@@ -59,11 +56,7 @@
                             x:Name="Result"                       
                             ShowLineNumbers="True"
                             WordWrap="True"
-                            MinWidth="600"
-                            MinHeight="150"
                             ClipToBounds="True"
-                            MaxHeight="{Binding Path=TextBoxHeight}"
-                            MaxWidth="{Binding Path=TextBoxWidth}"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalScrollBarVisibility="Auto"
@@ -81,11 +74,11 @@
                         Background="Gainsboro">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <ContentPresenter Grid.Column="0" Height="50" Width="{Binding Path=InfoTextWidth}" ContentSource="Content" />
+                        <ContentPresenter Grid.Column="0" Height="Auto" ClipToBounds="True" ContentSource="Content" />
 
                         <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                     Orientation="Horizontal" Width="200">

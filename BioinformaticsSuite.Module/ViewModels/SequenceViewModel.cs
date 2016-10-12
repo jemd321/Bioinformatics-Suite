@@ -9,7 +9,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
-using BioinformaticsSuite.Module.Events;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.Views;
@@ -29,14 +28,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         private SelectedTab selectedTab;
         private string inputBoxText;
         private string resultBoxText;
-        private double textBoxHeight;
-        private double textBoxWidth;
-        private double infoTextWidth;
 
-        const int TitleBarHeight = 22;
-        const int MethodSelectionBarWidth = 220;
-        const int InfoBarButtonsWidth = 200;
-        const int InfoBarHeight = 50;
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -52,13 +44,8 @@ namespace BioinformaticsSuite.Module.ViewModels
           
             // Event Subscription is done via virtual method rather than here in the constructor for testing purposes,
             // since mock view models cannot be instantiated when the UIThread has not been constructed. Only testing mocks override this method.
-            SubscribeToEvents();
 
             // Initial Max Dimensions Assignment
-
-            TextBoxHeight = Application.Current.MainWindow.ActualHeight - TitleBarHeight - InfoBarHeight;
-            TextBoxWidth = Application.Current.MainWindow.ActualWidth - MethodSelectionBarWidth;
-            InfoTextWidth = Application.Current.MainWindow.ActualWidth - InfoBarButtonsWidth - MethodSelectionBarWidth;
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
@@ -123,36 +110,6 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             get { return resultBoxText; }
             set { SetProperty(ref resultBoxText, value); }
-        }
-
-        // Dynamic Element Resizing Dependecy Properties
-        public double TextBoxHeight
-        {
-            get { return textBoxHeight; }
-            set { SetProperty(ref textBoxHeight, value - 50); }
-        }
-        public double TextBoxWidth
-        {
-            get { return textBoxWidth; }
-            set { SetProperty(ref textBoxWidth, value); }
-        }
-
-        public double InfoTextWidth
-        {
-            get { return infoTextWidth; }
-            set { SetProperty(ref infoTextWidth, value); }
-        }
-
-        public virtual void SubscribeToEvents()
-        {
-            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(ResizeTextBox, ThreadOption.UIThread);
-        }
-
-        public void ResizeTextBox(WindowSize newWindowSize)
-        {
-            TextBoxHeight = newWindowSize.Height - TitleBarHeight - InfoBarHeight;
-            TextBoxWidth = newWindowSize.Width - MethodSelectionBarWidth;
-            InfoTextWidth = newWindowSize.Width - MethodSelectionBarWidth - InfoBarButtonsWidth;
         }
 
         public virtual void OnRun() {}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BioinformaticsSuite.Module.Events;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.ViewModels;
 using Prism.Commands;
@@ -16,11 +15,6 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         public MockViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser,
             IEventAggregator eventAggregator) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-        }      
-
-        public override void SubscribeToEvents()
-        {
-            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(ResizeTextBox);
         }      
     }
 }

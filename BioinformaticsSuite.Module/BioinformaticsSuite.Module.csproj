@@ -93,8 +93,6 @@
   <ItemGroup>
     <Compile Include="Enums\SelectedTab.cs" />
     <Compile Include="Enums\SequenceType.cs" />
-    <Compile Include="Enums\WindowSize.cs" />
-    <Compile Include="Events\WindowSizeChanged.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />

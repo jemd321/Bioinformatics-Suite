@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BioinformaticsSuite.Module.Events;
 using BioinformaticsSuite.Module.ViewModels;
 using Prism.Mvvm;
 using Prism.Events;
