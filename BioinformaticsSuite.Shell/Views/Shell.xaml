@@ -8,7 +8,7 @@
         Title="Bioinformatics Suite" Height="Auto" Width="Auto"
         Icon ="Icons-Land-Medical-Body-DNA.ico">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
@@ -16,7 +16,7 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="220"/>
                 <ColumnDefinition Width="1*" MinWidth="300"/>
             </Grid.ColumnDefinitions>
 

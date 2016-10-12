@@ -12,6 +12,7 @@ using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Events;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using BioinformaticsSuite.Module.Views;
 using Microsoft.Win32;
 using NuGet;
 using Prism.Commands;
@@ -30,7 +31,12 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string resultBoxText;
         private double textBoxHeight;
         private double textBoxWidth;
-        private double maxInfoBarWidth;
+        private double infoTextWidth;
+
+        const int TitleBarHeight = 22;
+        const int MethodSelectionBarWidth = 220;
+        const int InfoBarButtonsWidth = 200;
+        const int InfoBarHeight = 50;
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -49,12 +55,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             SubscribeToEvents();
 
             // Initial Max Dimensions Assignment
-            const int infoAndTitleBarHeight = 80;
-            const int methodSelectionBarWidth = 235;
-            const int infoBarButtonsWidth = 200;
-            TextBoxHeight = Application.Current.MainWindow.ActualHeight - infoAndTitleBarHeight;
-            TextBoxWidth = Application.Current.MainWindow.ActualWidth - methodSelectionBarWidth;
-            MaxInfoBarWidth = Application.Current.MainWindow.ActualWidth - infoBarButtonsWidth - methodSelectionBarWidth;
+
+            TextBoxHeight = Application.Current.MainWindow.ActualHeight - TitleBarHeight - InfoBarHeight;
+            TextBoxWidth = Application.Current.MainWindow.ActualWidth - MethodSelectionBarWidth;
+            InfoTextWidth = Application.Current.MainWindow.ActualWidth - InfoBarButtonsWidth - MethodSelectionBarWidth;
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
@@ -121,6 +125,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref resultBoxText, value); }
         }
 
+        // Dynamic Element Resizing Dependecy Properties
         public double TextBoxHeight
         {
             get { return textBoxHeight; }
@@ -132,22 +137,22 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref textBoxWidth, value); }
         }
 
-        public double MaxInfoBarWidth
+        public double InfoTextWidth
         {
-            get { return maxInfoBarWidth; }
-            set { SetProperty(ref maxInfoBarWidth, value); }
-        }
-
-        public void AdjustTextBoxHeight(WindowSize currentWindowSize)
-        {
-            TextBoxHeight = currentWindowSize.Height;
-            TextBoxWidth = currentWindowSize.Width;
-            MaxInfoBarWidth = currentWindowSize.Width - 200;
+            get { return infoTextWidth; }
+            set { SetProperty(ref infoTextWidth, value); }
         }
 
         public virtual void SubscribeToEvents()
         {
-            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(AdjustTextBoxHeight, ThreadOption.UIThread);
+            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(ResizeTextBox, ThreadOption.UIThread);
+        }
+
+        public void ResizeTextBox(WindowSize newWindowSize)
+        {
+            TextBoxHeight = newWindowSize.Height - TitleBarHeight - InfoBarHeight;
+            TextBoxWidth = newWindowSize.Width - MethodSelectionBarWidth;
+            InfoTextWidth = newWindowSize.Width - MethodSelectionBarWidth - InfoBarButtonsWidth;
         }
 
         public virtual void OnRun() {}

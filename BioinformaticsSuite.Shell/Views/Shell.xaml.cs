@@ -12,10 +12,6 @@ namespace BioinformaticsSuite.Shell.Views
         private IEventAggregator eventAggregator;
         private WindowSize currentWindowSize;
 
-        // these are hacks so that the size of the elements surrounding the sequence text box are account for when resizing.
-        private const double infoAndTitleBarHeight = 80;
-        private const double methodSelectionBarWidth = 235;
-
         // These events publish the new dimensions of the main window whenever it is resized.
         // this is broadcast on the UI thread to UI elements that need to resize dynamically.
         public Shell(IEventAggregator eventAggregator)
@@ -28,8 +24,8 @@ namespace BioinformaticsSuite.Shell.Views
 
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            currentWindowSize.Height = e.NewSize.Height - infoAndTitleBarHeight;
-            currentWindowSize.Width = e.NewSize.Width - methodSelectionBarWidth;
+            currentWindowSize.Height = e.NewSize.Height;
+            currentWindowSize.Width = e.NewSize.Width;
 
             eventAggregator.GetEvent<WindowSizeChanged>().Publish(currentWindowSize);
         }

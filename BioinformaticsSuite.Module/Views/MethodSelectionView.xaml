@@ -9,7 +9,7 @@
              d:DesignHeight="300"
              mvvm:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" MaxWidth="220" Background="AliceBlue">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" Background="AliceBlue">
             <TabItem Header="DNA">
                 <StackPanel>
                     <StackPanel.Resources>

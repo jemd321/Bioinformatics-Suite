@@ -14,6 +14,7 @@ namespace BioinformaticsSuite.Module.ViewModels
     {        
         private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "Find Reading Frames";
+        private double infoBarHeight;
 
         public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
@@ -26,6 +27,12 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        public double InfoBarHeight
+        {
+            get { return infoBarHeight; }
+            set { SetProperty(ref infoBarHeight, value); }
         }
 
         public override void OnRun()
@@ -61,7 +68,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                 foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
                 {
                     displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
+                    //displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
+                    displayStringBuilder.AppendLine(frame.Value);
                 }
             }
             string displayString = displayStringBuilder.ToString();

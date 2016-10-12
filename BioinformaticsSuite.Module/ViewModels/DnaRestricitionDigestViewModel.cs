@@ -62,7 +62,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                 foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
                 {
                     displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
+                    //displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
+                    displayStringBuilder.AppendLine(frame.Value);
                 }
             }
             string displayString = displayStringBuilder.ToString();

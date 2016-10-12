@@ -20,7 +20,7 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
 
         public override void SubscribeToEvents()
         {
-            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(AdjustTextBoxHeight);
+            EventAggregator.GetEvent<WindowSizeChanged>().Subscribe(ResizeTextBox);
         }      
     }
 }

@@ -97,6 +97,7 @@
     <Compile Include="Events\WindowSizeChanged.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
     <Compile Include="Models\MolecularWeightCalculator.cs" />
+    <Compile Include="Models\MotifFinder.cs" />
     <Compile Include="Services\SequenceFactory.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="Models\Dna.cs" />
