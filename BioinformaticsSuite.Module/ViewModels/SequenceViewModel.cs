@@ -24,11 +24,11 @@ namespace BioinformaticsSuite.Module.ViewModels
     {  
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
+
         private int selectedTextBoxIndex;
         private SelectedTab selectedTab;
         private string inputBoxText;
         private string resultBoxText;
-
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -42,10 +42,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             if(SequenceParser == null) throw new ArgumentNullException(nameof(sequenceParser));
             if(EventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
           
-            // Event Subscription is done via virtual method rather than here in the constructor for testing purposes,
-            // since mock view models cannot be instantiated when the UIThread has not been constructed. Only testing mocks override this method.
-
-            // Initial Max Dimensions Assignment
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
@@ -175,6 +171,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
+        // Currently unused -  can't decide on whether to have the sequences wrap inside the text box or to insert line breaks. -  wrapping 
+        // messes with the line numbers though.
         public string DisplayStringSplitter(string line)
         {
             StringBuilder displayStringBuilder = new StringBuilder();
