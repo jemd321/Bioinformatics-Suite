@@ -11,7 +11,12 @@ using BioinformaticsSuite.Module.Views;
 
 namespace BioinformaticsSuite.Module.Models
 {
-    class MotifFinder
+    public interface IMotifFinder
+    {
+        Dictionary<string, MatchCollection> FindMotif(string motif, List<LabelledSequence> labelledSequences);
+    }
+
+    public class MotifFinder : IMotifFinder
     {
         private SequenceType sequenceType;
 
@@ -21,39 +26,19 @@ namespace BioinformaticsSuite.Module.Models
 
         private static readonly StringBuilder regexBuilder = new StringBuilder();
 
-        public void FindMotif(string motif, List<LabelledSequence> labelledSequences)
+        public Dictionary<string, MatchCollection> FindMotif(string motif, List<LabelledSequence> labelledSequences)
         {
             sequenceType = labelledSequences.First().SequenceType;
             string motifPattern = BuildMotifPattern(motif);
             var motifRegex = new Regex(motifPattern);
+
+            var labelledMatches = new Dictionary<string, MatchCollection>();
             foreach (var labelledSequence in labelledSequences)
             {
-                //  how to print a match
-                //  index of matches must be linked in some way to the label
-                //      1. Could be an instance variable of the labelledSequence object
-                //      2. Could be a motif object.
-                //      3. Potential for highlighting of text, how would this work?
-                //      4. If this is a possinility, how would this gel with the line numbers and the insertion of line breaks to make the display look good.
-                //      5. Note to self, have a look again at the automatic resizing of the window elements.
-                //      6. Make a regex widget that lets you choose a letter eg 'Not P' drop down and a button to add to the regex string. Must also be a text box where the motif can be pasted in.
-                /*
-                Match match = motifRegex.Match(labelledSequence.Sequence);
-                while (match.Success)
-                {
-                    string foundMotif = TrimOrf(match.Value);
-                    if (foundOrf != string.Empty)
-                    {
-                        string orfLabel = BuildLabel(match);
-                        openReadingFrames.Add(orfLabel, foundOrf);
-                    }
-                    match = orfMatcher.Match(proteinSequence, match.Index + 1);
-                }
-                */
-
-
-
-                MatchCollection matchCollection = motifRegex.Matches(labelledSequence.Sequence);
+                var matchCollection = motifRegex.Matches(labelledSequence.Sequence);
+                labelledMatches.Add(labelledSequence.Label, matchCollection);
             }
+            return labelledMatches;
         }
 
         private string BuildMotifPattern(string motif)
@@ -157,7 +142,9 @@ namespace BioinformaticsSuite.Module.Models
                     default: throw new ArgumentException("Invalid Nucleotide in Motif");
                 }
             }
-            return regexBuilder.ToString();
+            string resultMotif = regexBuilder.ToString();
+            regexBuilder.Clear();
+            return resultMotif;
         }
 
         private static string BuildMRnaMotifPattern(string motif)
@@ -217,7 +204,9 @@ namespace BioinformaticsSuite.Module.Models
                     default: throw new ArgumentException("Invalid Nucleotide in Motif");
                 }
             }
-            return regexBuilder.ToString();
+            string resultMotif = regexBuilder.ToString();
+            regexBuilder.Clear();
+            return resultMotif;
         }
         private static string BuildProteinMotifPattern(string motif)
         {
@@ -300,13 +289,10 @@ namespace BioinformaticsSuite.Module.Models
                     default: throw new ArgumentException("Invalid Nucleotide in Motif");
                 }
             }
-            return regexBuilder.ToString();
+            string resultMotif = regexBuilder.ToString();
+            regexBuilder.Clear();
+            return resultMotif;
             */
         }
-    }
-
-    public interface IMotifFinder
-    {
-        
     }
 }

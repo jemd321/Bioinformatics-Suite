@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using BioinformaticsSuite.Module.Enums;
@@ -13,14 +14,14 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaFindMotifViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory readingFrameFactory;
+        private readonly IMotifFinder motifFinder;
         private string title = "Find Motifs";
 
         public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+            IMotifFinder motifFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
-            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+            this.motifFinder = motifFinder;
+            if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));
         }
 
         public string Title
@@ -35,11 +36,12 @@ namespace BioinformaticsSuite.Module.ViewModels
             bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
+                string motif = "ACTG";
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
-                SelectedTab = SelectedTab.Result;
+                Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(motif, labelledSequences);
+                ResultBoxText = BuildDisplayString(labelledMatches);
+                SelectedTab = SelectedTab.Result;               
             }
             else
             {
@@ -48,24 +50,29 @@ namespace BioinformaticsSuite.Module.ViewModels
             SequenceParser.ResetSequences();
         }
 
-        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
-        {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
-        }
-
         // Concatenates labels and sequences for display in the sequence text box.
-        private string BuildDisplayString(List<ReadingFrame> readingFrames)
+        private string BuildDisplayString(Dictionary<string, MatchCollection> labelledMatches)
         {
-            StringBuilder displayStringBuilder = new StringBuilder();
-            foreach (ReadingFrame frames in readingFrames)
+            var displayStringBuilder = new StringBuilder();
+            foreach (var labelledMatch in labelledMatches)
             {
-                foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
+                string label = labelledMatch.Key;
+                displayStringBuilder.AppendLine(label);
+
+                var matches = labelledMatch.Value;
+                foreach (Match match in matches)
                 {
-                    displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
+                    var startIndex = match.Index;
+                    var endIndex = startIndex + match.Length;
+                    displayStringBuilder.Append(startIndex);
+                    displayStringBuilder.Append(" - ");
+                    displayStringBuilder.Append(endIndex);
+                    displayStringBuilder.Append("    ");
                 }
+                displayStringBuilder.AppendLine();
             }
-            string displayString = displayStringBuilder.ToString();
+
+            var displayString = displayStringBuilder.ToString();
             displayStringBuilder.Clear();
             return displayString;
         }
