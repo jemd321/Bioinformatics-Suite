@@ -16,6 +16,7 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private readonly IMotifFinder motifFinder;
         private string title = "Find Motifs";
+        private string motifBoxText;
 
         public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IMotifFinder motifFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
@@ -30,13 +31,19 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref title, value); }
         }
 
+        public string MotifBoxText
+        {
+            get { return motifBoxText; }
+            set { SetProperty(ref motifBoxText, value); }
+        }
+
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
             bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                string motif = "ACTG";
+                string motif = MotifBoxText;
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(motif, labelledSequences);

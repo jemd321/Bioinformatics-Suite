@@ -6,41 +6,37 @@
         xmlns:prism="http://www.codeplex.com/prism"
         mc:Ignorable="d"
         Title="Bioinformatics Suite" Height="Auto" Width="Auto"
-        Icon ="Icons-Land-Medical-Body-DNA.ico">
+        Icon ="Icons-Land-Medical-Body-DNA.ico"
+        MinHeight="300"
+        MinWidth="530">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" >
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="1*" MinWidth="300"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
-                <ColumnDefinition Width="1*" MinWidth="300"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- MethodRegion -->
-            <Border Grid.Row="1"
+        <!-- MethodRegion -->
+        <Border Grid.Row="1"
                 Grid.Column="0"
                 Background="Gainsboro">
-
-                <ContentControl x:Name="MethodSelectionRegion"
+            <ContentControl x:Name="MethodSelectionRegion"
                             prism:RegionManager.RegionName="MethodSelectionRegion"
                             VerticalContentAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"/>
-            </Border>
+        </Border>
 
-            <!-- SequenceRegion -->
-            <Border Grid.Row="1"
+        <!-- SequenceRegion -->
+        <Border Grid.Row="1"
                 Grid.Column="1">
-                <ContentControl x:Name="SequenceRegion"
+            <ContentControl x:Name="SequenceRegion"
                             prism:RegionManager.RegionName="SequenceRegion"
                             VerticalContentAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"/>
-            </Border>
-
-        </Grid>
-    </ScrollViewer>
-
+        </Border>
+    </Grid>
 </Window>
