@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Translate DNA sequences into proteins" Margin="10,10,0,0"></TextBlock>
+        <TextBlock Text="Translate DNA sequences into proteins" />
     </views:SequenceView>
 </UserControl>

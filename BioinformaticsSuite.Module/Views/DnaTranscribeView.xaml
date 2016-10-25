@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Transcribe DNA sequences into mRNA" Margin="10,10,0,0"></TextBlock>
+        <TextBlock Text="Transcribe DNA sequences into mRNA" />
     </views:SequenceView>
 </UserControl>

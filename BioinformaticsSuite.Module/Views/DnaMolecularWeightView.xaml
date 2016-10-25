@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Returns the Molecular weight of given DNA sequences in daltons"  TextWrapping="Wrap" Margin="10,10,0,0"></TextBlock>
+        <TextBlock Text="Returns the molecular weight of given DNA sequences in Daltons"  TextWrapping="Wrap"/>
     </views:SequenceView>
 </UserControl>

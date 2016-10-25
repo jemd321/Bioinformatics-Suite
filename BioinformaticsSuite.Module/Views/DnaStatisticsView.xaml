@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="General Statistcs about the DNA, eg Isoelectric point, number of bases etc. Not implemented." Margin="10,10,0,0"></TextBlock>
+        <TextBlock Text="General Statistcs about the DNA, number of bases etc. Not implemented."/>
     </views:SequenceView>
 </UserControl>

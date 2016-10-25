@@ -78,7 +78,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ContentPresenter  Grid.Column="0" Height="Auto" MinWidth="250" ClipToBounds="True" Margin="5,5,5,5"  ContentSource="Content"/>
+                        <ContentPresenter  Grid.Column="0" Height="Auto" MinWidth="250" ClipToBounds="True" Margin="10,10,10,10"  ContentSource="Content"/>
 
                         <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderBrush="DimGray" BorderThickness="1" Background="AliceBlue">
                             <StackPanel Orientation="Horizontal" Width="200" VerticalAlignment="Bottom">
