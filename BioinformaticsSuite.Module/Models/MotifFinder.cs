@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Resources;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Views;
 
@@ -15,16 +16,18 @@ namespace BioinformaticsSuite.Module.Models
     {
         bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
         Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences);
+        string InvalidMotifMessage { get; }
     }
 
     public class MotifFinder : IMotifFinder
     {
         private SequenceType sequenceType;
-
         private readonly Regex dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex mRnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex proteinMotifValidator = new Regex("[^ABCDEFGHIKLMNPQRSTVWXYZ]", RegexOptions.Compiled);
         private static readonly StringBuilder regexBuilder = new StringBuilder();
+
+        public string InvalidMotifMessage { get; private set; }
 
         public bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif)
         {
@@ -100,20 +103,45 @@ namespace BioinformaticsSuite.Module.Models
             }
         }
 
+        private void BuildInvalidMotifErrorMessage(Match invalidMatch)
+        {
+            string invalidBase = invalidMatch.Value;
+            var invalidCharIndex = invalidMatch.Index + 1;
+            InvalidMotifMessage = "An invalid character (" + invalidBase + ") was found at position: " +
+                                  invalidCharIndex;
+        }
+
         private bool IsValidDnaMotif(string motif)
         {
-
-            return !dnaMotifValidator.IsMatch(motif);
+            var match = dnaMotifValidator.Match(motif);           
+            if (match.Success)
+            {
+                BuildInvalidMotifErrorMessage(match);
+                return false;
+            }
+            else return true;
         }
 
         private bool IsValidMRnaMotif(string motif)
         {
-            return !mRnaMotifValidator.IsMatch(motif);
+            var match = mRnaMotifValidator.Match(motif);
+            if (match.Success)
+            {
+                BuildInvalidMotifErrorMessage(match);
+                return false;
+            }
+            else return true;
         }
 
         private bool IsValidProteinMotif(string motif)
         {
-            return !proteinMotifValidator.IsMatch(motif);
+            var match = proteinMotifValidator.Match(motif);
+            if (match.Success)
+            {
+                BuildInvalidMotifErrorMessage(match);
+                return false;
+            }
+            else return true;
         }
 
         private static string BuildDnaMotifPattern(string motif)
@@ -170,7 +198,7 @@ namespace BioinformaticsSuite.Module.Models
                     case 'N':
                         regexBuilder.Append("[ACGT]");
                         break;
-                    default: throw new ArgumentException("Invalid Nucleotide in Motif");
+                    default: throw new ArgumentException("Invalid Nucleotide in Motif - Parsing Method has missed it");
                 }
             }
             string resultMotif = regexBuilder.ToString();

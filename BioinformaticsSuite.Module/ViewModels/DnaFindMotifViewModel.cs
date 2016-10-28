@@ -78,7 +78,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification("An invalid Dna Motif was entered. Please click the 'IUPAC Code Help' button for more information.");
+                RaiseInvalidInputNotification("A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" + motifFinder.InvalidMotifMessage);
             }
             SequenceParser.ResetSequences();
         }
