@@ -8,9 +8,15 @@
              xmlns:services="clr-namespace:BioinformaticsSuite.Module.Services"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="clr-namespace:BioinformaticsSuite.Module.Behaviours"
+             xmlns:interactionRequest="http://prismlibrary.com/"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
+    <i:Interaction.Triggers>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
+        </interactionRequest:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
 
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
@@ -98,4 +104,6 @@
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>
+
+
 

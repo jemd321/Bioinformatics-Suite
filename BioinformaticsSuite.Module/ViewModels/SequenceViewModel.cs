@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using NuGet;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 
 namespace BioinformaticsSuite.Module.ViewModels
@@ -41,23 +42,28 @@ namespace BioinformaticsSuite.Module.ViewModels
             if(SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
             if(SequenceParser == null) throw new ArgumentNullException(nameof(sequenceParser));
             if(EventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
-          
+
+            NotificationRequest = new InteractionRequest<INotification>();
+
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
-            SaveCommand = new DelegateCommand(OnSave);            
+            SaveCommand = new DelegateCommand(OnSave);
+
         }
 
         public ISequenceFactory SequenceFactory { get; }
         public ISequenceParser SequenceParser { get; }
         public IEventAggregator EventAggregator { get; }
 
+        public InteractionRequest<INotification> NotificationRequest { get; private set; }
+
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
         public ICommand OpenCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
 
-        // Dependency Property index for the selected tab, use the enum 'Selected tab' to change this.
+        // Dependency Property index for the selected tab, use the property 'Selected tab' to change this.
         public int SelectedTextBoxIndex
         {
             // index 0 = input tab, index 1 = result tab.
@@ -77,7 +83,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        // Set this property when you want to change the selected tab. This avoids having to use the magic number tab index.
+        // Set this property when you want to change the selected tab. This avoids having to use a 'magic number' tab index.
         public SelectedTab SelectedTab
         {
             get { return selectedTab; }
@@ -169,6 +175,11 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 InputBoxText = reader.ReadToEnd();
             }
+        }
+
+        protected void RaiseSequenceValidationErrorNotification(string errorMessage)
+        {
+            NotificationRequest.Raise(new Notification {Title = "Invalid Sequence Input", Content = errorMessage});
         }
 
         // Currently unused -  can't decide on whether to have the sequences wrap inside the text box or to insert line breaks. -  wrapping 

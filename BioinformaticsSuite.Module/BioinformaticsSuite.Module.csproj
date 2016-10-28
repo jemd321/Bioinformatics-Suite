@@ -153,6 +153,9 @@
     <Compile Include="Views\MethodSelectionView.xaml.cs">
       <DependentUpon>MethodSelectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PopupViews\DnaHelpPopupView.xaml.cs">
+      <DependentUpon>DnaHelpPopupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MethodSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PopupViews\DnaHelpPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

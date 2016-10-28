@@ -5,10 +5,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using BioinformaticsSuite.Module.Views.PopupViews;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -23,7 +27,14 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             this.motifFinder = motifFinder;
             if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));
+
+            HelpPopupViewRequest = new InteractionRequest<INotification>();
+            RaiseHelpPopupCommand = new DelegateCommand(RaiseHelpPopupView);
+
         }
+
+        public InteractionRequest<INotification> HelpPopupViewRequest { get; private set; }
+        public ICommand RaiseHelpPopupCommand { get; private set; }
 
         public string Title
         {
@@ -35,6 +46,11 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             get { return motifBoxText; }
             set { SetProperty(ref motifBoxText, value); }
+        }
+
+        private void RaiseHelpPopupView()
+        {
+            HelpPopupViewRequest.Raise(new Notification() {Title = "", Content = ""});
         }
 
         public override void OnRun()
@@ -52,7 +68,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                RaiseSequenceValidationErrorNotification(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
         }

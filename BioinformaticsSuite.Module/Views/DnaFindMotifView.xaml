@@ -4,9 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:BioinformaticsSuite.Module.Views"
+             xmlns:interactionRequest="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:popupViews="clr-namespace:BioinformaticsSuite.Module.Views.PopupViews"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
+
+    <i:Interaction.Triggers>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding HelpPopupViewRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction>
+                <interactionRequest:PopupWindowAction.WindowContent>
+                    <popupViews:DnaHelpPopupView/>
+                </interactionRequest:PopupWindowAction.WindowContent>
+            </interactionRequest:PopupWindowAction>
+        </interactionRequest:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
     <views:SequenceView>
         <StackPanel>
             <Grid>
@@ -15,7 +29,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Search for a motif (a unique DNA sequence) within DNA Sequences" HorizontalAlignment="Left" MinWidth="180" TextWrapping="Wrap"/>
-                <Button Grid.Column="1" Content="Help/IUPAC Codes" Width="Auto" MaxHeight="25" HorizontalAlignment="Right"/>
+                <Button Grid.Column="1" Content="Help/IUPAC Codes" Width="Auto" MaxHeight="25" HorizontalAlignment="Right" Command="{Binding RaiseHelpPopupCommand}"/>
             </Grid>
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
