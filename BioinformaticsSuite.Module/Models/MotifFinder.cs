@@ -13,7 +13,8 @@ namespace BioinformaticsSuite.Module.Models
 {
     public interface IMotifFinder
     {
-        Dictionary<string, MatchCollection> FindMotif(string motif, List<LabelledSequence> labelledSequences);
+        bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
+        Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences);
     }
 
     public class MotifFinder : IMotifFinder
@@ -23,15 +24,45 @@ namespace BioinformaticsSuite.Module.Models
         private readonly Regex dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex mRnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex proteinMotifValidator = new Regex("[^ABCDEFGHIKLMNPQRSTVWXYZ]", RegexOptions.Compiled);
-
         private static readonly StringBuilder regexBuilder = new StringBuilder();
 
-        public Dictionary<string, MatchCollection> FindMotif(string motif, List<LabelledSequence> labelledSequences)
+        public bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif)
         {
-            sequenceType = labelledSequences.First().SequenceType;
-            string motifPattern = BuildMotifPattern(motif);
-            var motifRegex = new Regex(motifPattern);
+            parsedMotif = "";
+            sequenceType = motifSequenceType;
 
+            switch (sequenceType)
+            {
+                case SequenceType.Dna:
+                    if (IsValidDnaMotif(motif))
+                    {
+                        parsedMotif = BuildDnaMotifPattern(motif);
+                        return true;
+                    }
+                    else return false;
+                case SequenceType.MRna:
+                    if (IsValidMRnaMotif(motif))
+                    {
+                        parsedMotif = BuildMRnaMotifPattern(motif);
+                        return true;
+                    }
+                    else return false;
+                case SequenceType.Protein:
+                    if (IsValidProteinMotif(motif))
+                    {
+                        parsedMotif = BuildProteinMotifPattern(motif);
+                        return true;
+
+                    }
+                    else return false;
+                default:
+                    throw new Exception("Sequence Type not recognised");
+            }
+        }
+
+        public Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences)
+        {
+            var motifRegex = new Regex(parsedMotif);
             var labelledMatches = new Dictionary<string, MatchCollection>();
             foreach (var labelledSequence in labelledSequences)
             {
@@ -41,7 +72,7 @@ namespace BioinformaticsSuite.Module.Models
             return labelledMatches;
         }
 
-        private string BuildMotifPattern(string motif)
+        public string BuildMotifPattern(string motif)
         {
             // Exceptions thrown here should be changed to return an invalid motif message to the user rather than throwing an E.
             switch (sequenceType)
@@ -211,7 +242,7 @@ namespace BioinformaticsSuite.Module.Models
         private static string BuildProteinMotifPattern(string motif)
         {
             return motif;
-            // UNDER CONSTRUCTION, may add custom regex UI builder thingy
+            // UNDER CONSTRUCTION, may add custom regex UI builder
             /*
             foreach (char nucleotide in motif)
             {

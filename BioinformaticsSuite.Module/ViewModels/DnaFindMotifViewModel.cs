@@ -56,19 +56,29 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            string motif = MotifBoxText;
+            string parsedMotif;
+
+            bool isValidMotif = motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
+            if (isValidMotif)
             {
-                string motif = MotifBoxText;
-                var parsedSequences = SequenceParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(motif, labelledSequences);
-                ResultBoxText = BuildDisplayString(labelledMatches);
-                SelectedTab = SelectedTab.Result;               
+                bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+                if (isParsedSuccessfully)
+                {
+                    var parsedSequences = SequenceParser.ParsedSequences;
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
+                    Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(motif, labelledSequences);
+                    ResultBoxText = BuildDisplayString(labelledMatches);
+                    SelectedTab = SelectedTab.Result;
+                }
+                else
+                {
+                    RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                }
             }
             else
             {
-                RaiseSequenceValidationErrorNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification("An invalid Dna Motif was entered. Please click the 'IUPAC Code Help' button for more information.");
             }
             SequenceParser.ResetSequences();
         }

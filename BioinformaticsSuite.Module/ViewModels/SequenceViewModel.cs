@@ -114,6 +114,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref resultBoxText, value); }
         }
 
+
+
         public virtual void OnRun() {}
 
         public void OnClear()
@@ -129,7 +131,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        // change open/save to WPF dialog  at some point rather than Win32 dialog, since the latter is very difficult to test properly.
         public void OnOpen()
         {
             switch (selectedTab)
@@ -177,9 +178,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        protected void RaiseSequenceValidationErrorNotification(string errorMessage)
+        protected void RaiseInvalidInputNotification(string errorMessage)
         {
-            NotificationRequest.Raise(new Notification {Title = "Invalid Sequence Input", Content = errorMessage});
+            NotificationRequest.Raise(new Notification {Title = "Invalid Data Input", Content = errorMessage});
         }
 
         // Currently unused -  can't decide on whether to have the sequences wrap inside the text box or to insert line breaks. -  wrapping 
