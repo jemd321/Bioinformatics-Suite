@@ -1,0 +1,123 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BioinformaticsSuite.Module.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using BioinformaticsSuite.Module.Enums;
+
+namespace BioinformaticsSuite.Module.Models.Tests
+{
+    [TestClass()]
+    public class MotifFinderTests
+    {
+        [TestMethod()]
+        public void TryParseMotifTest()
+        {
+            var motifFinder = CreateTestInstance();
+
+            const string testDnaMotif = "ACGTRYSWKMBDHVNX";
+            const string testRnaMotif = "ACGURYSWKMBDHVNX";
+            const string testProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
+
+            const string expectedDnaMotif = "ACGT[AG][CT][GC][AT][GT][AC][CGT][AGT][ACT][ACG][ACGT][ACGT]";
+            const string expectedRnaMotif = "ACGU[AG][CU][GC][AU][UG][CA][CGU][AGU][ACU][ACG][ACGU][ACGU]";
+            const string expectedProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
+
+            string actualDnaMotif;
+            string actualRnaMotif;
+            string actualProteinMotif;
+
+            const string invalidDnaMotif = "ACZT";
+            const string invalidRnaMotif = "AZGU";
+            const string invalidProteinMotif = "ACDEFGHIJKLM";
+
+            Assert.IsTrue(motifFinder.TryParseMotif(testDnaMotif, SequenceType.Dna, out actualDnaMotif));
+            Assert.IsTrue(motifFinder.TryParseMotif(testRnaMotif, SequenceType.MRna, out actualRnaMotif));
+            Assert.IsTrue(motifFinder.TryParseMotif(testProteinMotif, SequenceType.Protein, out actualProteinMotif));
+
+            Assert.AreEqual(expectedDnaMotif, actualDnaMotif);
+            Assert.AreEqual(expectedRnaMotif, actualRnaMotif);
+            Assert.AreEqual(expectedProteinMotif, actualProteinMotif);
+
+            Assert.IsFalse(motifFinder.TryParseMotif(invalidDnaMotif, SequenceType.Dna, out actualDnaMotif));
+            Assert.IsFalse(motifFinder.TryParseMotif(invalidRnaMotif, SequenceType.MRna, out actualRnaMotif));
+            Assert.IsFalse(motifFinder.TryParseMotif(invalidProteinMotif, SequenceType.Protein, out actualProteinMotif));
+        }
+
+        [TestMethod()]
+        public void FindMotifTest()
+        {
+            var motifFinder = CreateTestInstance();
+            var resultStringBuilder = new StringBuilder();
+
+            List<LabelledSequence> testDnaSequences = new List<LabelledSequence>()
+            {
+                new Dna("test1", "ACGTACGATCGTTGAG"),
+                new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG")
+            };
+
+            List<LabelledSequence> testRnaSequences = new List<LabelledSequence>()
+            {
+                new MRna("test1", "ACGUACGAUCGUUGAG"),
+                new MRna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG")
+            };
+
+            List<LabelledSequence> testProteinSequences = new List<LabelledSequence>()
+            {
+                new Protein("test1", "ABCDEFGHIKLMNPQRSTVWYABCD"),
+                new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY")
+            };
+           
+            const string parsedDnaMotif = "ACGT[AG][CT][GC][AT][TG][CA][CGT][AGT][ACT][ACG][ACGT][ACGT]";
+            const string parsedRnaMotif = "ACGU[AG][CU][GC][AU][UG][CA][CGU][AGU][ACU][ACG][ACGU][ACGU]";
+            const string parsedProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
+
+            var actualDnaMotifs = motifFinder.FindMotif(parsedDnaMotif, testDnaSequences);
+            var actualRnaMotifs = motifFinder.FindMotif(parsedRnaMotif, testRnaSequences);
+            var actualProteinMotifs = motifFinder.FindMotif(parsedProteinMotif, testProteinSequences);
+
+            var expectedDnaIndices = new List<int>() { 1, 16, 1, 16, 21, 36 };
+            var expectedRnaIndices = new List<int>() { 1, 16, 1, 16, 21, 36 };
+            var expectedProteinIndices = new List<int>() { 1, 21, 1, 21, 26, 46 };
+
+            var actualDnaIndices = ParseMatchCollections(actualDnaMotifs);
+            var actualRnaIndices = ParseMatchCollections(actualRnaMotifs);
+            var actualProteinIndicies = ParseMatchCollections(actualProteinMotifs);
+
+            CollectionAssert.AreEquivalent(expectedDnaIndices, actualDnaIndices);
+            CollectionAssert.AreEquivalent(expectedRnaIndices, actualRnaIndices);
+            CollectionAssert.AreEquivalent(expectedProteinIndices, actualProteinIndicies);
+        }
+
+        [TestMethod()]
+        public void BuildMotifPatternTest()
+        {
+
+        }
+
+        private IMotifFinder CreateTestInstance()
+        {
+             IMotifFinder motifFinder = new MotifFinder();
+            return motifFinder;
+        }
+
+        private List<int> ParseMatchCollections(Dictionary<string, MatchCollection> labelledMatches)
+        {
+            var actualIndices = new List<int>();
+            foreach (MatchCollection matches in labelledMatches.Values)
+            {
+                foreach (Match match in matches)
+                {
+                    int startIndex = match.Index + 1;
+                    int endIndex = startIndex + match.Length - 1;
+                    actualIndices.Add(startIndex);
+                    actualIndices.Add(endIndex);
+                }
+            }
+            return actualIndices;
+        }
+    }
+}

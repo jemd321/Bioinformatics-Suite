@@ -87,6 +87,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\MotifFinderTests.cs" />
     <Compile Include="Models\OpenReadingFrameTests.cs" />
     <Compile Include="Models\ReadingFrameTests.cs" />
     <Compile Include="Models\TranslatorTests.cs" />

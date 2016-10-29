@@ -53,7 +53,7 @@ namespace BioinformaticsSuite.Module.Models
                 case SequenceType.Protein:
                     if (IsValidProteinMotif(motif))
                     {
-                        parsedMotif = BuildProteinMotifPattern(motif);
+                        parsedMotif = motif;
                         return true;
 
                     }
@@ -95,7 +95,7 @@ namespace BioinformaticsSuite.Module.Models
                 case SequenceType.Protein:
                     if (IsValidProteinMotif(motif))
                     {
-                        return BuildProteinMotifPattern(motif);
+                        return motif;
                     }
                     else throw new Exception("Invalid Protein Motif");
                 default:
@@ -162,35 +162,35 @@ namespace BioinformaticsSuite.Module.Models
                     case 'T':
                         regexBuilder.Append("T");
                         break;
-                    case 'Y':
-                        regexBuilder.Append("[CT]");
-                        break;
                     case 'R':
                         regexBuilder.Append("[AG]");
                         break;
-                    case 'W':
-                        regexBuilder.Append("[AT]");
+                    case 'Y':
+                        regexBuilder.Append("[CT]");
                         break;
                     case 'S':
                         regexBuilder.Append("[GC]");
                         break;
+                    case 'W':
+                        regexBuilder.Append("[AT]");
+                        break;
                     case 'K':
-                        regexBuilder.Append("[TG]");
+                        regexBuilder.Append("[GT]");
                         break;
                     case 'M':
-                        regexBuilder.Append("[CA]");
+                        regexBuilder.Append("[AC]");
+                        break;
+                    case 'B':
+                        regexBuilder.Append("[CGT]");
                         break;
                     case 'D':
                         regexBuilder.Append("[AGT]");
                         break;
-                    case 'V':
-                        regexBuilder.Append("[ACG]");
-                        break;
                     case 'H':
                         regexBuilder.Append("[ACT]");
                         break;
-                    case 'B':
-                        regexBuilder.Append("[CGT]");
+                    case 'V':
+                        regexBuilder.Append("[ACG]");
                         break;
                     case 'X':
                         regexBuilder.Append("[ACGT]");
@@ -266,92 +266,6 @@ namespace BioinformaticsSuite.Module.Models
             string resultMotif = regexBuilder.ToString();
             regexBuilder.Clear();
             return resultMotif;
-        }
-        private static string BuildProteinMotifPattern(string motif)
-        {
-            return motif;
-            // UNDER CONSTRUCTION, may add custom regex UI builder
-            /*
-            foreach (char nucleotide in motif)
-            {
-                switch (nucleotide)
-                {
-                    case 'A':
-                        regexBuilder.Append("A");
-                        break;
-                    case 'B':
-                        regexBuilder.Append("C");
-                        break;
-                    case 'C':
-                        regexBuilder.Append("G");
-                        break;
-                    case 'D':
-                        regexBuilder.Append("T");
-                        break;
-                    case 'E':
-                        regexBuilder.Append("[CT]");
-                        break;
-                    case 'F':
-                        regexBuilder.Append("[AG]");
-                        break;
-                    case 'G':
-                        regexBuilder.Append("[AT]");
-                        break;
-                    case 'H':
-                        regexBuilder.Append("[GC]");
-                        break;
-                    case 'I':
-                        regexBuilder.Append("[TG]");
-                        break;
-                    case 'K':
-                        regexBuilder.Append("[CA]");
-                        break;
-                    case 'L':
-                        regexBuilder.Append("[AGT]");
-                        break;
-                    case 'M':
-                        regexBuilder.Append("[ACG]");
-                        break;
-                    case 'N':
-                        regexBuilder.Append("[ACT]");
-                        break;
-                    case 'P':
-                        regexBuilder.Append("[CGT]");
-                        break;
-                    case 'Q':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'R':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'S':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'T':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'V':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'W':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'X':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'Y':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    case 'Z':
-                        regexBuilder.Append("[ACGT]");
-                        break;
-                    default: throw new ArgumentException("Invalid Nucleotide in Motif");
-                }
-            }
-            string resultMotif = regexBuilder.ToString();
-            regexBuilder.Clear();
-            return resultMotif;
-            */
         }
     }
 }

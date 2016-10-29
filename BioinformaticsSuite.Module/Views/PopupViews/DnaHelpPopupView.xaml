@@ -10,8 +10,8 @@
         <StackPanel Margin="10">
             <TextBlock TextWrapping="Wrap" TextAlignment="Left" FontSize="14">
                 <Bold FontSize="20">DNA IUPAC Codes</Bold><LineBreak/>
-                A : Arginine <LineBreak/>
-                C : Cysteine <LineBreak/>
+                A : Adenine <LineBreak/>
+                C : Cytosine <LineBreak/>
                 G : Guanine <LineBreak/>
                 T : Thymine <LineBreak/>
                 <Bold FontSize="16">Ambiguous Bases:</Bold> <LineBreak/>

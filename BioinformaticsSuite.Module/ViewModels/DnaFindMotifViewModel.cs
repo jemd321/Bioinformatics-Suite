@@ -56,9 +56,14 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            string motif = MotifBoxText;
-            string parsedMotif;
+            string motif = MotifBoxText.ToUpper();
+            if (string.IsNullOrWhiteSpace(motif))
+            {
+                RaiseInvalidInputNotification("Please enter a valid motif in the box below.");
+                return;
+            }
 
+            string parsedMotif;
             bool isValidMotif = motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
             if (isValidMotif)
             {
@@ -67,7 +72,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 {
                     var parsedSequences = SequenceParser.ParsedSequences;
                     List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                    Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(motif, labelledSequences);
+                    Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(parsedMotif, labelledSequences);
                     ResultBoxText = BuildDisplayString(labelledMatches);
                     SelectedTab = SelectedTab.Result;
                 }
@@ -82,7 +87,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             SequenceParser.ResetSequences();
         }
-
+           
         // Concatenates labels and sequences for display in the sequence text box.
         private string BuildDisplayString(Dictionary<string, MatchCollection> labelledMatches)
         {
@@ -95,8 +100,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                 var matches = labelledMatch.Value;
                 foreach (Match match in matches)
                 {
-                    var startIndex = match.Index;
-                    var endIndex = startIndex + match.Length;
+                    var startIndex = match.Index + 1;
+                    var endIndex = startIndex + match.Length - 1;
                     displayStringBuilder.Append(startIndex);
                     displayStringBuilder.Append(" - ");
                     displayStringBuilder.Append(endIndex);
