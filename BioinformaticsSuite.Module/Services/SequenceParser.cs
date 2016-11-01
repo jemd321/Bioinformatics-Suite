@@ -73,7 +73,7 @@ namespace BioinformaticsSuite.Module.Services
             else
             {
                 const int errorLineNumber = 0;
-                ErrorMessage = BuildErrorMessage(errorLineNumber, sequenceValidator.ErrorCharNumber, sequenceValidator.ErrorContent);
+                ErrorMessage = BuildErrorMessage(errorLineNumber, sequenceValidator.ErrorIndex, sequenceValidator.ErrorContent);
                 return false;
             }
         }
@@ -151,7 +151,7 @@ namespace BioinformaticsSuite.Module.Services
                         else
                         {
                             int errorLineNumber = i;
-                            ErrorMessage = BuildErrorMessage(errorLineNumber, sequenceValidator.ErrorCharNumber, sequenceValidator.ErrorContent);
+                            ErrorMessage = BuildErrorMessage(errorLineNumber, sequenceValidator.ErrorIndex, sequenceValidator.ErrorContent);
                             return false;
                         }                            
                 }

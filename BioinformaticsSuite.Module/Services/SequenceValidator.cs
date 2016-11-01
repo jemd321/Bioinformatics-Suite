@@ -11,12 +11,21 @@ using Microsoft.Win32;
 
 namespace BioinformaticsSuite.Module.Services
 {
+    public interface ISequenceValidator
+    {
+        int ErrorIndex { get; }
+        string ErrorContent { get; }
+        bool ValidateSequence(string sequence, SequenceType sequenceType);
+    }
+
+    // Sequence Validator matches invalid sequence chars and logs the error content and location as properties.
     public class SequenceValidator : ISequenceValidator
     {
-        private readonly Regex dnaRegex = new Regex("[^ACTG]", RegexOptions.Compiled);
+        private readonly Regex dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
+        private readonly Regex rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
         private readonly Regex proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY]", RegexOptions.Compiled);
 
-        public int ErrorCharNumber { get; private set; }
+        public int ErrorIndex { get; private set; }
         public string ErrorContent { get; private set; }
 
         public bool ValidateSequence(string sequence, SequenceType sequenceType)
@@ -28,7 +37,7 @@ namespace BioinformaticsSuite.Module.Services
                 case SequenceType.Protein:
                     return IsValidProtein(sequence);
                 case SequenceType.MRna:
-                    return IsValidMRna(sequence);
+                    return IsValidRna(sequence);
                 default:
                     return false;
             }
@@ -36,39 +45,32 @@ namespace BioinformaticsSuite.Module.Services
 
         private bool IsValidDna(string sequence)
         {
-            Match match = dnaRegex.Match(sequence);
-            if (match.Success)
-            {               
-                ErrorCharNumber = match.Index;
-                ErrorContent = match.Value;
-                return false;
-            }
-            return true;
+            var match = dnaRegex.Match(sequence);
+            if (!match.Success) return true;
+            LogErrorInfo(match);
+            return false;
+        }
+
+        private bool IsValidRna(string sequence)
+        {
+            var match = rnaRegex.Match(sequence);
+            if (!match.Success) return true;
+            LogErrorInfo(match);
+            return false;
         }
 
         private bool IsValidProtein(string sequence)
         {
-            Match match = proteinRegex.Match(sequence);
-            if (match.Success)
-            {
-                ErrorCharNumber = match.Index;
-                ErrorContent = match.Value;
-                return false;
-            }
-            return true;
+            var match = proteinRegex.Match(sequence);
+            if (!match.Success) return true;
+            LogErrorInfo(match);
+            return false;
         }
 
-        private bool IsValidMRna(string sequence)
+        private void LogErrorInfo(Match match)
         {
-            return true;
-            //Todo
+            ErrorIndex = match.Index + 1;
+            ErrorContent = match.Value;
         }
-    }
-
-    public interface ISequenceValidator
-    {
-        int ErrorCharNumber { get; }
-        string ErrorContent { get; }
-        bool ValidateSequence(string sequence, SequenceType sequenceType);
     }
 }

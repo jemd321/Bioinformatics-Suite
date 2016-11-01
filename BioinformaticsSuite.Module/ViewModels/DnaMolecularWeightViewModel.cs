@@ -59,7 +59,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             foreach (var labelledSequence in labelledSequences)
             {
                 displayStringBuilder.AppendLine(labelledSequence.Label);
-                displayStringBuilder.Append(DisplayStringSplitter(labelledSequence.MolecularWeight.ToString(CultureInfo.InvariantCulture)));
+                displayStringBuilder.Append(labelledSequence.MolecularWeight.ToString(CultureInfo.InvariantCulture));
                 displayStringBuilder.AppendLine(" Da");
             }
             var displayString = displayStringBuilder.ToString();

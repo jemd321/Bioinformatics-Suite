@@ -79,6 +79,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     case 1:
                         selectedTab = SelectedTab.Result;
                         break;
+                    default: throw new Exception("Invalid sequence box tab index supplied");
                 }
             }
         }
@@ -98,6 +99,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     case SelectedTab.Result:
                         SelectedTextBoxIndex = 1;
                         break;
+                    default: throw new Exception("Invalid sequence box tab enum selected");
                 }
             }
         }
@@ -114,8 +116,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref resultBoxText, value); }
         }
 
-
-
         public virtual void OnRun() {}
 
         public void OnClear()
@@ -128,6 +128,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 case SelectedTab.Result:
                     ResultBoxText = "";
                     break;
+                default: throw new Exception("Invalid sequence box tab selected for clear dialog");
             }
         }
 
@@ -142,26 +143,26 @@ namespace BioinformaticsSuite.Module.ViewModels
                     SelectedTab = SelectedTab.Input;
                     OpenFile();
                     break;
+                default: throw new Exception("Invalid sequence box tab selected for open dialog") ;
             }
         }
 
         public void OnSave()
         {
-            SaveFileDialog dialog = new SaveFileDialog { OverwritePrompt = true, Filter = "FASTA File (*.txt)|*.txt" };
+            var dialog = new SaveFileDialog { OverwritePrompt = true, Filter = "FASTA File (*.txt)|*.txt" };
             var result = dialog.ShowDialog();
-            if (!string.IsNullOrWhiteSpace(dialog.FileName))
+            if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
+            using (var writer = new StreamWriter(dialog.FileName))
             {
-                using (StreamWriter writer = new StreamWriter(dialog.FileName))
+                switch (selectedTab)
                 {
-                    switch (selectedTab)
-                    {
-                        case SelectedTab.Input:
-                            writer.WriteLine(InputBoxText);
-                            break;
-                        case SelectedTab.Result:
-                            writer.WriteLine(ResultBoxText);
-                            break;
-                    }
+                    case SelectedTab.Input:
+                        writer.WriteLine(InputBoxText);
+                        break;
+                    case SelectedTab.Result:
+                        writer.WriteLine(ResultBoxText);
+                        break;
+                    default: throw new Exception("Invalid sequence box tab selected for save dialog");
                 }
             }
         }
@@ -183,43 +184,15 @@ namespace BioinformaticsSuite.Module.ViewModels
             NotificationRequest.Raise(new Notification {Title = "Invalid Data Input", Content = errorMessage});
         }
 
-        // Currently unused -  can't decide on whether to have the sequences wrap inside the text box or to insert line breaks. -  wrapping 
-        // messes with the line numbers though.
-        public string DisplayStringSplitter(string line)
-        {
-            StringBuilder displayStringBuilder = new StringBuilder();
-            int length = line.Length;
-
-            // To be settable in options later
-            const int maxLineLength = 70;
-
-            int startIndex = 0;
-            int endIndex = maxLineLength;
-            while (length > endIndex)
-            {
-                displayStringBuilder.AppendLine(line.Substring(startIndex, maxLineLength));
-                startIndex += maxLineLength;
-                endIndex += maxLineLength;
-            }
-            if (length % 80 != 0)
-            {
-                int remainingLength = length - startIndex;
-                displayStringBuilder.Append(line.Substring(startIndex, remainingLength));
-            }
-            line = displayStringBuilder.ToString();
-            displayStringBuilder.Clear();
-            return line;
-        }
-
         public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)
         {
-            StringBuilder displayStringBuilder = new StringBuilder();
+            var displayStringBuilder = new StringBuilder();
             foreach (var labelledSequence in labelledSequences)
             {
                 displayStringBuilder.AppendLine(labelledSequence.Label);
-                displayStringBuilder.AppendLine(DisplayStringSplitter(labelledSequence.Sequence));
+                displayStringBuilder.AppendLine(labelledSequence.Sequence);
             }
-            string displayString = displayStringBuilder.ToString();
+            var displayString = displayStringBuilder.ToString();
             displayStringBuilder.Clear();
             return displayString;
         }

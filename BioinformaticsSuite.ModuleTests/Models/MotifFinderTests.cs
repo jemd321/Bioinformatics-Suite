@@ -21,11 +21,11 @@ namespace BioinformaticsSuite.Module.Models.Tests
 
             const string testDnaMotif = "ACGTRYSWKMBDHVNX";
             const string testRnaMotif = "ACGURYSWKMBDHVNX";
-            const string testProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
+            const string testProteinMotif = "ACDEFGHIKLMNPQRSTVW";
 
             const string expectedDnaMotif = "ACGT[AG][CT][GC][AT][GT][AC][CGT][AGT][ACT][ACG][ACGT][ACGT]";
             const string expectedRnaMotif = "ACGU[AG][CU][GC][AU][UG][CA][CGU][AGU][ACU][ACG][ACGU][ACGU]";
-            const string expectedProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
+            const string expectedProteinMotif = "ACDEFGHIKLMNPQRSTVW";
 
             string actualDnaMotif;
             string actualRnaMotif;

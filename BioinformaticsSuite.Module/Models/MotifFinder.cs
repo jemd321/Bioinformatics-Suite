@@ -14,8 +14,8 @@ namespace BioinformaticsSuite.Module.Models
 {
     public interface IMotifFinder
     {
-        bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
         Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences);
+        bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
         string InvalidMotifMessage { get; }
     }
 
@@ -24,11 +24,25 @@ namespace BioinformaticsSuite.Module.Models
         private SequenceType sequenceType;
         private readonly Regex dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex mRnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex proteinMotifValidator = new Regex("[^ABCDEFGHIKLMNPQRSTVWXYZ]", RegexOptions.Compiled);
+        private readonly Regex proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY]", RegexOptions.Compiled);
         private static readonly StringBuilder regexBuilder = new StringBuilder();
 
         public string InvalidMotifMessage { get; private set; }
 
+        // Searches all supplied sequences for the motif and foreach sequence returns a labelled collection of matches.
+        public Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences)
+        {
+            var motifRegex = new Regex(parsedMotif);
+            var labelledMatches = new Dictionary<string, MatchCollection>();
+            foreach (var labelledSequence in labelledSequences)
+            {
+                var matchCollection = motifRegex.Matches(labelledSequence.Sequence);
+                labelledMatches.Add(labelledSequence.Label, matchCollection);
+            }
+            return labelledMatches;
+        }
+
+        // Validates the user supplied motif then builds and passes out a regex string that will be used to search for the motif.
         public bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif)
         {
             parsedMotif = "";
@@ -63,85 +77,36 @@ namespace BioinformaticsSuite.Module.Models
             }
         }
 
-        public Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences)
-        {
-            var motifRegex = new Regex(parsedMotif);
-            var labelledMatches = new Dictionary<string, MatchCollection>();
-            foreach (var labelledSequence in labelledSequences)
-            {
-                var matchCollection = motifRegex.Matches(labelledSequence.Sequence);
-                labelledMatches.Add(labelledSequence.Label, matchCollection);
-            }
-            return labelledMatches;
-        }
-
-        public string BuildMotifPattern(string motif)
-        {
-            // Exceptions thrown here should be changed to return an invalid motif message to the user rather than throwing an E.
-            switch (sequenceType)
-            {
-                case SequenceType.Dna:
-                    if (IsValidDnaMotif(motif))
-                    {
-                        return BuildDnaMotifPattern(motif);
-                    }
-                    else throw new Exception("Invalid Dna Motif");
-                case SequenceType.MRna:
-                    if (IsValidMRnaMotif(motif))
-                    {
-                        return BuildMRnaMotifPattern(motif);
-                    }
-                    else throw new Exception("Invalid MRna Motif");
-                case SequenceType.Protein:
-                    if (IsValidProteinMotif(motif))
-                    {
-                        return motif;
-                    }
-                    else throw new Exception("Invalid Protein Motif");
-                default:
-                    throw new Exception("Sequence Type not recognised, you really shouldnt be able to get here!");           
-            }
-        }
-
-        private void BuildInvalidMotifErrorMessage(Match invalidMatch)
-        {
-            string invalidBase = invalidMatch.Value;
-            var invalidCharIndex = invalidMatch.Index + 1;
-            InvalidMotifMessage = "An invalid character (" + invalidBase + ") was found at position: " +
-                                  invalidCharIndex;
-        }
-
         private bool IsValidDnaMotif(string motif)
         {
-            var match = dnaMotifValidator.Match(motif);           
-            if (match.Success)
-            {
-                BuildInvalidMotifErrorMessage(match);
-                return false;
-            }
-            else return true;
+            var match = dnaMotifValidator.Match(motif);
+            if (!match.Success) return true;
+            BuildInvalidMotifErrorMessage(match);
+            return false;
         }
 
         private bool IsValidMRnaMotif(string motif)
         {
             var match = mRnaMotifValidator.Match(motif);
-            if (match.Success)
-            {
-                BuildInvalidMotifErrorMessage(match);
-                return false;
-            }
-            else return true;
+            if (!match.Success) return true;
+            BuildInvalidMotifErrorMessage(match);
+            return false;
         }
 
         private bool IsValidProteinMotif(string motif)
         {
             var match = proteinMotifValidator.Match(motif);
-            if (match.Success)
-            {
-                BuildInvalidMotifErrorMessage(match);
-                return false;
-            }
-            else return true;
+            if (!match.Success) return true;
+            BuildInvalidMotifErrorMessage(match);
+            return false;
+        }
+
+        private void BuildInvalidMotifErrorMessage(Match invalidMatch)
+        {
+            var invalidBase = invalidMatch.Value;
+            var invalidCharIndex = invalidMatch.Index + 1;
+            InvalidMotifMessage = "An invalid character (" + invalidBase + ") was found at position: " +
+                                  invalidCharIndex;
         }
 
         private static string BuildDnaMotifPattern(string motif)
