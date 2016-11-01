@@ -8,6 +8,11 @@ using BioinformaticsSuite.Module.Utility;
 
 namespace BioinformaticsSuite.Module.Models
 {
+    public interface IMolecularWeightCalculator
+    {
+        void CalculateMolecularWeight(LabelledSequence labelledSequence);
+    }
+
     public class MolecularWeightCalculator : IMolecularWeightCalculator
     {
         private const decimal DnaAWeight = 313.21m;
@@ -24,7 +29,6 @@ namespace BioinformaticsSuite.Module.Models
 
         public void CalculateMolecularWeight(LabelledSequence labelledSequence)
         {
-
             switch (labelledSequence.SequenceType)
             {
                  case SequenceType.Dna:
@@ -70,10 +74,5 @@ namespace BioinformaticsSuite.Module.Models
             // NOT IMPLEMENTED YET!
             return 12;
         }
-    }
-
-    public interface IMolecularWeightCalculator
-    {
-        void CalculateMolecularWeight(LabelledSequence labelledSequence);
     }
 }

@@ -3,6 +3,7 @@ using BioinformaticsSuite.Module.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -34,14 +35,17 @@ namespace BioinformaticsSuite.Module.Models.Tests
             const string invalidRnaMotif = "AZGU";
             const string invalidProteinMotif = "ACDEFGHIJKLM";
 
+            // Assert is Valid Motif
             Assert.IsTrue(motifFinder.TryParseMotif(testDnaMotif, SequenceType.Dna, out actualDnaMotif));
             Assert.IsTrue(motifFinder.TryParseMotif(testRnaMotif, SequenceType.MRna, out actualRnaMotif));
             Assert.IsTrue(motifFinder.TryParseMotif(testProteinMotif, SequenceType.Protein, out actualProteinMotif));
 
+            // Assert has motif been correctly converted to a regex pattern
             Assert.AreEqual(expectedDnaMotif, actualDnaMotif);
             Assert.AreEqual(expectedRnaMotif, actualRnaMotif);
             Assert.AreEqual(expectedProteinMotif, actualProteinMotif);
 
+            // Assert that an invalid motif is correctly identified
             Assert.IsFalse(motifFinder.TryParseMotif(invalidDnaMotif, SequenceType.Dna, out actualDnaMotif));
             Assert.IsFalse(motifFinder.TryParseMotif(invalidRnaMotif, SequenceType.MRna, out actualRnaMotif));
             Assert.IsFalse(motifFinder.TryParseMotif(invalidProteinMotif, SequenceType.Protein, out actualProteinMotif));
@@ -53,19 +57,19 @@ namespace BioinformaticsSuite.Module.Models.Tests
             var motifFinder = CreateTestInstance();
             var resultStringBuilder = new StringBuilder();
 
-            List<LabelledSequence> testDnaSequences = new List<LabelledSequence>()
+            var testDnaSequences = new List<LabelledSequence>()
             {
                 new Dna("test1", "ACGTACGATCGTTGAG"),
                 new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG")
             };
 
-            List<LabelledSequence> testRnaSequences = new List<LabelledSequence>()
+            var testRnaSequences = new List<LabelledSequence>()
             {
                 new MRna("test1", "ACGUACGAUCGUUGAG"),
                 new MRna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG")
             };
 
-            List<LabelledSequence> testProteinSequences = new List<LabelledSequence>()
+            var testProteinSequences = new List<LabelledSequence>()
             {
                 new Protein("test1", "ABCDEFGHIKLMNPQRSTVWYABCD"),
                 new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY")
@@ -87,32 +91,27 @@ namespace BioinformaticsSuite.Module.Models.Tests
             var actualRnaIndices = ParseMatchCollections(actualRnaMotifs);
             var actualProteinIndicies = ParseMatchCollections(actualProteinMotifs);
 
+            // Assert that the indices for each motif search are correct
             CollectionAssert.AreEquivalent(expectedDnaIndices, actualDnaIndices);
             CollectionAssert.AreEquivalent(expectedRnaIndices, actualRnaIndices);
             CollectionAssert.AreEquivalent(expectedProteinIndices, actualProteinIndicies);
         }
 
-        [TestMethod()]
-        public void BuildMotifPatternTest()
-        {
-
-        }
-
-        private IMotifFinder CreateTestInstance()
+        private static IMotifFinder CreateTestInstance()
         {
              IMotifFinder motifFinder = new MotifFinder();
             return motifFinder;
         }
 
-        private List<int> ParseMatchCollections(Dictionary<string, MatchCollection> labelledMatches)
+        private static List<int> ParseMatchCollections(Dictionary<string, MatchCollection> labelledMatches)
         {
             var actualIndices = new List<int>();
             foreach (MatchCollection matches in labelledMatches.Values)
             {
                 foreach (Match match in matches)
                 {
-                    int startIndex = match.Index + 1;
-                    int endIndex = startIndex + match.Length - 1;
+                    var startIndex = match.Index + 1;
+                    var endIndex = startIndex + match.Length - 1;
                     actualIndices.Add(startIndex);
                     actualIndices.Add(endIndex);
                 }
