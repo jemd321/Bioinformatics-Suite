@@ -7,6 +7,7 @@ using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using BioinformaticsSuite.Module.Utility;
 using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
@@ -15,12 +16,11 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "DNA Statistics";
+        private readonly StringBuilder displayStringBuilder = new StringBuilder();
 
-        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator
+             ) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
-            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
         public string Title
@@ -37,37 +37,67 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
+                foreach (var labelledSequence in labelledSequences)
+                {
+                    decimal sequenceLength = labelledSequence.Sequence.Length;
+                    int [] baseCount = labelledSequence.Sequence.CountDnaBases();
+                    decimal[] basePercent = CalculateBasePercentage(baseCount, sequenceLength);
+
+                    BuildDisplayString(labelledSequence, sequenceLength, baseCount, basePercent);
+                }
+                ResultBoxText = displayStringBuilder.ToString();
+                displayStringBuilder.Clear();
                 SelectedTab = SelectedTab.Result;
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
         }
 
-        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
+        private static decimal[] CalculateBasePercentage(int[] baseCount, decimal sequenceLength)
         {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
+            decimal aPercent = (decimal)baseCount[0] / sequenceLength * 100;
+            decimal cPercent = (decimal)baseCount[1] / sequenceLength * 100;
+            decimal gPercent = (decimal)baseCount[2] / sequenceLength * 100;
+            decimal tPercent = (decimal)baseCount[3] / sequenceLength * 100;
+            return new[] {aPercent, cPercent, gPercent, tPercent};
         }
 
         // Concatenates labels and sequences for display in the sequence text box.
-        private string BuildDisplayString(List<ReadingFrame> readingFrames)
+        private void BuildDisplayString(LabelledSequence labelledSequence, decimal sequenceLength, int[] baseCount, decimal[] basePercent)
         {
-            StringBuilder displayStringBuilder = new StringBuilder();
-            foreach (ReadingFrame frames in readingFrames)
-            {
-                foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
-                {
-                    displayStringBuilder.AppendLine(frame.Key);
-                    displayStringBuilder.AppendLine(frame.Value);
-                }
-            }
-            string displayString = displayStringBuilder.ToString();
-            displayStringBuilder.Clear();
-            return displayString;
+            int aCount = baseCount[0];
+            int cCount = baseCount[1];
+            int gCount = baseCount[2];
+            int tCount = baseCount[3];
+            decimal aPercent = basePercent[0];
+            decimal cPercent = basePercent[1];
+            decimal gPercent = basePercent[2];
+            decimal tPercent = basePercent[3];
+
+
+            displayStringBuilder.AppendLine(labelledSequence.Label);
+            displayStringBuilder.Append("SequenceLength: ")
+                .Append(sequenceLength)
+                .Append("    Base Count:  A:   ")
+                .Append(aCount)
+                .Append("   C:   ")
+                .Append(cCount)
+                .Append("   G:   ")
+                .Append(gCount)
+                .Append("   T:   ")
+                .Append(tCount)
+                .Append("    Base Percent:   A:   ")
+                .Append(Math.Round(aPercent, 2) + "%")
+                .Append("   C:   ")
+                .Append(Math.Round(cPercent, 2) + "%")
+                .Append("   G:   ")
+                .Append(Math.Round(gPercent, 2) + "%")
+                .Append("   T:   ")
+                .Append(Math.Round(tPercent, 2) + "%")
+                .AppendLine();
         }
     }
 }

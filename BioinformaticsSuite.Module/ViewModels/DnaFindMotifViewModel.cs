@@ -97,17 +97,24 @@ namespace BioinformaticsSuite.Module.ViewModels
                 string label = labelledMatch.Key;
                 displayStringBuilder.AppendLine(label);
 
-                var matches = labelledMatch.Value;
-                foreach (Match match in matches)
+                if (labelledMatch.Value == null)
                 {
-                    var startIndex = match.Index + 1;
-                    var endIndex = startIndex + match.Length - 1;
-                    displayStringBuilder.Append(startIndex);
-                    displayStringBuilder.Append(" - ");
-                    displayStringBuilder.Append(endIndex);
-                    displayStringBuilder.Append("    ");
+                    displayStringBuilder.AppendLine("Motif Not Found");
                 }
-                displayStringBuilder.AppendLine();
+                else
+                {
+                    var matches = labelledMatch.Value;
+                    foreach (Match match in matches)
+                    {
+                        var startIndex = match.Index + 1;
+                        var endIndex = startIndex + match.Length - 1;
+                        displayStringBuilder.Append(startIndex);
+                        displayStringBuilder.Append(" - ");
+                        displayStringBuilder.Append(endIndex);
+                        displayStringBuilder.Append("    ");
+                    }
+                    displayStringBuilder.AppendLine();
+                }
             }
 
             var displayString = displayStringBuilder.ToString();
