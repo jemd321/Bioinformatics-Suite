@@ -14,7 +14,7 @@ namespace BioinformaticsSuite.Module.Models
 {
     public interface IMotifFinder
     {
-        Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences);
+        MatchCollection FindMotif(string parsedMotif, LabelledSequence labelledSequence);
         bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
         string InvalidMotifMessage { get; }
     }
@@ -30,16 +30,11 @@ namespace BioinformaticsSuite.Module.Models
         public string InvalidMotifMessage { get; private set; }
 
         // Searches all supplied sequences for the motif and foreach sequence returns a labelled collection of matches.
-        public Dictionary<string, MatchCollection> FindMotif(string parsedMotif, List<LabelledSequence> labelledSequences)
+        public MatchCollection FindMotif(string parsedMotif, LabelledSequence labelledSequence)
         {
             var motifRegex = new Regex(parsedMotif);
-            var labelledMatches = new Dictionary<string, MatchCollection>();
-            foreach (var labelledSequence in labelledSequences)
-            {
-                var matchCollection = motifRegex.Matches(labelledSequence.Sequence);
-                labelledMatches.Add(labelledSequence.Label, matchCollection);
-            }
-            return labelledMatches;
+            var matches = motifRegex.Matches(labelledSequence.Sequence);         
+            return matches;
         }
 
         // Validates the user supplied motif then builds and passes out a regex string that will be used to search for the motif.

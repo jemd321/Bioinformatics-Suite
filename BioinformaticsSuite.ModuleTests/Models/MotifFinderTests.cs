@@ -57,35 +57,24 @@ namespace BioinformaticsSuite.Module.Models.Tests
             var motifFinder = CreateTestInstance();
             var resultStringBuilder = new StringBuilder();
 
-            var testDnaSequences = new List<LabelledSequence>()
-            {
-                new Dna("test1", "ACGTACGATCGTTGAG"),
-                new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG")
-            };
+            var testDnaSequence = new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG");
 
-            var testRnaSequences = new List<LabelledSequence>()
-            {
-                new MRna("test1", "ACGUACGAUCGUUGAG"),
-                new MRna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG")
-            };
 
-            var testProteinSequences = new List<LabelledSequence>()
-            {
-                new Protein("test1", "ABCDEFGHIKLMNPQRSTVWYABCD"),
-                new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY")
-            };
+            var testRnaSequence = new MRna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG");
+
+            var testProteinSequence = new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY");
            
             const string parsedDnaMotif = "ACGT[AG][CT][GC][AT][TG][CA][CGT][AGT][ACT][ACG][ACGT][ACGT]";
             const string parsedRnaMotif = "ACGU[AG][CU][GC][AU][UG][CA][CGU][AGU][ACU][ACG][ACGU][ACGU]";
             const string parsedProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
 
-            var actualDnaMotifs = motifFinder.FindMotif(parsedDnaMotif, testDnaSequences);
-            var actualRnaMotifs = motifFinder.FindMotif(parsedRnaMotif, testRnaSequences);
-            var actualProteinMotifs = motifFinder.FindMotif(parsedProteinMotif, testProteinSequences);
+            var actualDnaMotifs = motifFinder.FindMotif(parsedDnaMotif, testDnaSequence);
+            var actualRnaMotifs = motifFinder.FindMotif(parsedRnaMotif, testRnaSequence);
+            var actualProteinMotifs = motifFinder.FindMotif(parsedProteinMotif, testProteinSequence);
 
-            var expectedDnaIndices = new List<int>() { 1, 16, 1, 16, 21, 36 };
-            var expectedRnaIndices = new List<int>() { 1, 16, 1, 16, 21, 36 };
-            var expectedProteinIndices = new List<int>() { 1, 21, 1, 21, 26, 46 };
+            var expectedDnaIndices = new List<int>() { 1, 16, 21, 36 };
+            var expectedRnaIndices = new List<int>() { 1, 16, 21, 36 };
+            var expectedProteinIndices = new List<int>() { 1, 21, 26, 46 };
 
             var actualDnaIndices = ParseMatchCollections(actualDnaMotifs);
             var actualRnaIndices = ParseMatchCollections(actualRnaMotifs);
@@ -103,18 +92,15 @@ namespace BioinformaticsSuite.Module.Models.Tests
             return motifFinder;
         }
 
-        private static List<int> ParseMatchCollections(Dictionary<string, MatchCollection> labelledMatches)
+        private static List<int> ParseMatchCollections(MatchCollection matches)
         {
             var actualIndices = new List<int>();
-            foreach (MatchCollection matches in labelledMatches.Values)
+            foreach (Match match in matches)
             {
-                foreach (Match match in matches)
-                {
-                    var startIndex = match.Index + 1;
-                    var endIndex = startIndex + match.Length - 1;
-                    actualIndices.Add(startIndex);
-                    actualIndices.Add(endIndex);
-                }
+                var startIndex = match.Index + 1;
+                var endIndex = startIndex + match.Length - 1;
+                actualIndices.Add(startIndex);
+                actualIndices.Add(endIndex);
             }
             return actualIndices;
         }

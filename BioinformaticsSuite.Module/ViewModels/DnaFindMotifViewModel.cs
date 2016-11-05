@@ -72,7 +72,13 @@ namespace BioinformaticsSuite.Module.ViewModels
                 {
                     var parsedSequences = SequenceParser.ParsedSequences;
                     List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                    Dictionary<string, MatchCollection> labelledMatches = motifFinder.FindMotif(parsedMotif, labelledSequences);
+
+                    var labelledMatches = new Dictionary<string, MatchCollection>();
+                    foreach (var labelledSequence in labelledSequences)
+                    {
+                        var matches = motifFinder.FindMotif(parsedMotif, labelledSequence);
+                        labelledMatches.Add(labelledSequence.Label, matches);
+                    }
                     ResultBoxText = BuildDisplayString(labelledMatches);
                     SelectedTab = SelectedTab.Result;
                 }

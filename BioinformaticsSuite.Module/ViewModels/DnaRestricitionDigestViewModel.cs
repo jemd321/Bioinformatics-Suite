@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -52,29 +53,36 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public string EnzymeBox2Selection
         {
-            get { return enzymeBox1Selection; }
+            get { return enzymeBox2Selection; }
             set { SetProperty(ref enzymeBox2Selection, value); }
         }
         public string EnzymeBox3Selection
         {
-            get { return enzymeBox1Selection; }
+            get { return enzymeBox3Selection; }
             set { SetProperty(ref enzymeBox3Selection, value); }
         }
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
+            var enzymes = CollateEnzymeSelections();
+
+            if (enzymes.Count == 0)
+            {
+                RaiseInvalidInputNotification("Please select at least one Restriction Enzyme to digest with.");
+                return;
+            }
+            // move to restriction digest class
+            enzymes = RemoveEnzymeCutMarkers(enzymes);
+
             bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
                 SelectedTab = SelectedTab.Result;
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
         }
@@ -91,9 +99,33 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
+        private List<string> CollateEnzymeSelections()
         {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
+            var enzymes = new List<string>();
+            if (!string.IsNullOrEmpty(EnzymeBox1Selection))
+            {
+                enzymes.Add(EnzymeBox1Selection);
+            }
+            if (!string.IsNullOrEmpty(EnzymeBox2Selection))
+            {
+                enzymes.Add(EnzymeBox2Selection);
+            }
+            if (!string.IsNullOrEmpty(EnzymeBox3Selection))
+            {
+                enzymes.Add(EnzymeBox3Selection);
+            }
+            return enzymes;
+        }
+
+        // Cut marker is '|' for sticky ends display purposes to the user.
+        private List<string> RemoveEnzymeCutMarkers(List<string> enzymes)
+        {
+            var replacer = new Regex("|");
+            for (int i = 0; i < enzymes.Count; i++)
+            {
+                enzymes[i] = replacer.Replace(enzymes[i], "");
+            }
+            return enzymes;
         }
 
         // Concatenates labels and sequences for display in the sequence text box.
