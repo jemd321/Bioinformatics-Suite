@@ -71,8 +71,6 @@ namespace BioinformaticsSuite.Module.ViewModels
                 RaiseInvalidInputNotification("Please select at least one Restriction Enzyme to digest with.");
                 return;
             }
-            // move to restriction digest class
-            enzymes = RemoveEnzymeCutMarkers(enzymes);
 
             bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
@@ -117,16 +115,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             return enzymes;
         }
 
-        // Cut marker is '|' for sticky ends display purposes to the user.
-        private List<string> RemoveEnzymeCutMarkers(List<string> enzymes)
-        {
-            var replacer = new Regex("|");
-            for (int i = 0; i < enzymes.Count; i++)
-            {
-                enzymes[i] = replacer.Replace(enzymes[i], "");
-            }
-            return enzymes;
-        }
 
         // Concatenates labels and sequences for display in the sequence text box.
         private string BuildDisplayString(List<ReadingFrame> readingFrames)

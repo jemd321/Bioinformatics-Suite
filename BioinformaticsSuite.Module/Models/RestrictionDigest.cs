@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BioinformaticsSuite.Module.Enums;
+using System.Text.RegularExpressions;
 
 namespace BioinformaticsSuite.Module.Models
 {
-    /*
+    
     public interface IRestrictionDigest
     {
         
@@ -25,36 +26,60 @@ namespace BioinformaticsSuite.Module.Models
 
         public void FindRestrictionDigestProducts(List<string> enyzmes, List<Dna> labelledSequences)
         {
-            
+            enyzmes = RemoveEnzymeCutMarkers(enyzmes);
             foreach (var labelledSequence in labelledSequences)
             {
-                foreach (var enyzme in enyzmes)
+                FirstDigest(enyzmes.First(), labelledSequence);
+                for (int i = 1; i < enyzmes.Count; i++)
                 {
-                    var label = labelledSequence.Label;
-                    var sequence = labelledSequence.Sequence;
-
-                    int[] digestProductIndices = FindRSiteIndices(enyzme, sequence);
-                    foreach(var digestProduct in )
-                    DigestProduct digestProduct = new DigestProduct(label, digestProductIndices);
-                    var labelledDigestProducts = new Dictionary<string, DigestProduct>();
-                    labelledDigestProducts.
+                    
                 }
-            }       
+            }      
         }
 
-        private List<int[]> FindRSiteIndices(string enyzme, string sequence)
+        private DigestProduct FirstDigest(string enzyme, LabelledSequence labelledSequence)
         {
-            motifFinder.FindMotif(enzyme, )
+            var digestRegex = new Regex(enzyme, RegexOptions.Compiled);
+            var rSiteIndices = new List<int[]>();
+            var digestProducts = new List<string>();
+
+            var matches = digestRegex.Matches(labelledSequence.Sequence);
+            foreach (Match match in matches)
+            {
+                int startIndex = match.Index + 1;
+                int endIndex = match.Index + match.Length;
+                rSiteIndices.Add(new int[] { startIndex, endIndex });
+                digestProducts.Add(match.Value);
+            }
+            var digestProduct = new DigestProduct(labelledSequence.Label, rSiteIndices, digestProducts);
+            return digestProduct;
         }
 
-        private void Digest(string enzyme, string sequence)
+        private DigestProduct SubsequentDigest(string enzyme, DigestProduct previousDigest)
         {
-            // returns substrings based on the indices found by the motif finder.
+            var digestRegex = new Regex(enzyme, RegexOptions.Compiled);
+            var rSiteIndices = new List<int[]>();
+
+            foreach (string product in previousDigest.Products)
+            {
+                var matches = digestRegex.Matches(product);
+            }
+        }
+
+        // Cut marker is '|' for sticky ends display purposes to the user.
+        private static List<string> RemoveEnzymeCutMarkers(List<string> enzymes)
+        {
+            var replacer = new Regex("|");
+            for (int i = 0; i < enzymes.Count; i++)
+            {
+                enzymes[i] = replacer.Replace(enzymes[i], "");
+            }
+            return enzymes;
         }
 
 
 
 
     }
-    */
+    
 }
