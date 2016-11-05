@@ -91,11 +91,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\RestrictionEnzymes.cs" />
     <Compile Include="Enums\SelectedTab.cs" />
     <Compile Include="Enums\SequenceType.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
+    <Compile Include="Models\DigestProduct.cs" />
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
+    <Compile Include="Models\RestrictionDigest.cs" />
     <Compile Include="Services\SequenceFactory.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="Models\Dna.cs" />

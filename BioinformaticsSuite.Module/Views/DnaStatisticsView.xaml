@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="General Statistcs about the DNA, number of bases etc. Not implemented."/>
+        <TextBlock Text="Displays the number and percentage composition of bases in given DNA sequences."/>
     </views:SequenceView>
 </UserControl>

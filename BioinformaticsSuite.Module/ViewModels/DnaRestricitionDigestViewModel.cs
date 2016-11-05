@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
@@ -15,13 +17,20 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "Restriction Digest";
+        private List<string> comboBoxEnzymes = new List<string>();
+        private string enzymeBox1Selection;
+        private string enzymeBox2Selection;
+        private string enzymeBox3Selection;
 
         public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
             this.readingFrameFactory = readingFrameFactory;
             if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+            ImportEnzymes();
         }
+
+        public ICommand UpdateCombobox;
 
         public string Title
         {
@@ -29,6 +38,28 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref title, value); }
         }
 
+        public List<string> ComboBoxEnzymes
+        {
+            get { return comboBoxEnzymes; }
+            set { SetProperty(ref comboBoxEnzymes, value); }
+        }
+
+        public string EnzymeBox1Selection
+        {
+            get { return enzymeBox1Selection; }
+            set { SetProperty(ref enzymeBox1Selection, value); }
+        }
+
+        public string EnzymeBox2Selection
+        {
+            get { return enzymeBox1Selection; }
+            set { SetProperty(ref enzymeBox2Selection, value); }
+        }
+        public string EnzymeBox3Selection
+        {
+            get { return enzymeBox1Selection; }
+            set { SetProperty(ref enzymeBox3Selection, value); }
+        }
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
@@ -46,6 +77,18 @@ namespace BioinformaticsSuite.Module.ViewModels
                 MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
+        }
+
+        private void ImportEnzymes()
+        {
+            using (var importer = new StreamReader("Enzymes.txt"))
+            {
+                while (!importer.EndOfStream)
+                {
+                    string enzyme = importer.ReadLine();
+                    comboBoxEnzymes.Add(enzyme);
+                }
+            }
         }
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)

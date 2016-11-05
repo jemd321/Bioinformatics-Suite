@@ -8,7 +8,31 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Returns the products of a restriction digest with the selected enzyme"  TextWrapping="Wrap"/>
+        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            <Grid Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Sequentially digest DNA sequences with up to three restriction enzymes."  TextWrapping="Wrap"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin ="0,5,0,0">
+                    <Label Content="Enyzme 1:"/>
+                    <ComboBox MinWidth="100" ItemsSource="{Binding Path=ComboBoxEnzymes, Mode=OneWay}" SelectedValue="{Binding Path=EnzymeBox1Selection, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Enyzme 2:" Margin="10,0,0,0"/>
+                    <ComboBox MinWidth="100" ItemsSource="{Binding Path=ComboBoxEnzymes, Mode=OneWay}" SelectedValue="{Binding Path=EnzymeBox2Selection, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Enyzme 3:" Margin="10,0,0,0"/>
+                    <ComboBox MinWidth="100" ItemsSource="{Binding Path=ComboBoxEnzymes, Mode=OneWay}" SelectedValue="{Binding Path=EnzymeBox3Selection, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Grid>
+            
+            
+            
+        </ScrollViewer>
+        
+        
+        
+        
+
     </views:SequenceView>
 </UserControl>
     

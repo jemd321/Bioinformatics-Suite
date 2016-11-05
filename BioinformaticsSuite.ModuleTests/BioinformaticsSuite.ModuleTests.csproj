@@ -97,6 +97,7 @@
     <Compile Include="Services\SequenceParserTests.cs" />
     <Compile Include="Services\SequenceValidatorTests.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModelTests.cs" />
+    <Compile Include="ViewModels\DnaStatisticsViewModelTests.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModelTests.cs" />
     <Compile Include="ViewModels\MockViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModelTests.cs" />
