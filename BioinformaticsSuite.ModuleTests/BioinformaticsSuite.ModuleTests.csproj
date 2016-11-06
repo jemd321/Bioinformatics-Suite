@@ -91,6 +91,7 @@
     <Compile Include="Models\MotifFinderTests.cs" />
     <Compile Include="Models\OpenReadingFrameTests.cs" />
     <Compile Include="Models\ReadingFrameTests.cs" />
+    <Compile Include="Models\RestrictionDigestTests.cs" />
     <Compile Include="Models\TranslatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SequenceFactoryTests.cs" />

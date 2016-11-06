@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -21,6 +24,25 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             this.readingFrameFactory = readingFrameFactory;
             if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+
+            openconnections = new DelegateCommand(RaiseConnctionsOptionsRequest);
+            this.OptionSettingConformationRequest = new InteractionRequest<IConfirmation>();
+        }
+
+        public InteractionRequest<IConfirmation> OptionSettingConformationRequest { get; private set; }
+
+
+        private readonly ICommand openconnections;
+        public ICommand OpenConnections { get { return openconnections; } }
+
+        private void RaiseConnctionsOptionsRequest()
+        {
+            this.OptionSettingConformationRequest.Raise(new Confirmation { Title = "helloeold"}, OnConnectionOptionsResponse);
+        }
+
+        protected virtual void OnConnectionOptionsResponse(IConfirmation context)
+        {
+            
         }
 
         public string Title

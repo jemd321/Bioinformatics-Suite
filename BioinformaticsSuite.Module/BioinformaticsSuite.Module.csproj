@@ -94,7 +94,8 @@
     <Compile Include="Enums\SelectedTab.cs" />
     <Compile Include="Enums\SequenceType.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
-    <Compile Include="Models\DigestProduct.cs" />
+    <Compile Include="Models\DigestFragment.cs" />
+    <Compile Include="Models\LabelledDigestFragments.cs" />
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
     <Compile Include="Models\RestrictionDigest.cs" />
