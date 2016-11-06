@@ -46,6 +46,7 @@ namespace BioinformaticsSuite.Module
             container.RegisterType<ISequenceValidator, SequenceValidator>();
             container.RegisterType<IMolecularWeightCalculator, MolecularWeightCalculator>();
             container.RegisterType<IMotifFinder, MotifFinder>();
+            container.RegisterType<IRestrictionDigest, RestrictionDigest>();
 
             // StartUp Views Registration
             regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

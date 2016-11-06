@@ -10,13 +10,14 @@ using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
+using Microsoft.Practices.ObjectBuilder2;
 using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaRestricitionDigestViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory readingFrameFactory;
+        private readonly IRestrictionDigest restrictionDigest;
         private string title = "Restriction Digest";
         private List<string> comboBoxEnzymes = new List<string>();
         private string enzymeBox1Selection;
@@ -24,10 +25,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string enzymeBox3Selection;
 
         public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+            IRestrictionDigest restrictionDigest) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
-            if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
+            this.restrictionDigest = restrictionDigest;
+            if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));
             ImportEnzymes();
         }
 
@@ -76,6 +77,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (isParsedSuccessfully)
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
+                var labelledDigestFragments = restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
+                string displayString = BuildDisplayString(labelledDigestFragments);
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -115,18 +119,17 @@ namespace BioinformaticsSuite.Module.ViewModels
             return enzymes;
         }
 
-
         // Concatenates labels and sequences for display in the sequence text box.
-        private string BuildDisplayString(List<ReadingFrame> readingFrames)
+        private string BuildDisplayString(List<LabelledDigestFragments> labelledDisDigestFragments)
         {
-            StringBuilder displayStringBuilder = new StringBuilder();
-            foreach (ReadingFrame frames in readingFrames)
+            var displayStringBuilder = new StringBuilder();
+            foreach (var labelledDigest in labelledDisDigestFragments)
             {
-                foreach (KeyValuePair<string, string> frame in frames.LabelledFrames)
+                displayStringBuilder.AppendLine(labelledDigest.Label);
+                var orderFragments = labelledDigest.DigestFramgments.OrderBy(n => n.Enzyme.Length);
+                foreach (var fragment in orderFragments)
                 {
-                    displayStringBuilder.AppendLine(frame.Key);
-                    //displayStringBuilder.AppendLine(DisplayStringSplitter(frame.Value));
-                    displayStringBuilder.AppendLine(frame.Value);
+                    displayStringBuilder.AppendLine(fragment.Fragment);
                 }
             }
             string displayString = displayStringBuilder.ToString();
