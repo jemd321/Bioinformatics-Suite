@@ -11,6 +11,7 @@ using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Practices.ObjectBuilder2;
+using NuGet;
 using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
@@ -31,8 +32,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));
             ImportEnzymes();
         }
-
-        public ICommand UpdateCombobox;
 
         public string Title
         {
@@ -79,7 +78,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
                 var labelledDigestFragments = restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
-                string displayString = BuildDisplayString(labelledDigestFragments);
+                ResultBoxText = BuildDisplayString(labelledDigestFragments);
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -91,30 +90,26 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void ImportEnzymes()
         {
-            using (var importer = new StreamReader("Enzymes.txt"))
-            {
-                while (!importer.EndOfStream)
-                {
-                    string enzyme = importer.ReadLine();
-                    comboBoxEnzymes.Add(enzyme);
-                }
-            }
+            ComboBoxEnzymes.Add("No Enzyme");
+            var enzymes = Resources.Resources.Enzymes.Split('\n');
+            enzymes.Where(e => e != "").Select(e => e.TrimEnd('\r')).ForEach(ComboBoxEnzymes.Add);
+
         }
 
         private List<string> CollateEnzymeSelections()
         {
             var enzymes = new List<string>();
-            if (!string.IsNullOrEmpty(EnzymeBox1Selection))
+            if (!string.IsNullOrEmpty(EnzymeBox1Selection) && EnzymeBox1Selection != "No Enzyme")
             {
-                enzymes.Add(EnzymeBox1Selection);
+                enzymes.Add(EnzymeBox1Selection.Split(' ').Last().ToUpper());
             }
-            if (!string.IsNullOrEmpty(EnzymeBox2Selection))
+            if (!string.IsNullOrEmpty(EnzymeBox2Selection) && EnzymeBox2Selection != "No Enzyme")
             {
-                enzymes.Add(EnzymeBox2Selection);
+                enzymes.Add(EnzymeBox2Selection.Split(' ').Last().ToUpper());
             }
-            if (!string.IsNullOrEmpty(EnzymeBox3Selection))
+            if (!string.IsNullOrEmpty(EnzymeBox3Selection) && EnzymeBox3Selection != "No Enzyme")
             {
-                enzymes.Add(EnzymeBox3Selection);
+                enzymes.Add(EnzymeBox3Selection.Split(' ').Last().ToUpper());
             }
             return enzymes;
         }
@@ -123,13 +118,24 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string BuildDisplayString(List<LabelledDigestFragments> labelledDisDigestFragments)
         {
             var displayStringBuilder = new StringBuilder();
+            var labeldBuilder = new StringBuilder();
             foreach (var labelledDigest in labelledDisDigestFragments)
             {
-                displayStringBuilder.AppendLine(labelledDigest.Label);
-                var orderFragments = labelledDigest.DigestFramgments.OrderBy(n => n.Enzyme.Length);
+                displayStringBuilder.AppendLine(labelledDigest.Label).AppendLine();
+                var orderFragments = labelledDigest.DigestFramgments.OrderByDescending(n => n.Fragment.Length);
                 foreach (var fragment in orderFragments)
                 {
+                    labeldBuilder.Append(">Fragment: ")
+                        .Append(fragment.CutPosition)
+                        .Append("-")
+                        .Append(fragment.CutPosition + fragment.Fragment.Length)
+                        .Append(" Enzyme: ")
+                        .Append(fragment.Enzyme)
+                        .Append(" Length: ")
+                        .Append(fragment.Fragment.Length);
+                    displayStringBuilder.AppendLine(labeldBuilder.ToString());
                     displayStringBuilder.AppendLine(fragment.Fragment);
+                    labeldBuilder.Clear();
                 }
             }
             string displayString = displayStringBuilder.ToString();
