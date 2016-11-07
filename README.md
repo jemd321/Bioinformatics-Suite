@@ -10,8 +10,10 @@ sequences via conversion between commonly used bioinformatic formats, finding th
 results of various processes such as translation, restriction digest products 
 and open reading frames.
 
+Sample sequences for demonstration are available in the BioinformaticsSuite.Module/Resources folder.
+
 The program is still under development, and as of yet only DNA sequence
-manipulation is supported.
+manipulation is completed.
 
 
 Supported Features
@@ -27,9 +29,12 @@ DNA
 - Finding Reading Frames: returns the six frames in which a DNA sequence can
 			  be translated from based on the start point.
 
+- Restricition Digest: Finding the products of a sequence when cut into fragments
+		       by a number of different enzymes.
+
 - DNA statistics: calculates the percentage make up of sequences by each base.
 
-- Transcription: produces an mRNA sequence from DNA.
+- Transcription: produces an RNA sequence from DNA.
 
 - Translation: produces a protein sequence from DNA.
 
@@ -38,16 +43,10 @@ DNA
 Planned Features
 -----------------
 
-DNA
-----
-
-- Restricition Digest: Finding the products of a sequence when cut into fragments
-		      by a number of different enzymes.
-
-
 mRNA
 -----
 
+- Translation: produces a protein sequence from RNA.
 
 
 Protein
