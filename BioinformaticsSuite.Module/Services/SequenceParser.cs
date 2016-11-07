@@ -94,6 +94,11 @@ namespace BioinformaticsSuite.Module.Services
             string firstLine = inputLines[0];
             if (firstLine.StartsWith(">"))
             {
+                if (!sequenceValidator.ValidateLabel(firstLine))
+                {
+                    ErrorMessage = "Labels must not consist solely of '>'";
+                    return false;
+                }
                 label = firstLine;
                 previousLineIsLabel = true;
             }
@@ -120,6 +125,11 @@ namespace BioinformaticsSuite.Module.Services
                         }
                         else
                         {
+                            if (!sequenceValidator.ValidateLabel(line))
+                            {
+                                ErrorMessage = "Labels must not consist solely of '>'";
+                                return false;
+                            }
                             sequence = sequenceBuilder.ToString();
                             if (sequence == "")
                             {

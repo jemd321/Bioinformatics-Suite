@@ -15,6 +15,7 @@ namespace BioinformaticsSuite.Module.Services
     {
         int ErrorIndex { get; }
         string ErrorContent { get; }
+        bool ValidateLabel(string label);
         bool ValidateSequence(string sequence, SequenceType sequenceType);
     }
 
@@ -27,6 +28,11 @@ namespace BioinformaticsSuite.Module.Services
 
         public int ErrorIndex { get; private set; }
         public string ErrorContent { get; private set; }
+
+        public bool ValidateLabel(string label)
+        {
+            return label != ">";
+        }
 
         public bool ValidateSequence(string sequence, SequenceType sequenceType)
         {

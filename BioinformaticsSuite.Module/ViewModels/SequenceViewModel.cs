@@ -169,7 +169,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void OpenFile()
         {
-            OpenFileDialog dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
+            OpenFileDialog dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt", InitialDirectory = @"C:\Users\Jem\Documents\Visual Studio 2015\Projects\BioinformaticsSuite\BioinformaticsSuite.Module\Resources" };
             var result = dialog.ShowDialog();
             if (result == false) return;
 
