@@ -38,11 +38,11 @@ namespace BioinformaticsSuite.Module.ViewModels
                 foreach (var labelledSequence in parsedSequences)
                 {
                     string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranscribeDnaToMRna(dnaSequence);
+                    string proteinSequence = Translation.TranscribeDnaToRna(dnaSequence);
                     transcribedSequences.Add(labelledSequence.Key, proteinSequence);
                 }
-                List<LabelledSequence> labelledMRna = SequenceFactory.CreateLabelledSequences(transcribedSequences, SequenceType.MRna);
-                ResultBoxText = BuildDisplayString(labelledMRna);
+                List<LabelledSequence> labelledRna = SequenceFactory.CreateLabelledSequences(transcribedSequences, SequenceType.Rna);
+                ResultBoxText = BuildDisplayString(labelledRna);
                 SelectedTab = SelectedTab.Result;
             }
             else

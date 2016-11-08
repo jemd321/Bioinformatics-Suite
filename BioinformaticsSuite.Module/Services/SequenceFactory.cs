@@ -19,8 +19,8 @@ namespace BioinformaticsSuite.Module.Services
                 case SequenceType.Protein:
                     labelledSequences = CreateProteinInstances(sequences);
                     break;
-                case SequenceType.MRna:
-                    labelledSequences = CreateMRnaInstances(sequences);
+                case SequenceType.Rna:
+                    labelledSequences = CreateRnaInstances(sequences);
                     break;
             }
             return labelledSequences;
@@ -52,7 +52,7 @@ namespace BioinformaticsSuite.Module.Services
             return labelledSequences;
         }
 
-        private List<LabelledSequence> CreateMRnaInstances(Dictionary<string, string> sequences)
+        private List<LabelledSequence> CreateRnaInstances(Dictionary<string, string> sequences)
         {
             var labelledSequences = new List<LabelledSequence>();
 
@@ -60,7 +60,7 @@ namespace BioinformaticsSuite.Module.Services
             {
                 string label = sequencePair.Key;
                 string sequence = sequencePair.Value;
-                labelledSequences.Add(new MRna(label, sequence));
+                labelledSequences.Add(new Rna(label, sequence));
             }
             return labelledSequences;
         }

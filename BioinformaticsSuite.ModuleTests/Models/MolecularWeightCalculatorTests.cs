@@ -17,7 +17,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
             var weightCalculator = CreateTestInstance();
 
             var testDna = new Dna("test", "ACGT");
-            var testRna = new MRna("test", "ACGU");
+            var testRna = new Rna("test", "ACGU");
 
             const decimal expectedDnaWeight = 1173.84m;
             const decimal expectedRnaWeight = 1444.77m;

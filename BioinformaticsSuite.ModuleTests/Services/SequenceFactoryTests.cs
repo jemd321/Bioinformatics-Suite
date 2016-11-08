@@ -42,19 +42,19 @@ namespace BioinformaticsSuite.ModuleTests.Services
         }
 
         [TestMethod()]
-        public void CreateMRnaInstancesTest()
+        public void CreateRnaInstancesTest()
         {
             var sequenceFactory = CreateSequenceFactory();
             var testCase = new Dictionary<string, string>()
             {
-                {"MRnaTest1", "AUCG"},
-                {"MRnaTest2", "CGUAC"}
+                {"RnaTest1", "AUCG"},
+                {"RnaTest2", "CGUAC"}
             };
 
-            var actualMRna = sequenceFactory.CreateLabelledSequences(testCase, SequenceType.MRna);
+            var actualRna = sequenceFactory.CreateLabelledSequences(testCase, SequenceType.Rna);
 
-            Assert.IsInstanceOfType(actualMRna, typeof(List<LabelledSequence>));
-            CollectionAssert.AllItemsAreInstancesOfType(actualMRna, typeof(MRna));
+            Assert.IsInstanceOfType(actualRna, typeof(List<LabelledSequence>));
+            CollectionAssert.AllItemsAreInstancesOfType(actualRna, typeof(Rna));
         }
 
         private ISequenceFactory CreateSequenceFactory()

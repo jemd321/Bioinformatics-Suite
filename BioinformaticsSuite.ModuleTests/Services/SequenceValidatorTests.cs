@@ -32,8 +32,8 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.AreEqual(expectedDnaErrorIndex, sequenceValidator.ErrorIndex);
             Assert.AreEqual(expectedDnaErrorContent, sequenceValidator.ErrorContent);
 
-            Assert.IsTrue(sequenceValidator.ValidateSequence(validTestRna, SequenceType.MRna));
-            Assert.IsFalse(sequenceValidator.ValidateSequence(invalidTestRna, SequenceType.MRna));
+            Assert.IsTrue(sequenceValidator.ValidateSequence(validTestRna, SequenceType.Rna));
+            Assert.IsFalse(sequenceValidator.ValidateSequence(invalidTestRna, SequenceType.Rna));
             Assert.AreEqual(expectedRnaErrorIndex, sequenceValidator.ErrorIndex);
             Assert.AreEqual(expectedRnaErrorContent, sequenceValidator.ErrorContent);
 

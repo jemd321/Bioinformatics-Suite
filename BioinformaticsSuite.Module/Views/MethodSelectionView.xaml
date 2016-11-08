@@ -69,7 +69,7 @@
                     </RadioButton>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="mRNA">
+            <TabItem Header="RNA">
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
@@ -112,13 +112,13 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="MRnaMethod1" GroupName ="Methods" Content="MRna Method 1"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    <RadioButton x:Name="RnaMethod1" GroupName ="Methods" Content="Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="MRnaMethod2" GroupName ="Methods" Content="MRna Method 2"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="RnaMethod2" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
 
-                    <RadioButton x:Name="MRnaMethod3" GroupName ="Methods" Content="MRna Method 3"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="RnaMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
                 </StackPanel>
 
@@ -166,13 +166,13 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="ProteinMethod1" GroupName ="Methods" Content="Open Reading Frames"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    <RadioButton x:Name="ProteinMethod1" GroupName ="Methods" Content="ORFs - Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Restriction Sites"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Protein Statistics -Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
 
-                    <RadioButton x:Name="ProteinMethod3" GroupName ="Methods" Content="Protein Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ProteinMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
                 </StackPanel>
             </TabItem>
@@ -219,13 +219,13 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="ConversionMethod1" GroupName ="Methods" Content="Conversion Method 1"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    <RadioButton x:Name="ConversionMethod1" GroupName ="Methods" Content="Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="ConversionMethod2" GroupName ="Methods" Content="Conversion Method 2"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ConversionMethod2" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
 
-                    <RadioButton x:Name="ConversionMethod3" GroupName ="Methods" Content="Conversion Method 3"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ConversionMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
                     </RadioButton>
                 </StackPanel>
             </TabItem>

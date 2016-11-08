@@ -42,7 +42,7 @@ namespace BioinformaticsSuite.Module.Services
                     return IsValidDna(sequence);
                 case SequenceType.Protein:
                     return IsValidProtein(sequence);
-                case SequenceType.MRna:
+                case SequenceType.Rna:
                     return IsValidRna(sequence);
                 default:
                     return false;

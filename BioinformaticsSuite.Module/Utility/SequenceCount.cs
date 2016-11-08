@@ -19,7 +19,7 @@ namespace BioinformaticsSuite.Module.Utility
             return countArray;
         }
 
-        public static int[] CountMRnaBases(this string sequence)
+        public static int[] CountRnaBases(this string sequence)
         {
             int aCount = sequence.Count(n => n == 'A');
             int cCount = sequence.Count(n => n == 'C');

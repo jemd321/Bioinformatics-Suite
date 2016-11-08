@@ -4,6 +4,6 @@
     {
         Dna,
         Protein,
-        MRna
+        Rna
     }
 }

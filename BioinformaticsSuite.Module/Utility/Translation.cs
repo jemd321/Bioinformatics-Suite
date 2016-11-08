@@ -81,15 +81,15 @@ namespace BioinformaticsSuite.Module.Utility
             return protein;
         }
 
-        public static string TranscribeDnaToMRna(string dnaSequence)
+        public static string TranscribeDnaToRna(string dnaSequence)
         {
-            string mRna = ConvertDnatoRna(dnaSequence);
-            return mRna;
+            string rna = ConvertDnatoRna(dnaSequence);
+            return rna;
         }
 
-        public static string TranslateMRnaToProtein(string mRNASequence)
+        public static string TranslateRnaToProtein(string rnaSequence)
         {
-            string protein = ConvertRnaToProtein(mRNASequence);
+            string protein = ConvertRnaToProtein(rnaSequence);
             return protein;
         }
 

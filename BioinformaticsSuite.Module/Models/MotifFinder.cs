@@ -23,7 +23,7 @@ namespace BioinformaticsSuite.Module.Models
     {
         private SequenceType sequenceType;
         private readonly Regex dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex mRnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
+        private readonly Regex rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY]", RegexOptions.Compiled);
         private static readonly StringBuilder regexBuilder = new StringBuilder();
 
@@ -52,10 +52,10 @@ namespace BioinformaticsSuite.Module.Models
                         return true;
                     }
                     else return false;
-                case SequenceType.MRna:
-                    if (IsValidMRnaMotif(motif))
+                case SequenceType.Rna:
+                    if (IsValidRnaMotif(motif))
                     {
-                        parsedMotif = BuildMRnaMotifPattern(motif);
+                        parsedMotif = BuildRnaMotifPattern(motif);
                         return true;
                     }
                     else return false;
@@ -80,9 +80,9 @@ namespace BioinformaticsSuite.Module.Models
             return false;
         }
 
-        private bool IsValidMRnaMotif(string motif)
+        private bool IsValidRnaMotif(string motif)
         {
-            var match = mRnaMotifValidator.Match(motif);
+            var match = rnaMotifValidator.Match(motif);
             if (!match.Success) return true;
             BuildInvalidMotifErrorMessage(match);
             return false;
@@ -166,7 +166,7 @@ namespace BioinformaticsSuite.Module.Models
             return resultMotif;
         }
 
-        private static string BuildMRnaMotifPattern(string motif)
+        private static string BuildRnaMotifPattern(string motif)
         {
             foreach (char nucleotide in motif)
             {

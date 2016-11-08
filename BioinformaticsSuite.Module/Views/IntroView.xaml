@@ -11,7 +11,7 @@
     <Grid Background="White" VerticalAlignment ="Stretch" HorizontalAlignment="Stretch">
         <StackPanel>
             <Label x:Name="Title" Content="Bioinformatics Suite" FontWeight="Bold" HorizontalAlignment="Left" Height="Auto" Margin="5,5,0,0" VerticalAlignment="Top" Width="Auto"/>
-            <TextBlock x:Name="WelcomeMessage" Text="Welcome to Bioinformatics Suite! This program is intended as a personal project to support my learning of C# and WPF with MVVM, particularly of concepts such as dependency injection, loosely coupled structure and scalability. &#10;&#10;This application is a toolkit for manipulating DNA, mRNA and protein sequences via conversion between commonly used bioinformatic formats, finding the results of various processes such as translation, restriction digest products and open reading frames. &#10;&#10;The program is still under development, and as of yet only DNA sequence manipulation is supported." 
+            <TextBlock x:Name="WelcomeMessage" Text="Welcome to Bioinformatics Suite! This program is intended as a personal project to support my learning of C# and WPF with MVVM, particularly of concepts such as dependency injection, loosely coupled structure and scalability. &#10;&#10;This application is a toolkit for manipulating DNA, RNA and protein sequences via conversion between commonly used bioinformatic formats, finding the results of various processes such as translation, restriction digest products and open reading frames. &#10;&#10;The program is still under development, and as of yet only DNA sequence manipulation is supported." 
                        HorizontalAlignment="Left" 
                        Height="Auto"
                        Margin="15,5,15,0" 

@@ -109,7 +109,7 @@
     <Compile Include="Models\Dna.cs" />
     <Compile Include="Services\SequenceParser.cs" />
     <Compile Include="Models\LabelledSequence.cs" />
-    <Compile Include="Models\MRna.cs" />
+    <Compile Include="Models\Rna.cs" />
     <Compile Include="Models\OpenReadingFrame.cs" />
     <Compile Include="Models\Protein.cs" />
     <Compile Include="Models\ReadingFrame.cs" />

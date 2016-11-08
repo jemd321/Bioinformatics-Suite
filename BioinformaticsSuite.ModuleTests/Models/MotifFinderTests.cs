@@ -37,7 +37,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
 
             // Assert is Valid Motif
             Assert.IsTrue(motifFinder.TryParseMotif(testDnaMotif, SequenceType.Dna, out actualDnaMotif));
-            Assert.IsTrue(motifFinder.TryParseMotif(testRnaMotif, SequenceType.MRna, out actualRnaMotif));
+            Assert.IsTrue(motifFinder.TryParseMotif(testRnaMotif, SequenceType.Rna, out actualRnaMotif));
             Assert.IsTrue(motifFinder.TryParseMotif(testProteinMotif, SequenceType.Protein, out actualProteinMotif));
 
             // Assert has motif been correctly converted to a regex pattern
@@ -47,7 +47,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
 
             // Assert that an invalid motif is correctly identified
             Assert.IsFalse(motifFinder.TryParseMotif(invalidDnaMotif, SequenceType.Dna, out actualDnaMotif));
-            Assert.IsFalse(motifFinder.TryParseMotif(invalidRnaMotif, SequenceType.MRna, out actualRnaMotif));
+            Assert.IsFalse(motifFinder.TryParseMotif(invalidRnaMotif, SequenceType.Rna, out actualRnaMotif));
             Assert.IsFalse(motifFinder.TryParseMotif(invalidProteinMotif, SequenceType.Protein, out actualProteinMotif));
         }
 
@@ -60,7 +60,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
             var testDnaSequence = new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG");
 
 
-            var testRnaSequence = new MRna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG");
+            var testRnaSequence = new Rna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG");
 
             var testProteinSequence = new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY");
            

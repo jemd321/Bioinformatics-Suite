@@ -5,7 +5,7 @@ Welcome to Bioinformatics Suite. This program is intended as a personal project
 to support my learning of C# and WPF with MVVM, particularly of concepts such as
 dependency injection,loosely coupled structure and scalability.
 
-This application is a toolkit for manipulating DNA, mRNA and protein
+This application is a toolkit for manipulating DNA, RNA and protein
 sequences via conversion between commonly used bioinformatic formats, finding the 
 results of various processes such as translation, restriction digest products 
 and open reading frames.
@@ -43,7 +43,7 @@ DNA
 Planned Features
 -----------------
 
-mRNA
+RNA
 -----
 
 - Translation: produces a protein sequence from RNA.

@@ -21,11 +21,11 @@ namespace BioinformaticsSuite.Module.Models
         private const decimal DnaTWeight = 304.2m;
         private const decimal DnaWeightCorrection = 61.96m;
 
-        private const decimal MRnaAWeight = 329.21m;
-        private const decimal MRnaCWeight = 305.18m;
-        private const decimal MRnaGWeight = 345.21m;
-        private const decimal MRnaUWeight = 306.17m;
-        private const decimal MRnaWeightCorrection = 159;
+        private const decimal RnaAWeight = 329.21m;
+        private const decimal RnaCWeight = 305.18m;
+        private const decimal RnaGWeight = 345.21m;
+        private const decimal RnaUWeight = 306.17m;
+        private const decimal RnaWeightCorrection = 159;
 
         public void CalculateMolecularWeight(LabelledSequence labelledSequence)
         {
@@ -34,8 +34,8 @@ namespace BioinformaticsSuite.Module.Models
                  case SequenceType.Dna:
                     labelledSequence.MolecularWeight = CalculateDnaMolecularWeight(labelledSequence as Dna);
                     break;
-                 case SequenceType.MRna:
-                    labelledSequence.MolecularWeight = CalculateMRnaMolecularWeight(labelledSequence as MRna);
+                 case SequenceType.Rna:
+                    labelledSequence.MolecularWeight = CalculateRnaMolecularWeight(labelledSequence as Rna);
                     break;
                 case SequenceType.Protein:
                     labelledSequence.MolecularWeight = CalculateProteinMolecularWeight(labelledSequence as Protein);
@@ -57,15 +57,15 @@ namespace BioinformaticsSuite.Module.Models
             return molecularWeight;
         }
 
-        private static decimal CalculateMRnaMolecularWeight(MRna mRna)
+        private static decimal CalculateRnaMolecularWeight(Rna rna)
         {
-            int[] baseCount = mRna.Sequence.CountMRnaBases();
+            int[] baseCount = rna.Sequence.CountRnaBases();
             int aCount = baseCount[0];
             int cCount = baseCount[1];
             int gCount = baseCount[2];
             int uCount = baseCount[3];
-            decimal molecularWeight = (aCount * MRnaAWeight) + (cCount * MRnaCWeight) + (gCount * MRnaGWeight) +
-                                      (uCount * MRnaUWeight) + MRnaWeightCorrection;
+            decimal molecularWeight = (aCount * RnaAWeight) + (cCount * RnaCWeight) + (gCount * RnaGWeight) +
+                                      (uCount * RnaUWeight) + RnaWeightCorrection;
             return molecularWeight;
         }
 
