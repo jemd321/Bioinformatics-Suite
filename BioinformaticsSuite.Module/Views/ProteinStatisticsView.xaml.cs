@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BioinformaticsSuite.Module.ViewModels;
 
 namespace BioinformaticsSuite.Module.Views
 {
@@ -20,9 +21,10 @@ namespace BioinformaticsSuite.Module.Views
     /// </summary>
     public partial class ProteinStatisticsView : UserControl
     {
-        public ProteinStatisticsView()
+        public ProteinStatisticsView(ProteinStatisticsViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

@@ -61,6 +61,9 @@ namespace BioinformaticsSuite.Module.ViewModels
                 case MethodNames.ProteinOpenReadingFrame:
                     regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinOpenReadingFrameView, UriKind.Relative));
                     break;
+                case MethodNames.ProteinStatistics:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinStatisticsView, UriKind.Relative));
+                    break;
             }
         }
     }

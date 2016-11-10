@@ -31,15 +31,16 @@ namespace BioinformaticsSuite.Module
             container.RegisterType<object, MethodSelectionView>("MethodSelectionView");
             container.RegisterType<object, IntroView>("IntroView");
 
-            container.RegisterType<object, DnaFindMotifView>("DnaFindMotifView");
-            container.RegisterType<object, DnaMolecularWeightView>("DnaMolecularWeightView");
-            container.RegisterType<object, DnaReadingFrameView>("DnaReadingFrameView");
-            container.RegisterType<object, DnaRestrictionDigestView>("DnaRestrictionDigestView");
-            container.RegisterType<object, DnaStatisticsView>("DnaStatisticsView");
-            container.RegisterType<object, DnaTranscribeView>("DnaTranscribeView");
-            container.RegisterType<object, DnaTranslateView>("DnaTranslateView");
+            container.RegisterType<object, DnaFindMotifView>(ViewNames.DnaFindMotifView);
+            container.RegisterType<object, DnaMolecularWeightView>(ViewNames.DnaMolecularWeightView);
+            container.RegisterType<object, DnaReadingFrameView>(ViewNames.DnaReadingFrameView);
+            container.RegisterType<object, DnaRestrictionDigestView>(ViewNames.DnaRestrictionDigestView);
+            container.RegisterType<object, DnaStatisticsView>(ViewNames.DnaStatisticsView);
+            container.RegisterType<object, DnaTranscribeView>(ViewNames.DnaTranscribeView);
+            container.RegisterType<object, DnaTranslateView>(ViewNames.DnaTranslateView);
 
             container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
+            container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);
 
             // Service Registration
             container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();

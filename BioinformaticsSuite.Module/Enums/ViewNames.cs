@@ -13,5 +13,6 @@
         public const string DnaTranslateView = "DnaTranslateView";
 
         public const string ProteinOpenReadingFrameView = "ProteinOpenReadingFrameView";
+        public const string ProteinStatisticsView = "ProteinStatisticsView";
     }
 }

@@ -169,7 +169,7 @@
                     <RadioButton x:Name="ProteinMethod1" GroupName ="Methods" Content="Open Reading Frames"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinOpenReadingFrame" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Protein Statistics -Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Protein Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinStatistics" VerticalAlignment="Top">
                     </RadioButton>
 
                     <RadioButton x:Name="ProteinMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">

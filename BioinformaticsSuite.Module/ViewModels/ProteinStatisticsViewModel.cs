@@ -34,6 +34,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     displayStringBuilder.AppendLine(protein.Label);
                     BuildDisplayString(aminoAcidCount, protein.Sequence.Length);
                 }
+                SelectedTab = SelectedTab.Result;
                 ResultBoxText = displayStringBuilder.ToString();
                 displayStringBuilder.Clear();
             }
@@ -56,7 +57,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
             foreach (var aminoAcid in aminoAcidCount)
             {
-                decimal percentage = ((decimal)aminoAcid.Value/(decimal)proteinLength)*100;
+                decimal percentage = Math.Round(((decimal)aminoAcid.Value / (decimal)proteinLength) * 100, 2);
                 displayStringBuilder.Append(aminoAcid.Key).Append(": ").Append(percentage).Append(" ");
             }
             displayStringBuilder.AppendLine();
