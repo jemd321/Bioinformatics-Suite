@@ -7,6 +7,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
     [TestClass()]
     public class OpenReadingFrameTests
     {
+        /*
         [TestMethod()]
         public void OpenReadingFrameTest()
         {
@@ -23,5 +24,6 @@ namespace BioinformaticsSuite.ModuleTests.Models
             Assert.AreEqual(expectedLabel, openReadingFrame.Label);
             CollectionAssert.AreEquivalent(expectedOrfs, openReadingFrame.OrfList);
         }
+        */
     }
 }

@@ -17,44 +17,18 @@ namespace BioinformaticsSuite.Module.ViewModels
     {        
         private readonly IReadingFrameFactory readingFrameFactory;
         private string title = "Find Reading Frames";
-        private double infoBarHeight;
 
         public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
             this.readingFrameFactory = readingFrameFactory;
             if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
-
-            openconnections = new DelegateCommand(RaiseConnctionsOptionsRequest);
-            this.OptionSettingConformationRequest = new InteractionRequest<IConfirmation>();
-        }
-
-        public InteractionRequest<IConfirmation> OptionSettingConformationRequest { get; private set; }
-
-
-        private readonly ICommand openconnections;
-        public ICommand OpenConnections { get { return openconnections; } }
-
-        private void RaiseConnctionsOptionsRequest()
-        {
-            this.OptionSettingConformationRequest.Raise(new Confirmation { Title = "helloeold"}, OnConnectionOptionsResponse);
-        }
-
-        protected virtual void OnConnectionOptionsResponse(IConfirmation context)
-        {
-            
         }
 
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
-        }
-
-        public double InfoBarHeight
-        {
-            get { return infoBarHeight; }
-            set { SetProperty(ref infoBarHeight, value); }
         }
 
         public override void OnRun()
@@ -71,7 +45,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
             }
             SequenceParser.ResetSequences();
         }

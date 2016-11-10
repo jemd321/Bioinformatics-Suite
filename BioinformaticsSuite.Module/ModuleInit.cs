@@ -39,6 +39,8 @@ namespace BioinformaticsSuite.Module
             container.RegisterType<object, DnaTranscribeView>("DnaTranscribeView");
             container.RegisterType<object, DnaTranslateView>("DnaTranslateView");
 
+            container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
+
             // Service Registration
             container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();
             container.RegisterType<ISequenceFactory, SequenceFactory>();
@@ -47,6 +49,7 @@ namespace BioinformaticsSuite.Module
             container.RegisterType<IMolecularWeightCalculator, MolecularWeightCalculator>();
             container.RegisterType<IMotifFinder, MotifFinder>();
             container.RegisterType<IRestrictionDigest, RestrictionDigest>();
+            container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
 
             // StartUp Views Registration
             regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

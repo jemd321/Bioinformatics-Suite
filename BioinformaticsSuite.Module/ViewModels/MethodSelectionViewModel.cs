@@ -58,6 +58,9 @@ namespace BioinformaticsSuite.Module.ViewModels
                 case MethodNames.DnaTranslate:
                     regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranslateView, UriKind.Relative));
                     break;
+                case MethodNames.ProteinOpenReadingFrame:
+                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinOpenReadingFrameView, UriKind.Relative));
+                    break;
             }
         }
     }

@@ -11,5 +11,6 @@
         public const string DnaStatistics = "DnaStatistics";
         public const string DnaTranscribe = "DnaTranscribe";
         public const string DnaTranslate = "DnaTranslate";
+        public const string ProteinOpenReadingFrame = "ProteinOpenReadingFrame";
     }
 }

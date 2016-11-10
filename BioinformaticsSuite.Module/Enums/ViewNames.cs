@@ -11,5 +11,7 @@
         public const string DnaStatisticsView = "DnaStatisticsView";
         public const string DnaTranscribeView = "DnaTranscribeView";
         public const string DnaTranslateView = "DnaTranslateView";
+
+        public const string ProteinOpenReadingFrameView = "ProteinOpenReadingFrameView";
     }
 }
