@@ -12,23 +12,23 @@ namespace BioinformaticsSuite.Module.Models
 
     public class OpenReadingFrameFinder : IOpenReadingFrameFinder
     {
-        private readonly StringBuilder labelBuilder = new StringBuilder();
-        private string sequenceLabel;
-        private readonly IReadingFrameFactory readingFrameFactory;
+        private readonly StringBuilder _labelBuilder = new StringBuilder();
+        private string _sequenceLabel;
+        private readonly IReadingFrameFactory _readingFrameFactory;
 
         public OpenReadingFrameFinder(IReadingFrameFactory readingFrameFactory)
         {
-            this.readingFrameFactory = readingFrameFactory;
+            this._readingFrameFactory = readingFrameFactory;
         }
         public bool FoundOrf { get; private set; }
 
         public Dictionary<string, string> FindOpenReadingFrames(Dna dna)
         {
-            sequenceLabel = dna.Label;
+            _sequenceLabel = dna.Label;
             var labelledOrfs = new Dictionary<string, string>();
             var orfMatcher = new Regex("M[^X]*X", RegexOptions.Compiled);
 
-            ReadingFrame readingFrame = readingFrameFactory.GetReadingFrames(dna);
+            ReadingFrame readingFrame = _readingFrameFactory.GetReadingFrames(dna);
             foreach (var labelledFrame in readingFrame.LabelledFrames)
             {
                 var frame = Translation.TranslateDnaToProtein(labelledFrame.Value);
@@ -60,15 +60,15 @@ namespace BioinformaticsSuite.Module.Models
             int startIndex = match.Index + 1;
             int endIndex = startIndex + match.Length - 1;
 
-            labelBuilder.Append(sequenceLabel)
+            _labelBuilder.Append(_sequenceLabel)
                 .Append(": ")
                 .Append(startIndex)
                 .Append("-")
                 .Append(endIndex)
                 .Append(" Length: ")
                 .Append(match.Length - 1);
-            string orfLabel = labelBuilder.ToString();
-            labelBuilder.Clear();
+            string orfLabel = _labelBuilder.ToString();
+            _labelBuilder.Clear();
             return orfLabel;
         }
     }

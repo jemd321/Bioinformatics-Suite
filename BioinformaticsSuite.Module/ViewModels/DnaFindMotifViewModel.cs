@@ -18,14 +18,14 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaFindMotifViewModel : SequenceViewModel
     {
-        private readonly IMotifFinder motifFinder;
-        private string title = "Find Motifs";
-        private string motifBoxText;
+        private readonly IMotifFinder _motifFinder;
+        private string _title = "Find Motifs";
+        private string _motifBoxText;
 
         public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IMotifFinder motifFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.motifFinder = motifFinder;
+            this._motifFinder = motifFinder;
             if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));
 
             HelpPopupViewRequest = new InteractionRequest<INotification>();
@@ -38,14 +38,14 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public string MotifBoxText
         {
-            get { return motifBoxText; }
-            set { SetProperty(ref motifBoxText, value); }
+            get { return _motifBoxText; }
+            set { SetProperty(ref _motifBoxText, value); }
         }
 
         private void RaiseHelpPopupView()
@@ -64,7 +64,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
 
             string parsedMotif;
-            bool isValidMotif = motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
+            bool isValidMotif = _motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
             if (isValidMotif)
             {
                 bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
@@ -76,7 +76,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     var labelledMatches = new Dictionary<string, MatchCollection>();
                     foreach (var labelledSequence in labelledSequences)
                     {
-                        var matches = motifFinder.FindMotif(parsedMotif, labelledSequence);
+                        var matches = _motifFinder.FindMotif(parsedMotif, labelledSequence);
                         labelledMatches.Add(labelledSequence.Label, matches);
                     }
                     ResultBoxText = BuildDisplayString(labelledMatches);
@@ -89,7 +89,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification("A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" + motifFinder.InvalidMotifMessage);
+                RaiseInvalidInputNotification("A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" + _motifFinder.InvalidMotifMessage);
             }
             SequenceParser.ResetSequences();
         }

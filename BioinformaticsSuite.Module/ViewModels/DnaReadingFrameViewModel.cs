@@ -15,20 +15,20 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaReadingFrameViewModel : SequenceViewModel
     {        
-        private readonly IReadingFrameFactory readingFrameFactory;
-        private string title = "Find Reading Frames";
+        private readonly IReadingFrameFactory _readingFrameFactory;
+        private string _title = "Find Reading Frames";
 
         public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.readingFrameFactory = readingFrameFactory;
+            this._readingFrameFactory = readingFrameFactory;
             if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
         }
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public override void OnRun()
@@ -52,7 +52,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)
         {
-            return labelledSequences.Select(labelledSequence => readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
+            return labelledSequences.Select(labelledSequence => _readingFrameFactory.GetReadingFrames(labelledSequence as Dna)).ToList();
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

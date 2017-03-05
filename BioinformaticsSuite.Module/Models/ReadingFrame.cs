@@ -11,11 +11,11 @@ namespace BioinformaticsSuite.Module.Models
              - eg. "ACTGCTA" would be f1 "ACTGCTA" f2 "CTGCTA" f3 "TGCTA" | r1 "TAGCAGT" r2 "AGCAGT" r3 "GCACT"
         */
 
-        private readonly Dna dna;
+        private readonly Dna _dna;
 
         public ReadingFrame(Dna dna)
         {
-            this.dna = dna;
+            this._dna = dna;
             Label = dna.Label;
             LabelledFrames = SplitIntoFrames(dna.Sequence);
         }
@@ -49,7 +49,7 @@ namespace BioinformaticsSuite.Module.Models
                 forward3 = TrimBases(forward3, remainder);
             }
 
-            string reverseComplement = dna.ReverseComplement;
+            string reverseComplement = _dna.ReverseComplement;
 
             string reverse1 = reverseComplement;
             remainder = reverse1.Length%3;

@@ -95,6 +95,7 @@
     <Compile Include="Enums\SequenceType.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
     <Compile Include="Models\DigestFragment.cs" />
+    <Compile Include="Models\FastaCombiner.cs" />
     <Compile Include="Models\LabelledDigestFragments.cs" />
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
@@ -113,8 +114,6 @@
     <Compile Include="Models\OpenReadingFrameFinder.cs" />
     <Compile Include="Models\Protein.cs" />
     <Compile Include="Models\ReadingFrame.cs" />
-    <Compile Include="Models\RestrictionSiteHelper.cs" />
-    <Compile Include="Models\RnaSplicing.cs" />
     <Compile Include="Utility\SequenceCount.cs" />
     <Compile Include="Utility\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,6 +121,11 @@
     <Compile Include="Models\ReadingFrameFactory.cs" />
     <Compile Include="Services\SequenceValidator.cs" />
     <Compile Include="Utility\StringExtensionMethods.cs" />
+    <Compile Include="ViewModels\ConversionEmblFastaViewModel.cs" />
+    <Compile Include="ViewModels\ConversionEmblTranslateViewModel.cs" />
+    <Compile Include="ViewModels\ConversionFastaCombineViewModel.cs" />
+    <Compile Include="ViewModels\ConversionGenbankFastaViewModel.cs" />
+    <Compile Include="ViewModels\ConversionGenbankTranslateViewModel.cs" />
     <Compile Include="ViewModels\DnaMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\DnaRestricitionDigestViewModel.cs" />
     <Compile Include="ViewModels\DnaStatisticsViewModel.cs" />
@@ -136,6 +140,21 @@
     <Compile Include="ViewModels\ProteinStatisticsViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModel.cs" />
     <Compile Include="Enums\ViewNames.cs" />
+    <Compile Include="Views\ConversionEmblFastaView.xaml.cs">
+      <DependentUpon>ConversionEmblFastaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConversionEmblTranslateView.xaml.cs">
+      <DependentUpon>ConversionEmblTranslateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConversionFastaCombineView.xaml.cs">
+      <DependentUpon>ConversionFastaCombineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConversionGenbankFastaView.xaml.cs">
+      <DependentUpon>ConversionGenbankFastaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConversionGenbankTranslateView.xaml.cs">
+      <DependentUpon>ConversionGenbankTranslateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DnaMolecularWeightView.xaml.cs">
       <DependentUpon>DnaMolecularWeightView.xaml</DependentUpon>
     </Compile>
@@ -177,6 +196,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ConversionEmblFastaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionEmblTranslateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionFastaCombineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionGenbankFastaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionGenbankTranslateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DnaMolecularWeightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,7 +270,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -16,47 +16,53 @@ namespace BioinformaticsSuite.Module
 {
     public class ModuleInit : IModule
     {        
-        private readonly IUnityContainer container;
-        private readonly IRegionManager regionManager;
+        private readonly IUnityContainer _container;
+        private readonly IRegionManager _regionManager;
 
         public ModuleInit(IUnityContainer container, IRegionManager regionManager)
         {
-            this.container = container;
-            this.regionManager = regionManager;
+            this._container = container;
+            this._regionManager = regionManager;
         }
 
         public void Initialize()
         {
             // View Registration
-            container.RegisterType<object, MethodSelectionView>("MethodSelectionView");
-            container.RegisterType<object, IntroView>("IntroView");
+            _container.RegisterType<object, MethodSelectionView>("MethodSelectionView");
+            _container.RegisterType<object, IntroView>("IntroView");
 
-            container.RegisterType<object, DnaFindMotifView>(ViewNames.DnaFindMotifView);
-            container.RegisterType<object, DnaMolecularWeightView>(ViewNames.DnaMolecularWeightView);
-            container.RegisterType<object, DnaReadingFrameView>(ViewNames.DnaReadingFrameView);
-            container.RegisterType<object, DnaRestrictionDigestView>(ViewNames.DnaRestrictionDigestView);
-            container.RegisterType<object, DnaStatisticsView>(ViewNames.DnaStatisticsView);
-            container.RegisterType<object, DnaTranscribeView>(ViewNames.DnaTranscribeView);
-            container.RegisterType<object, DnaTranslateView>(ViewNames.DnaTranslateView);
+            _container.RegisterType<object, DnaFindMotifView>(ViewNames.DnaFindMotifView);
+            _container.RegisterType<object, DnaMolecularWeightView>(ViewNames.DnaMolecularWeightView);
+            _container.RegisterType<object, DnaReadingFrameView>(ViewNames.DnaReadingFrameView);
+            _container.RegisterType<object, DnaRestrictionDigestView>(ViewNames.DnaRestrictionDigestView);
+            _container.RegisterType<object, DnaStatisticsView>(ViewNames.DnaStatisticsView);
+            _container.RegisterType<object, DnaTranscribeView>(ViewNames.DnaTranscribeView);
+            _container.RegisterType<object, DnaTranslateView>(ViewNames.DnaTranslateView);
 
-            container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
-            container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);
+            _container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
+            _container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);
+
+            _container.RegisterType<object, ConversionFastaCombineView>(ViewNames.ConversionFastaCombineView);
+            _container.RegisterType<object, ConversionEmblFastaView>(ViewNames.ConversionEmblFastaView);
+            _container.RegisterType<object, ConversionEmblTranslateView>(ViewNames.ConversionEmblTranslateView);
+            _container.RegisterType<object, ConversionGenbankFastaView>(ViewNames.ConversionGenbankFastaView);
+            _container.RegisterType<object, ConversionGenbankTranslateView>(ViewNames.ConversionGenbankTranslateView);
 
             // Service Registration
-            container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();
-            container.RegisterType<ISequenceFactory, SequenceFactory>();
-            container.RegisterType<ISequenceParser, SequenceParser>();
-            container.RegisterType<ISequenceValidator, SequenceValidator>();
-            container.RegisterType<IMolecularWeightCalculator, MolecularWeightCalculator>();
-            container.RegisterType<IMotifFinder, MotifFinder>();
-            container.RegisterType<IRestrictionDigest, RestrictionDigest>();
-            container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
+            _container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();
+            _container.RegisterType<ISequenceFactory, SequenceFactory>();
+            _container.RegisterType<ISequenceParser, SequenceParser>();
+            _container.RegisterType<ISequenceValidator, SequenceValidator>();
+            _container.RegisterType<IMolecularWeightCalculator, MolecularWeightCalculator>();
+            _container.RegisterType<IMotifFinder, MotifFinder>();
+            _container.RegisterType<IRestrictionDigest, RestrictionDigest>();
+            _container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
 
             // StartUp Views Registration
-            regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,
-                () => this.container.Resolve<MethodSelectionView>());
-            regionManager.RegisterViewWithRegion(RegionNames.SequenceRegion,
-                () => container.Resolve<IntroView>());
+            _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,
+                () => this._container.Resolve<MethodSelectionView>());
+            _regionManager.RegisterViewWithRegion(RegionNames.SequenceRegion,
+                () => _container.Resolve<IntroView>());
         }
 
     }

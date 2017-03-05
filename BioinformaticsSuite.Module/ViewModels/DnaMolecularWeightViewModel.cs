@@ -14,20 +14,20 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaMolecularWeightViewModel : SequenceViewModel
     {
-        private readonly IMolecularWeightCalculator molecularWeightCalculator;
-        private string title = "DNA Molecular Weight";
+        private readonly IMolecularWeightCalculator _molecularWeightCalculator;
+        private string _title = "DNA Molecular Weight";
 
         public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.molecularWeightCalculator = molecularWeightCalculator;
+            this._molecularWeightCalculator = molecularWeightCalculator;
             if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));
         }
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public override void OnRun()
@@ -40,7 +40,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
-                    molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                    _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
                 }   
                 ResultBoxText = BuildDisplayString(labelledSequences);
                 SelectedTab = SelectedTab.Result;

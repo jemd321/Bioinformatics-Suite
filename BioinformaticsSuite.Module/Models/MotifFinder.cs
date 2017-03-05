@@ -21,11 +21,11 @@ namespace BioinformaticsSuite.Module.Models
 
     public class MotifFinder : IMotifFinder
     {
-        private SequenceType sequenceType;
-        private readonly Regex dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY]", RegexOptions.Compiled);
-        private static readonly StringBuilder regexBuilder = new StringBuilder();
+        private SequenceType _sequenceType;
+        private readonly Regex _dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
+        private readonly Regex _rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
+        private readonly Regex _proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY]", RegexOptions.Compiled);
+        private static readonly StringBuilder RegexBuilder = new StringBuilder();
 
         public string InvalidMotifMessage { get; private set; }
 
@@ -41,9 +41,9 @@ namespace BioinformaticsSuite.Module.Models
         public bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif)
         {
             parsedMotif = "";
-            sequenceType = motifSequenceType;
+            _sequenceType = motifSequenceType;
 
-            switch (sequenceType)
+            switch (_sequenceType)
             {
                 case SequenceType.Dna:
                     if (IsValidDnaMotif(motif))
@@ -74,7 +74,7 @@ namespace BioinformaticsSuite.Module.Models
 
         private bool IsValidDnaMotif(string motif)
         {
-            var match = dnaMotifValidator.Match(motif);
+            var match = _dnaMotifValidator.Match(motif);
             if (!match.Success) return true;
             BuildInvalidMotifErrorMessage(match);
             return false;
@@ -82,7 +82,7 @@ namespace BioinformaticsSuite.Module.Models
 
         private bool IsValidRnaMotif(string motif)
         {
-            var match = rnaMotifValidator.Match(motif);
+            var match = _rnaMotifValidator.Match(motif);
             if (!match.Success) return true;
             BuildInvalidMotifErrorMessage(match);
             return false;
@@ -90,7 +90,7 @@ namespace BioinformaticsSuite.Module.Models
 
         private bool IsValidProteinMotif(string motif)
         {
-            var match = proteinMotifValidator.Match(motif);
+            var match = _proteinMotifValidator.Match(motif);
             if (!match.Success) return true;
             BuildInvalidMotifErrorMessage(match);
             return false;
@@ -111,58 +111,58 @@ namespace BioinformaticsSuite.Module.Models
                 switch (nucleotide)
                 {
                     case 'A':
-                        regexBuilder.Append("A");
+                        RegexBuilder.Append("A");
                         break;
                     case 'C':
-                        regexBuilder.Append("C");
+                        RegexBuilder.Append("C");
                         break;
                     case 'G':
-                        regexBuilder.Append("G");
+                        RegexBuilder.Append("G");
                         break;
                     case 'T':
-                        regexBuilder.Append("T");
+                        RegexBuilder.Append("T");
                         break;
                     case 'R':
-                        regexBuilder.Append("[AG]");
+                        RegexBuilder.Append("[AG]");
                         break;
                     case 'Y':
-                        regexBuilder.Append("[CT]");
+                        RegexBuilder.Append("[CT]");
                         break;
                     case 'S':
-                        regexBuilder.Append("[GC]");
+                        RegexBuilder.Append("[GC]");
                         break;
                     case 'W':
-                        regexBuilder.Append("[AT]");
+                        RegexBuilder.Append("[AT]");
                         break;
                     case 'K':
-                        regexBuilder.Append("[GT]");
+                        RegexBuilder.Append("[GT]");
                         break;
                     case 'M':
-                        regexBuilder.Append("[AC]");
+                        RegexBuilder.Append("[AC]");
                         break;
                     case 'B':
-                        regexBuilder.Append("[CGT]");
+                        RegexBuilder.Append("[CGT]");
                         break;
                     case 'D':
-                        regexBuilder.Append("[AGT]");
+                        RegexBuilder.Append("[AGT]");
                         break;
                     case 'H':
-                        regexBuilder.Append("[ACT]");
+                        RegexBuilder.Append("[ACT]");
                         break;
                     case 'V':
-                        regexBuilder.Append("[ACG]");
+                        RegexBuilder.Append("[ACG]");
                         break;
                     case 'X':
-                        regexBuilder.Append("[ACGT]");
+                        RegexBuilder.Append("[ACGT]");
                         break;
                     case 'N':
-                        regexBuilder.Append("[ACGT]");
+                        RegexBuilder.Append("[ACGT]");
                         break;
                     default: throw new ArgumentException("Invalid Nucleotide in Motif - Parsing Method has missed it");
                 }
             }
-            string resultMotif = regexBuilder.ToString();
-            regexBuilder.Clear();
+            string resultMotif = RegexBuilder.ToString();
+            RegexBuilder.Clear();
             return resultMotif;
         }
 
@@ -173,58 +173,58 @@ namespace BioinformaticsSuite.Module.Models
                 switch (nucleotide)
                 {
                     case 'A':
-                        regexBuilder.Append("A");
+                        RegexBuilder.Append("A");
                         break;
                     case 'C':
-                        regexBuilder.Append("C");
+                        RegexBuilder.Append("C");
                         break;
                     case 'G':
-                        regexBuilder.Append("G");
+                        RegexBuilder.Append("G");
                         break;
                     case 'U':
-                        regexBuilder.Append("U");
+                        RegexBuilder.Append("U");
                         break;
                     case 'Y':
-                        regexBuilder.Append("[CU]");
+                        RegexBuilder.Append("[CU]");
                         break;
                     case 'R':
-                        regexBuilder.Append("[AG]");
+                        RegexBuilder.Append("[AG]");
                         break;
                     case 'W':
-                        regexBuilder.Append("[AU]");
+                        RegexBuilder.Append("[AU]");
                         break;
                     case 'S':
-                        regexBuilder.Append("[GC]");
+                        RegexBuilder.Append("[GC]");
                         break;
                     case 'K':
-                        regexBuilder.Append("[UG]");
+                        RegexBuilder.Append("[UG]");
                         break;
                     case 'M':
-                        regexBuilder.Append("[CA]");
+                        RegexBuilder.Append("[CA]");
                         break;
                     case 'D':
-                        regexBuilder.Append("[AGU]");
+                        RegexBuilder.Append("[AGU]");
                         break;
                     case 'V':
-                        regexBuilder.Append("[ACG]");
+                        RegexBuilder.Append("[ACG]");
                         break;
                     case 'H':
-                        regexBuilder.Append("[ACU]");
+                        RegexBuilder.Append("[ACU]");
                         break;
                     case 'B':
-                        regexBuilder.Append("[CGU]");
+                        RegexBuilder.Append("[CGU]");
                         break;
                     case 'X':
-                        regexBuilder.Append("[ACGU]");
+                        RegexBuilder.Append("[ACGU]");
                         break;
                     case 'N':
-                        regexBuilder.Append("[ACGU]");
+                        RegexBuilder.Append("[ACGU]");
                         break;
                     default: throw new ArgumentException("Invalid Nucleotide in Motif");
                 }
             }
-            string resultMotif = regexBuilder.ToString();
-            regexBuilder.Clear();
+            string resultMotif = RegexBuilder.ToString();
+            RegexBuilder.Clear();
             return resultMotif;
         }
     }

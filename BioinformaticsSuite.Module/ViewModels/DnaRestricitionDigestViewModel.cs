@@ -18,48 +18,48 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaRestricitionDigestViewModel : SequenceViewModel
     {
-        private readonly IRestrictionDigest restrictionDigest;
-        private string title = "Restriction Digest";
-        private List<string> comboBoxEnzymes = new List<string>();
-        private string enzymeBox1Selection;
-        private string enzymeBox2Selection;
-        private string enzymeBox3Selection;
+        private readonly IRestrictionDigest _restrictionDigest;
+        private string _title = "Restriction Digest";
+        private List<string> _comboBoxEnzymes = new List<string>();
+        private string _enzymeBox1Selection;
+        private string _enzymeBox2Selection;
+        private string _enzymeBox3Selection;
 
         public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IRestrictionDigest restrictionDigest) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.restrictionDigest = restrictionDigest;
+            this._restrictionDigest = restrictionDigest;
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));
             ImportEnzymes();
         }
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public List<string> ComboBoxEnzymes
         {
-            get { return comboBoxEnzymes; }
-            set { SetProperty(ref comboBoxEnzymes, value); }
+            get { return _comboBoxEnzymes; }
+            set { SetProperty(ref _comboBoxEnzymes, value); }
         }
 
         public string EnzymeBox1Selection
         {
-            get { return enzymeBox1Selection; }
-            set { SetProperty(ref enzymeBox1Selection, value); }
+            get { return _enzymeBox1Selection; }
+            set { SetProperty(ref _enzymeBox1Selection, value); }
         }
 
         public string EnzymeBox2Selection
         {
-            get { return enzymeBox2Selection; }
-            set { SetProperty(ref enzymeBox2Selection, value); }
+            get { return _enzymeBox2Selection; }
+            set { SetProperty(ref _enzymeBox2Selection, value); }
         }
         public string EnzymeBox3Selection
         {
-            get { return enzymeBox3Selection; }
-            set { SetProperty(ref enzymeBox3Selection, value); }
+            get { return _enzymeBox3Selection; }
+            set { SetProperty(ref _enzymeBox3Selection, value); }
         }
         public override void OnRun()
         {
@@ -77,7 +77,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 var parsedSequences = SequenceParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
-                var labelledDigestFragments = restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
+                var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
                 ResultBoxText = BuildDisplayString(labelledDigestFragments);
                 SelectedTab = SelectedTab.Result;
             }

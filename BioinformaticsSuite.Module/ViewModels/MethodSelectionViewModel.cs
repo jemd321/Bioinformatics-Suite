@@ -15,13 +15,13 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class MethodSelectionViewModel : BindableBase
     {
-        private readonly IRegionManager regionManager;
+        private readonly IRegionManager _regionManager;
 
-        private bool isChecked = false;
+        private bool _isChecked = false;
 
         public MethodSelectionViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
-            this.regionManager = regionManager;
+            this._regionManager = regionManager;
             SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);
         }
 
@@ -29,8 +29,8 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public bool IsChecked
         {
-            get { return isChecked;}
-            set { SetProperty(ref isChecked, value); }
+            get { return _isChecked;}
+            set { SetProperty(ref _isChecked, value); }
         }
 
         private void OnMethodSelection(string methodName)
@@ -38,31 +38,48 @@ namespace BioinformaticsSuite.Module.ViewModels
             switch (methodName)
             {
                 case MethodNames.DnaFindMotif:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaFindMotifView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaFindMotifView, UriKind.Relative));
                     break;
                 case MethodNames.DnaMolecularWeight:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaMolecularWeightView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaMolecularWeightView, UriKind.Relative));
                     break;
                 case MethodNames.DnaReadingFrame:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaReadingFrameView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaReadingFrameView, UriKind.Relative));
                     break;
                 case MethodNames.DnaRestrictionDigest:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaRestrictionDigestView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaRestrictionDigestView, UriKind.Relative));
                     break;
                 case MethodNames.DnaStatistics:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaStatisticsView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaStatisticsView, UriKind.Relative));
                     break;
                 case MethodNames.DnaTranscribe:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranscribeView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranscribeView, UriKind.Relative));
                     break;
                 case MethodNames.DnaTranslate:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranslateView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranslateView, UriKind.Relative));
                     break;
+
                 case MethodNames.ProteinOpenReadingFrame:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinOpenReadingFrameView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinOpenReadingFrameView, UriKind.Relative));
                     break;
                 case MethodNames.ProteinStatistics:
-                    regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinStatisticsView, UriKind.Relative));
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinStatisticsView, UriKind.Relative));
+                    break;
+
+                case MethodNames.ConversionFastaCombine:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionFastaCombineView, UriKind.Relative));
+                    break;
+                case MethodNames.ConversionEmblFasta:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionEmblFastaView, UriKind.Relative));
+                    break;
+                case MethodNames.ConversionEmblTranslate:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionEmblTranslateView, UriKind.Relative));
+                    break;
+                case MethodNames.ConversionGenbankFasta:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionGenbankFastaView, UriKind.Relative));
+                    break;
+                case MethodNames.ConversionGenbankTranslate:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionGenbankTranslateView, UriKind.Relative));
                     break;
             }
         }

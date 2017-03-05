@@ -14,7 +14,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaTranscribeViewModel : SequenceViewModel
     {
-        private string title = "DNA Transcriber";
+        private string _title = "DNA Transcriber";
 
         public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator
             ) : base(sequenceFactory, sequenceParser, eventAggregator)
@@ -23,8 +23,8 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public override void OnRun()

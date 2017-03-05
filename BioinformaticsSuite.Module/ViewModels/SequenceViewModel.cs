@@ -26,10 +26,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
 
-        private int selectedTextBoxIndex;
-        private SelectedTab selectedTab;
-        private string inputBoxText;
-        private string resultBoxText;
+        private int _selectedTextBoxIndex;
+        private SelectedTab _selectedTab;
+        private string _inputBoxText;
+        private string _resultBoxText;
 
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
@@ -67,17 +67,17 @@ namespace BioinformaticsSuite.Module.ViewModels
         public int SelectedTextBoxIndex
         {
             // index 0 = input tab, index 1 = result tab.
-            get { return selectedTextBoxIndex; }
+            get { return _selectedTextBoxIndex; }
             set
             {
-                SetProperty(ref selectedTextBoxIndex, value);
-                switch (selectedTextBoxIndex)
+                SetProperty(ref _selectedTextBoxIndex, value);
+                switch (_selectedTextBoxIndex)
                 {
                     case 0:
-                        selectedTab = SelectedTab.Input;
+                        _selectedTab = SelectedTab.Input;
                         break;
                     case 1:
-                        selectedTab = SelectedTab.Result;
+                        _selectedTab = SelectedTab.Result;
                         break;
                     default: throw new Exception("Invalid sequence box tab index supplied");
                 }
@@ -87,11 +87,11 @@ namespace BioinformaticsSuite.Module.ViewModels
         // Set this property when you want to change the selected tab. This avoids having to use a 'magic number' tab index.
         public SelectedTab SelectedTab
         {
-            get { return selectedTab; }
+            get { return _selectedTab; }
             set
             {
-                selectedTab = value;
-                switch (selectedTab)
+                _selectedTab = value;
+                switch (_selectedTab)
                 {
                     case SelectedTab.Input:
                         SelectedTextBoxIndex = 0;
@@ -106,21 +106,21 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public string InputBoxText
         {
-            get { return inputBoxText; }
-            set { SetProperty(ref inputBoxText, value); }
+            get { return _inputBoxText; }
+            set { SetProperty(ref _inputBoxText, value); }
         }
 
         public string ResultBoxText
         {
-            get { return resultBoxText; }
-            set { SetProperty(ref resultBoxText, value); }
+            get { return _resultBoxText; }
+            set { SetProperty(ref _resultBoxText, value); }
         }
 
         public virtual void OnRun() {}
 
         public void OnClear()
         {
-            switch (selectedTab)
+            switch (_selectedTab)
             {
                 case SelectedTab.Input:
                     InputBoxText = "";
@@ -134,7 +134,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public void OnOpen()
         {
-            switch (selectedTab)
+            switch (_selectedTab)
             {
                 case SelectedTab.Input:
                     OpenFile();
@@ -154,7 +154,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
             using (var writer = new StreamWriter(dialog.FileName))
             {
-                switch (selectedTab)
+                switch (_selectedTab)
                 {
                     case SelectedTab.Input:
                         writer.WriteLine(InputBoxText);

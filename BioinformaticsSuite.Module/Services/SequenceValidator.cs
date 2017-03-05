@@ -22,9 +22,9 @@ namespace BioinformaticsSuite.Module.Services
     // Sequence Validator matches invalid sequence chars and logs the error content and location as properties.
     public class SequenceValidator : ISequenceValidator
     {
-        private readonly Regex dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
-        private readonly Regex rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
-        private readonly Regex proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY]", RegexOptions.Compiled);
+        private readonly Regex _dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
+        private readonly Regex _rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
+        private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY]", RegexOptions.Compiled);
 
         public int ErrorIndex { get; private set; }
         public string ErrorContent { get; private set; }
@@ -51,7 +51,7 @@ namespace BioinformaticsSuite.Module.Services
 
         private bool IsValidDna(string sequence)
         {
-            var match = dnaRegex.Match(sequence);
+            var match = _dnaRegex.Match(sequence);
             if (!match.Success) return true;
             LogErrorInfo(match);
             return false;
@@ -59,7 +59,7 @@ namespace BioinformaticsSuite.Module.Services
 
         private bool IsValidRna(string sequence)
         {
-            var match = rnaRegex.Match(sequence);
+            var match = _rnaRegex.Match(sequence);
             if (!match.Success) return true;
             LogErrorInfo(match);
             return false;
@@ -67,7 +67,7 @@ namespace BioinformaticsSuite.Module.Services
 
         private bool IsValidProtein(string sequence)
         {
-            var match = proteinRegex.Match(sequence);
+            var match = _proteinRegex.Match(sequence);
             if (!match.Success) return true;
             LogErrorInfo(match);
             return false;

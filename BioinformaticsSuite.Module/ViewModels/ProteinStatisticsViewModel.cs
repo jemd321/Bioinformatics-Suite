@@ -13,7 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
      public class ProteinStatisticsViewModel : SequenceViewModel
     {
-        private readonly StringBuilder displayStringBuilder = new StringBuilder();
+        private string _title = "Protein Statistics";
+        private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
         public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser,
             IEventAggregator eventAggregator) : base(sequenceFactory, sequenceParser, eventAggregator) {}
@@ -31,12 +32,12 @@ namespace BioinformaticsSuite.Module.ViewModels
                 {
                     Dictionary<char, int> aminoAcidCount = protein.Sequence.CountAminoAcids();
 
-                    displayStringBuilder.AppendLine(protein.Label);
+                    _displayStringBuilder.AppendLine(protein.Label);
                     BuildDisplayString(aminoAcidCount, protein.Sequence.Length);
                 }
                 SelectedTab = SelectedTab.Result;
-                ResultBoxText = displayStringBuilder.ToString();
-                displayStringBuilder.Clear();
+                ResultBoxText = _displayStringBuilder.ToString();
+                _displayStringBuilder.Clear();
             }
             else
             {
@@ -51,16 +52,16 @@ namespace BioinformaticsSuite.Module.ViewModels
 
             foreach (var aminoAcid in aminoAcidCount)
             {
-                displayStringBuilder.Append(aminoAcid.Key).Append(": ").Append(aminoAcid.Value).Append(" ");
+                _displayStringBuilder.Append(aminoAcid.Key).Append(": ").Append(aminoAcid.Value).Append(" ");
             }
-            displayStringBuilder.AppendLine();
+            _displayStringBuilder.AppendLine();
 
             foreach (var aminoAcid in aminoAcidCount)
             {
                 decimal percentage = Math.Round(((decimal)aminoAcid.Value / (decimal)proteinLength) * 100, 2);
-                displayStringBuilder.Append(aminoAcid.Key).Append(": ").Append(percentage).Append(" ");
+                _displayStringBuilder.Append(aminoAcid.Key).Append(": ").Append(percentage).Append("% ");
             }
-            displayStringBuilder.AppendLine();
+            _displayStringBuilder.AppendLine();
         }
     }
 }

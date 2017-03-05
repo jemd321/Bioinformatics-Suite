@@ -12,11 +12,11 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class DnaTranslateViewModel : SequenceViewModel
+    public class ConversionEmblFastaViewModel : SequenceViewModel
     {
-        private string _title = "Translate DNA";
+        private string _title = "Convert EMBL format to FASTA";
 
-        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
+        public ConversionEmblFastaViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
             IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
         }
@@ -41,7 +41,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
                     translatedSequences.Add(labelledSequence.Key, proteinSequence);
                 }
-                List<LabelledSequence> labelledProteins  = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
+                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
                 ResultBoxText = BuildDisplayString(labelledProteins);
                 SelectedTab = SelectedTab.Result;
             }

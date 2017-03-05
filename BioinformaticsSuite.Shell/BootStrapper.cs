@@ -12,7 +12,7 @@ namespace BioinformaticsSuite.Shell
         {
             base.ConfigureModuleCatalog();
 
-            ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+            var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
             moduleCatalog.AddModule(typeof(ModuleInit));
         }
 

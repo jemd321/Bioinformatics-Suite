@@ -12,20 +12,20 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ProteinOpenReadingFrameViewModel : SequenceViewModel
     {
-        private string title = "Open Reading Frames";
-        private readonly StringBuilder displayStringBuilder = new StringBuilder();
-        private readonly IOpenReadingFrameFinder openReadingFrameFinder;
+        private string _title = "Open Reading Frames";
+        private readonly StringBuilder _displayStringBuilder = new StringBuilder();
+        private readonly IOpenReadingFrameFinder _openReadingFrameFinder;
 
         public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator, IOpenReadingFrameFinder openReadingFrameFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
-            this.openReadingFrameFinder = openReadingFrameFinder;
-            if(this.openReadingFrameFinder == null) throw new ArgumentNullException(nameof(openReadingFrameFinder));
+            this._openReadingFrameFinder = openReadingFrameFinder;
+            if(this._openReadingFrameFinder == null) throw new ArgumentNullException(nameof(openReadingFrameFinder));
         }
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public override void OnRun()
@@ -39,11 +39,11 @@ namespace BioinformaticsSuite.Module.ViewModels
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
-                    Dictionary<string, string> labelledOrfs = openReadingFrameFinder.FindOpenReadingFrames((Dna) labelledSequence);
+                    Dictionary<string, string> labelledOrfs = _openReadingFrameFinder.FindOpenReadingFrames((Dna) labelledSequence);
                     BuildDisplayString(labelledSequence.Label, labelledOrfs);
                 }
-                ResultBoxText = displayStringBuilder.ToString();
-                displayStringBuilder.Clear();
+                ResultBoxText = _displayStringBuilder.ToString();
+                _displayStringBuilder.Clear();
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -55,11 +55,11 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void BuildDisplayString(string label, Dictionary<string, string> labelledOrfs)
         {
-            displayStringBuilder.AppendLine(label);
+            _displayStringBuilder.AppendLine(label);
             foreach (var orf in labelledOrfs)
             {
-                displayStringBuilder.AppendLine(orf.Key);
-                displayStringBuilder.AppendLine(orf.Value);
+                _displayStringBuilder.AppendLine(orf.Key);
+                _displayStringBuilder.AppendLine(orf.Value);
             }
         }
     }

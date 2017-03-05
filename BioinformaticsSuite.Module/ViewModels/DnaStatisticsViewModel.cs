@@ -14,9 +14,9 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaStatisticsViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory readingFrameFactory;
-        private string title = "DNA Statistics";
-        private readonly StringBuilder displayStringBuilder = new StringBuilder();
+        private readonly IReadingFrameFactory _readingFrameFactory;
+        private string _title = "DNA Statistics";
+        private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
         public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator
              ) : base(sequenceFactory, sequenceParser, eventAggregator)
@@ -25,8 +25,8 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
         public override void OnRun()
@@ -45,8 +45,8 @@ namespace BioinformaticsSuite.Module.ViewModels
 
                     BuildDisplayString(labelledSequence, sequenceLength, baseCount, basePercent);
                 }
-                ResultBoxText = displayStringBuilder.ToString();
-                displayStringBuilder.Clear();
+                ResultBoxText = _displayStringBuilder.ToString();
+                _displayStringBuilder.Clear();
                 SelectedTab = SelectedTab.Result;
             }
             else
@@ -78,8 +78,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             decimal tPercent = basePercent[3];
 
 
-            displayStringBuilder.AppendLine(labelledSequence.Label);
-            displayStringBuilder.Append("SequenceLength: ")
+            _displayStringBuilder.AppendLine(labelledSequence.Label);
+            _displayStringBuilder.Append("SequenceLength: ")
                 .Append(sequenceLength)
                 .Append("    Base Count:  A:   ")
                 .Append(aCount)

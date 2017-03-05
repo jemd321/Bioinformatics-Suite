@@ -14,5 +14,12 @@
 
         public const string ProteinOpenReadingFrameView = "ProteinOpenReadingFrameView";
         public const string ProteinStatisticsView = "ProteinStatisticsView";
+
+        public const string ConversionFastaCombineView = "ConversionFastaCombineView";
+        public const string ConversionEmblFastaView = "ConversionEmblFastaView";
+        public const string ConversionEmblTranslateView = "ConversionEmblTranslateView";
+        public const string ConversionGenbankFastaView = "ConversionGenbankFastaView";
+        public const string ConversionGenbankTranslateView = "ConversionGenbankTranslateView";
+
     }
 }

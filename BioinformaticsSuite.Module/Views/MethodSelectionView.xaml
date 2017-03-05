@@ -9,7 +9,7 @@
              d:DesignHeight="300"
              mvvm:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" Background="AliceBlue">
+        <TabControl x:Name="TabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight ="200" Background="AliceBlue">
             <TabItem Header="DNA">
                 <StackPanel>
                     <StackPanel.Resources>
@@ -219,13 +219,19 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="ConversionMethod1" GroupName ="Methods" Content="Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
+                    <RadioButton x:Name="ConversionFastaCombine" GroupName ="Methods" Content="Combine FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionFastaCombine" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="ConversionMethod2" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ConversionEmblFasta" GroupName ="Methods" Content="EMBL to FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionEmblFasta" VerticalAlignment="Top">
                     </RadioButton>
 
-                    <RadioButton x:Name="ConversionMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ConversionEmblTranslate" GroupName ="Methods" Content="EMBL Protein to FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionEmblTranslate" VerticalAlignment="Top">
+                    </RadioButton>
+
+                    <RadioButton x:Name="ConversionGenbankFasta" GroupName ="Methods" Content="Genbank to FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionGenbankFasta" VerticalAlignment="Top">
+                    </RadioButton>
+                    
+                    <RadioButton x:Name="ConversionGenbankTranslate" GroupName ="Methods" Content="Genbank Protein to FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionGenbankTranslate" VerticalAlignment="Top">
                     </RadioButton>
                 </StackPanel>
             </TabItem>

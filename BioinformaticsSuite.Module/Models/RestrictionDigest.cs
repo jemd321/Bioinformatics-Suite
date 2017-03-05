@@ -17,7 +17,7 @@ namespace BioinformaticsSuite.Module.Models
 
     public class RestrictionDigest : IRestrictionDigest
     {
-        private readonly Regex cutSiteRegex = new Regex(@"\|", RegexOptions.Compiled);
+        private readonly Regex _cutSiteRegex = new Regex(@"\|", RegexOptions.Compiled);
 
         public List<LabelledDigestFragments> FindRestrictionDigestFragments(List<string> enzymes, List<LabelledSequence> labelledSequences)
         {
@@ -36,8 +36,8 @@ namespace BioinformaticsSuite.Module.Models
            
         private List<DigestFragment> Digest(string cutSiteEnzyme, List<DigestFragment> inputFragments)
         {
-            int cutIndex = cutSiteRegex.Match(cutSiteEnzyme).Index; // eg. AAG|CC gives cut index of 3, ie. the index of the char right of the cut marker once the marker is gone.
-            string enzyme = cutSiteRegex.Replace(cutSiteEnzyme, "");
+            int cutIndex = _cutSiteRegex.Match(cutSiteEnzyme).Index; // eg. AAG|CC gives cut index of 3, ie. the index of the char right of the cut marker once the marker is gone.
+            string enzyme = _cutSiteRegex.Replace(cutSiteEnzyme, "");
             var digestRegex = new Regex(enzyme);
 
             var resultFragments = new List<DigestFragment>();
