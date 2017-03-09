@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BioinformaticsSuite.Module.Utility;
 using NuGet;
 
 namespace BioinformaticsSuite.Module.Models
 {
     public interface IGenbankConverter
     {
-        Dictionary<string, string> ConvertGenbank(string genbankFile);
+        Dictionary<string, string> ConvertGenbankFastaDna(string genbankFile);
+        Dictionary<string, string> ConvertGenbankFastaProtein(string genbankFile);
     }
 
     public class GenbankConverter : IGenbankConverter
@@ -32,10 +34,34 @@ namespace BioinformaticsSuite.Module.Models
 
         private static readonly StringBuilder RecordBuilder = new StringBuilder();
 
-        public Dictionary<string, string> ConvertGenbank(string genbankFile)
+        public Dictionary<string, string> ConvertGenbankFastaDna(string genbankFile)
         {
             var labelledSequences = new Dictionary<string, string>();
+            List<string> genbankRecords = SplitGenbankFile(genbankFile);
+            foreach (var record in genbankRecords)
+            {
+                string label = ExtractLabel(record);
+                string sequence = ExtractSequence(record);
+                labelledSequences.Add(label, sequence);
+            }
+            return labelledSequences;
+        }
 
+        public Dictionary<string, string> ConvertGenbankFastaProtein(string genbankFile)
+        {
+            var labelledSequences = new Dictionary<string, string>();
+            List<string> genbankRecords = SplitGenbankFile(genbankFile);
+            foreach (var record in genbankRecords)
+            {
+                string label = ExtractLabel(record);
+                string sequence = ExtractSequence(record);
+                labelledSequences.Add(label, Translation.TranslateDnaToProtein(sequence));
+            }
+            return labelledSequences;
+        }
+
+        private List<string> SplitGenbankFile(string genbankFile)
+        {
             if (!genbankFile.EndsWith("//"))
             {
                 // FORMAT ERROR - not a valid genbank file
@@ -50,13 +76,7 @@ namespace BioinformaticsSuite.Module.Models
             {
                 // FORMAT ERROR - Inform user
             }
-            foreach (var record in genbankRecords)
-            {
-                string label = ExtractLabel(record);
-                string sequence = ExtractSequence(record);
-                labelledSequences.Add(label, sequence);
-            }
-            return labelledSequences;
+            return genbankRecords;
         }
 
         private string[] ParseGenbank(string genbankRecord)

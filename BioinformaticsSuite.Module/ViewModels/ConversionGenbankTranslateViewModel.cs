@@ -14,11 +14,15 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionGenbankTranslateViewModel : SequenceViewModel
     {
-        private string _title = "Convert a Genbank format protein sequence into a FASTA sequence";
+        private string _title = "Genbank Translate to protein FASTA";
+
+        private readonly IGenbankConverter _genbankConverter;
 
         public ConversionGenbankTranslateViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+            IGenbankConverter genbankConverter) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
+            _genbankConverter = genbankConverter;
+            if (genbankConverter == null) throw new ArgumentNullException(nameof(genbankConverter));
         }
 
         public string Title
@@ -30,26 +34,11 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
-            {
-                var parsedSequences = SequenceParser.ParsedSequences;
-                var translatedSequences = new Dictionary<string, string>();
-                foreach (var labelledSequence in parsedSequences)
-                {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
-                    translatedSequences.Add(labelledSequence.Key, proteinSequence);
-                }
-                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
-                ResultBoxText = BuildDisplayString(labelledProteins);
-                SelectedTab = SelectedTab.Result;
-            }
-            else
-            {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
-            }
-            SequenceParser.ResetSequences();
+            string genbankRecord = InputBoxText;
+            Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaProtein(genbankRecord);
+            List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
+            ResultBoxText = BuildDisplayString(labelledSequences);
+            SelectedTab = SelectedTab.Result;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
     public class GenbankConverterTests
     {
         [TestMethod()]
-        public void ConvertGenbankTest()
+        public void ConvertGenbankFastaDnaTest()
         {
             // Arrange
             var genbankConverter = SetupMock();
@@ -16,16 +16,37 @@ namespace BioinformaticsSuite.ModuleTests.Models
                 "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    " +
                 "ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
 
-            string expectedlabel = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone            IMAGE:5494573), complete cds.";
+            string expectedlabel = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.";
             string expectedSequence = "CCACGCGTCCGGGTGGTGCCAAATTCTGGGGCCTAGGCATTTCCCTCGCTTTATGTTTTT";
 
-            var labelledFasta = genbankConverter.ConvertGenbank(testCase);
+            var labelledFasta = genbankConverter.ConvertGenbankFastaDna(testCase);
             var actualLabel = labelledFasta.FirstOrDefault().Key;
             var actualSequence = labelledFasta.FirstOrDefault().Value;
        
             Assert.AreEqual(expectedlabel, actualLabel);
             Assert.AreEqual(expectedSequence, actualSequence);
         }
+
+        [TestMethod()]
+        public void ConvertGenbankFastaProteinTest()
+        {
+            // Arrange
+            var genbankConverter = SetupMock();
+            string testCase =
+                "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    " +
+                "ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
+
+            string expectedlabel = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.";
+            string expectedSequence = "PRVRVVPNSGAXAFPSLYVF";
+
+            var labelledFasta = genbankConverter.ConvertGenbankFastaProtein(testCase);
+            var actualLabel = labelledFasta.FirstOrDefault().Key;
+            var actualSequence = labelledFasta.FirstOrDefault().Value;
+
+            Assert.AreEqual(expectedlabel, actualLabel);
+            Assert.AreEqual(expectedSequence, actualSequence);
+        }
+
 
         private IGenbankConverter SetupMock()
         {

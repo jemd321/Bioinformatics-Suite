@@ -16,7 +16,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionGenbankFastaViewModel : SequenceViewModel
     {
-        private string _title = "Convert Genbank format into FASTA";
+        private string _title = "Genbank to FASTA DNA converter";
         private readonly IGenbankConverter _genbankConverter;
 
         public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
@@ -36,7 +36,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             const SequenceType sequenceType = SequenceType.Dna;
             string genbankRecord = InputBoxText;
-            Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbank(genbankRecord);
+            Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaDna(genbankRecord);
             List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
             ResultBoxText = BuildDisplayString(labelledSequences);
             SelectedTab = SelectedTab.Result;

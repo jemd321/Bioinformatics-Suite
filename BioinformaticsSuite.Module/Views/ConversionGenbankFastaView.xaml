@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
             Height="Auto" Width="Auto">
     <local:SequenceView>
-        <TextBlock Text="Convert Genbank format sequences into FASTA" />
+        <TextBlock Text="Convert Genbank format DNA sequences into DNA FASTA sequences" />
     </local:SequenceView>
 </UserControl>
 

@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
             Height="Auto" Width="Auto">
     <local:SequenceView>
-        <TextBlock Text="Convert Genbank format protein sequences into FASTA format" />
+        <TextBlock Text="Convert Genbank format DNA sequences into protein in FASTA format" />
     </local:SequenceView>
 </UserControl>
