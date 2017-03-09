@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Models
 {
-    class FastaCombiner
+    class EmblConvert
     {
     }
 }

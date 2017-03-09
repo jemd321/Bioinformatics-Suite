@@ -57,6 +57,7 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<IMotifFinder, MotifFinder>();
             _container.RegisterType<IRestrictionDigest, RestrictionDigest>();
             _container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
+            _container.RegisterType<IGenbankConverter, GenbankConverter>();
 
             // StartUp Views Registration
             _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

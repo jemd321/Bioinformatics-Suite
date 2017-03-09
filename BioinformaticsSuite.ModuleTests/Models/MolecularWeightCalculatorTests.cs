@@ -1,12 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BioinformaticsSuite.Module.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BioinformaticsSuite.Module.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BioinformaticsSuite.Module.Models.Tests
+namespace BioinformaticsSuite.ModuleTests.Models
 {
     [TestClass()]
     public class MolecularWeightCalculatorTests

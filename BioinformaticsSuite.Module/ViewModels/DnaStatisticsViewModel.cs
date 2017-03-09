@@ -14,7 +14,6 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaStatisticsViewModel : SequenceViewModel
     {
-        private readonly IReadingFrameFactory _readingFrameFactory;
         private string _title = "DNA Statistics";
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
