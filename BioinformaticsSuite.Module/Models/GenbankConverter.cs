@@ -11,15 +11,12 @@ namespace BioinformaticsSuite.Module.Models
 {
     public interface IGenbankConverter
     {
-        Dictionary<string, string> ConvertGenbankFastaDna(string genbankFile);
-        Dictionary<string, string> ConvertGenbankFastaProtein(string genbankFile);
+        Dictionary<string, string> ConvertGenbankFastaDna(List<string> genbankFile);
+        Dictionary<string, string> ConvertGenbankFastaProtein(List<string> genbankFile);
     }
 
     public class GenbankConverter : IGenbankConverter
     {
-        // Regex for splitting a genbank file into single records
-        private static readonly Regex FileSeparatorRegex = new Regex(@"(?<!http:)\/\/");
-
         // Regexes for finding index of keywords that define section info
         private static readonly Regex VersionRegex = new Regex(@"VERSION", RegexOptions.Compiled);
         private static readonly Regex KeywordsRegex = new Regex(@"KEYWORDS", RegexOptions.Compiled);
@@ -34,10 +31,9 @@ namespace BioinformaticsSuite.Module.Models
 
         private static readonly StringBuilder RecordBuilder = new StringBuilder();
 
-        public Dictionary<string, string> ConvertGenbankFastaDna(string genbankFile)
+        public Dictionary<string, string> ConvertGenbankFastaDna(List<string> genbankRecords)
         {
             var labelledSequences = new Dictionary<string, string>();
-            List<string> genbankRecords = SplitGenbankFile(genbankFile);
             foreach (var record in genbankRecords)
             {
                 string label = ExtractLabel(record);
@@ -47,10 +43,9 @@ namespace BioinformaticsSuite.Module.Models
             return labelledSequences;
         }
 
-        public Dictionary<string, string> ConvertGenbankFastaProtein(string genbankFile)
+        public Dictionary<string, string> ConvertGenbankFastaProtein(List<string> genbankRecords)
         {
             var labelledSequences = new Dictionary<string, string>();
-            List<string> genbankRecords = SplitGenbankFile(genbankFile);
             foreach (var record in genbankRecords)
             {
                 string label = ExtractLabel(record);
@@ -58,32 +53,6 @@ namespace BioinformaticsSuite.Module.Models
                 labelledSequences.Add(label, Translation.TranslateDnaToProtein(sequence));
             }
             return labelledSequences;
-        }
-
-        private List<string> SplitGenbankFile(string genbankFile)
-        {
-            if (!genbankFile.EndsWith("//"))
-            {
-                // FORMAT ERROR - not a valid genbank file
-            }
-            List<string> genbankRecords = ParseGenbank(genbankFile).ToList();
-            string last = genbankRecords.Last();
-            if (string.IsNullOrWhiteSpace(last))
-            {
-                genbankRecords.RemoveAt(genbankRecords.Count - 1);
-            }
-            else
-            {
-                // FORMAT ERROR - Inform user
-            }
-            return genbankRecords;
-        }
-
-        private string[] ParseGenbank(string genbankRecord)
-        {
-            string[] genbankRecords = FileSeparatorRegex.Split(genbankRecord);
-            return genbankRecords;
-
         }
 
         private string ExtractLabel(string record)

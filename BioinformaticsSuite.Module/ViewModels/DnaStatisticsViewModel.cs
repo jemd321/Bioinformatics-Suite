@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "DNA Statistics";
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
-        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator
-             ) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator
+             ) : base(sequenceFactory, fastaParser, eventAggregator)
         {
         }
 
@@ -31,10 +31,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
@@ -50,9 +50,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         private static decimal[] CalculateBasePercentage(int[] baseCount, decimal sequenceLength)

@@ -34,13 +34,13 @@ namespace BioinformaticsSuite.Module.ViewModels
         // Unity requires public constructors to resolve, do not make protected.
         public SequenceViewModel() { }
 
-        public SequenceViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator)
+        public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator)
         {
-            SequenceParser = sequenceParser;
+            FastaParser = fastaParser;
             SequenceFactory = sequenceFactory;
             EventAggregator = eventAggregator;
             if(SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
-            if(SequenceParser == null) throw new ArgumentNullException(nameof(sequenceParser));
+            if(FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
             if(EventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
 
             NotificationRequest = new InteractionRequest<INotification>();
@@ -53,7 +53,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         }
 
         public ISequenceFactory SequenceFactory { get; }
-        public ISequenceParser SequenceParser { get; }
+        public IFastaParser FastaParser { get; }
         public IEventAggregator EventAggregator { get; }
 
         public InteractionRequest<INotification> NotificationRequest { get; private set; }

@@ -95,7 +95,7 @@
     <Compile Include="Enums\SequenceType.cs" />
     <Compile Include="Behaviours\AvalonEditBehaviour.cs" />
     <Compile Include="Models\DigestFragment.cs" />
-    <Compile Include="Models\EmblConvert.cs" />
+    <Compile Include="Models\EmblConverter.cs" />
     <Compile Include="Models\FastaManipulator.cs" />
     <Compile Include="Models\GenbankConverter.cs" />
     <Compile Include="Models\LabelledDigestFragments.cs" />
@@ -107,10 +107,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\EmblParser.cs" />
+    <Compile Include="Services\GenbankParser.cs" />
     <Compile Include="Services\SequenceFactory.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="Models\Dna.cs" />
-    <Compile Include="Services\SequenceParser.cs" />
+    <Compile Include="Services\FastaParser.cs" />
     <Compile Include="Models\LabelledSequence.cs" />
     <Compile Include="Models\Rna.cs" />
     <Compile Include="Models\OpenReadingFrameFinder.cs" />

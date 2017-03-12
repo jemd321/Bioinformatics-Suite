@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "Combine multiple FASTA sequences into a single sequence";
         private readonly IFastaManipulator _fastaManipulator;
 
-        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IFastaManipulator fastaManipulator) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             _fastaManipulator = fastaManipulator;
             if(fastaManipulator == null) { throw new ArgumentNullException(nameof(fastaManipulator));}
@@ -33,10 +33,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                Dictionary<string, string> parsedSequences = SequenceParser.ParsedSequences;
+                Dictionary<string, string> parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledFastas = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
                 var combinedFastas = SequenceFactory.CreateLabelledSequences(_fastaManipulator.CombineFasta(labelledFastas), SequenceType.Dna);
                 ResultBoxText = BuildDisplayString(combinedFastas);
@@ -44,9 +44,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
     }
 }

@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IMolecularWeightCalculator _molecularWeightCalculator;
         private string _title = "DNA Molecular Weight";
 
-        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             this._molecularWeightCalculator = molecularWeightCalculator;
             if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));
@@ -33,10 +33,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
@@ -47,9 +47,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

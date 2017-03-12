@@ -52,7 +52,7 @@ namespace BioinformaticsSuite.Module
             // Service Registration
             _container.RegisterType<IReadingFrameFactory, ReadingFrameFactory>();
             _container.RegisterType<ISequenceFactory, SequenceFactory>();
-            _container.RegisterType<ISequenceParser, SequenceParser>();
+            _container.RegisterType<IFastaParser, FastaParser>();
             _container.RegisterType<ISequenceValidator, SequenceValidator>();
             _container.RegisterType<IMolecularWeightCalculator, MolecularWeightCalculator>();
             _container.RegisterType<IMotifFinder, MotifFinder>();
@@ -60,7 +60,7 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
             _container.RegisterType<IFastaManipulator, FastaManipulator>();
             _container.RegisterType<IGenbankConverter, GenbankConverter>();
-
+            _container.RegisterType<IGenbankParser, GenbankParser>();
 
             // StartUp Views Registration
             _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

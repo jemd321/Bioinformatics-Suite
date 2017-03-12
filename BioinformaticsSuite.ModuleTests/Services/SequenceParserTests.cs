@@ -12,10 +12,10 @@ namespace BioinformaticsSuite.ModuleTests.Services
     {   
         private const SequenceType SequenceType = Module.Enums.SequenceType.Dna;
 
-        public ISequenceParser InstantiateParser()
+        public IFastaParser InstantiateParser()
         {
-            ISequenceParser sequenceParser = new SequenceParser(new SequenceValidator());
-            return sequenceParser;
+            IFastaParser fastaParser = new FastaParser(new SequenceValidator());
+            return fastaParser;
         }
 
         [TestMethod()]

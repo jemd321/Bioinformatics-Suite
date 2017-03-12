@@ -18,8 +18,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IReadingFrameFactory _readingFrameFactory;
         private string _title = "Find Reading Frames";
 
-        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             this._readingFrameFactory = readingFrameFactory;
             if(readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
@@ -34,10 +34,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 var readingFrames = CreateReadingFrames(labelledSequences);
                 ResultBoxText = BuildDisplayString(readingFrames);
@@ -45,9 +45,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)

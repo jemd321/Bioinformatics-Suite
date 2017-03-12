@@ -16,8 +16,8 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "Translate DNA";
 
-        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser, eventAggregator)
         {
         }
 
@@ -30,10 +30,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 var translatedSequences = new Dictionary<string, string>();
                 foreach (var labelledSequence in parsedSequences)
                 {
@@ -47,9 +47,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
     }
 }

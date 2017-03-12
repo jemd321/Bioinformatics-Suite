@@ -8,7 +8,7 @@ using BioinformaticsSuite.Module.Models;
 
 namespace BioinformaticsSuite.Module.Services
 {
-    public class SequenceParser : ISequenceParser
+    public class FastaParser : IFastaParser
     {
         private SequenceType _sequenceType;
         private Dictionary<string, string> _parsedSequences = new Dictionary<string, string>();
@@ -17,7 +17,7 @@ namespace BioinformaticsSuite.Module.Services
         private readonly ISequenceValidator _sequenceValidator;
         private readonly Regex _lineParser = new Regex("\n", RegexOptions.Compiled);
 
-        public SequenceParser(ISequenceValidator sequenceValidator)
+        public FastaParser(ISequenceValidator sequenceValidator)
         {
             this._sequenceValidator = sequenceValidator;
         }
@@ -254,7 +254,7 @@ namespace BioinformaticsSuite.Module.Services
         }
     }
 
-    public interface ISequenceParser
+    public interface IFastaParser
     {
         bool TryParseInput(string sequence, SequenceType sequenceType);
         string ErrorMessage { get; }

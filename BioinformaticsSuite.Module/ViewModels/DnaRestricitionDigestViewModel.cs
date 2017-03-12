@@ -25,8 +25,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _enzymeBox2Selection;
         private string _enzymeBox3Selection;
 
-        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IRestrictionDigest restrictionDigest) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             this._restrictionDigest = restrictionDigest;
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));
@@ -72,10 +72,10 @@ namespace BioinformaticsSuite.Module.ViewModels
                 return;
             }
 
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
                 var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
                 ResultBoxText = BuildDisplayString(labelledDigestFragments);
@@ -83,9 +83,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         private void ImportEnzymes()

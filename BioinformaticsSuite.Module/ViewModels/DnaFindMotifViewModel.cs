@@ -22,8 +22,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "Find Motifs";
         private string _motifBoxText;
 
-        public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IMotifFinder motifFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IMotifFinder motifFinder) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             this._motifFinder = motifFinder;
             if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));
@@ -67,10 +67,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             bool isValidMotif = _motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
             if (isValidMotif)
             {
-                bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
                 if (isParsedSuccessfully)
                 {
-                    var parsedSequences = SequenceParser.ParsedSequences;
+                    var parsedSequences = FastaParser.ParsedSequences;
                     List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
 
                     var labelledMatches = new Dictionary<string, MatchCollection>();
@@ -84,14 +84,14 @@ namespace BioinformaticsSuite.Module.ViewModels
                 }
                 else
                 {
-                    RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
                 }
             }
             else
             {
                 RaiseInvalidInputNotification("A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" + _motifFinder.InvalidMotifMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
            
         // Concatenates labels and sequences for display in the sequence text box.

@@ -18,8 +18,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _sequenceLengthBoxText;
         private readonly IFastaManipulator _fastaManipulator;
 
-        public ConversionFastaSplitViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IFastaManipulator fastaManipulator) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public ConversionFastaSplitViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             _fastaManipulator = fastaManipulator;
             if (fastaManipulator == null) { throw new ArgumentNullException(nameof(fastaManipulator)); }
@@ -42,10 +42,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             const SequenceType sequenceType = SequenceType.Dna;
             int splitLength;
             if(!ValidateSequenceLengthBox(out splitLength)) return;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                Dictionary<string, string> parsedSequences = SequenceParser.ParsedSequences;
+                Dictionary<string, string> parsedSequences = FastaParser.ParsedSequences;
                 int shortestSequenceLength = parsedSequences.Select(parsedSequence => parsedSequence.Value.Length).Min();
                 if (splitLength >= shortestSequenceLength)
                 {
@@ -67,9 +67,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(SequenceParser.ErrorMessage);
+                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         private bool ValidateSequenceLengthBox(out int splitLength)

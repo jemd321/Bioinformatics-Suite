@@ -18,12 +18,15 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "Genbank to FASTA DNA converter";
         private readonly IGenbankConverter _genbankConverter;
+        private readonly IGenbankParser _genbankParser;
 
-        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IGenbankConverter genbankConverter) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             _genbankConverter = genbankConverter;
+            _genbankParser = genbankParser;
             if (genbankConverter == null) throw new ArgumentNullException(nameof(genbankConverter));
+            if (genbankParser == null) throw new ArgumentNullException(nameof(genbankParser));
         }
 
         public string Title
@@ -35,11 +38,20 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            string genbankRecord = InputBoxText;
-            Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaDna(genbankRecord);
-            List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
-            ResultBoxText = BuildDisplayString(labelledSequences);
-            SelectedTab = SelectedTab.Result;
+            if (_genbankParser.TryParseGenbankFile(InputBoxText))
+            {
+                var genbankRecords = _genbankParser.GenbankRecords;
+                Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaDna(genbankRecords);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
+                ResultBoxText = BuildDisplayString(labelledSequences);
+                SelectedTab = SelectedTab.Result;
+            }
+            else
+            {
+                RaiseInvalidInputNotification(_genbankParser.ErrorMessage);
+                return;
+            }
+
         }
     }
 }

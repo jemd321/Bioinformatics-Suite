@@ -16,7 +16,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
         private readonly IOpenReadingFrameFinder _openReadingFrameFinder;
 
-        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator, IOpenReadingFrameFinder openReadingFrameFinder) : base(sequenceFactory, sequenceParser, eventAggregator)
+        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator, IOpenReadingFrameFinder openReadingFrameFinder) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             this._openReadingFrameFinder = openReadingFrameFinder;
             if(this._openReadingFrameFinder == null) throw new ArgumentNullException(nameof(openReadingFrameFinder));
@@ -31,11 +31,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            var isParsedSuccesfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            var isParsedSuccesfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccesfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
-                bool containsOrfs = false;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
@@ -48,9 +47,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
         }
 
         private void BuildDisplayString(string label, Dictionary<string, string> labelledOrfs)

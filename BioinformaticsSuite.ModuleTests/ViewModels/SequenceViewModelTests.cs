@@ -37,9 +37,9 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         private MockViewModel SetUpMock()
         {
             ISequenceFactory sequenceFactory = new SequenceFactory();
-            ISequenceParser sequenceParser = new SequenceParser(new SequenceValidator());
+            IFastaParser fastaParser = new FastaParser(new SequenceValidator());
             IEventAggregator eventAggregator = new EventAggregator();
-            MockViewModel mockViewModel = new MockViewModel(sequenceFactory, sequenceParser, eventAggregator);
+            MockViewModel mockViewModel = new MockViewModel(sequenceFactory, fastaParser, eventAggregator);
             return mockViewModel;
         }
     }

@@ -16,16 +16,22 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "Protein Statistics";
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
-        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser,
-            IEventAggregator eventAggregator) : base(sequenceFactory, sequenceParser, eventAggregator) {}
+        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IEventAggregator eventAggregator) : base(sequenceFactory, fastaParser, eventAggregator) {}
+
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value); }      
+        }
 
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Protein;
-            bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     sequenceType);
                 foreach (var protein in labelledSequences)
@@ -41,9 +47,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(SequenceParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
-            SequenceParser.ResetSequences();
+            FastaParser.ResetSequences();
 
         }
 
