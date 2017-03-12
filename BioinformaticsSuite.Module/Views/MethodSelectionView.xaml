@@ -222,6 +222,9 @@
                     <RadioButton x:Name="ConversionFastaCombine" GroupName ="Methods" Content="Combine FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionFastaCombine" VerticalAlignment="Top" >
                     </RadioButton>
 
+                    <RadioButton x:Name="ConversionFastaSplit" GroupName ="Methods" Content="Split FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionFastaSplit" VerticalAlignment="Top" >
+                    </RadioButton>
+
                     <RadioButton x:Name="ConversionEmblFasta" GroupName ="Methods" Content="EMBL to FASTA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionEmblFasta" VerticalAlignment="Top">
                     </RadioButton>
 

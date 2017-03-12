@@ -43,6 +43,7 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);
 
             _container.RegisterType<object, ConversionFastaCombineView>(ViewNames.ConversionFastaCombineView);
+            _container.RegisterType<object, ConversionFastaSplitView>(ViewNames.ConversionFastaSplitView);
             _container.RegisterType<object, ConversionEmblFastaView>(ViewNames.ConversionEmblFastaView);
             _container.RegisterType<object, ConversionEmblTranslateView>(ViewNames.ConversionEmblTranslateView);
             _container.RegisterType<object, ConversionGenbankFastaView>(ViewNames.ConversionGenbankFastaView);
@@ -57,7 +58,9 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<IMotifFinder, MotifFinder>();
             _container.RegisterType<IRestrictionDigest, RestrictionDigest>();
             _container.RegisterType<IOpenReadingFrameFinder, OpenReadingFrameFinder>();
+            _container.RegisterType<IFastaManipulator, FastaManipulator>();
             _container.RegisterType<IGenbankConverter, GenbankConverter>();
+
 
             // StartUp Views Registration
             _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

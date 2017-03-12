@@ -16,6 +16,7 @@
         public const string ProteinStatistics = "ProteinStatistics";
 
         public const string ConversionFastaCombine = "ConversionFastaCombine";
+        public const string ConversionFastaSplit = "ConversionFastaSplit";
         public const string ConversionEmblFasta = "ConversionEmblFasta";
         public const string ConversionEmblTranslate = "ConversionEmblTranslate";
         public const string ConversionGenbankFasta = "ConversionGenbankFasta";

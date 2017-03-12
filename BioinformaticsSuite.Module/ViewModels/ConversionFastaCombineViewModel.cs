@@ -15,10 +15,13 @@ namespace BioinformaticsSuite.Module.ViewModels
     public class ConversionFastaCombineViewModel : SequenceViewModel
     {
         private string _title = "Combine multiple FASTA sequences into a single sequence";
+        private readonly IFastaManipulator _fastaManipulator;
 
         public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, ISequenceParser sequenceParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, sequenceParser, eventAggregator)
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, sequenceParser, eventAggregator)
         {
+            _fastaManipulator = fastaManipulator;
+            if(fastaManipulator == null) { throw new ArgumentNullException(nameof(fastaManipulator));}
         }
 
         public string Title
@@ -33,16 +36,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             bool isParsedSuccessfully = SequenceParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
-                var parsedSequences = SequenceParser.ParsedSequences;
-                var translatedSequences = new Dictionary<string, string>();
-                foreach (var labelledSequence in parsedSequences)
-                {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
-                    translatedSequences.Add(labelledSequence.Key, proteinSequence);
-                }
-                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
-                ResultBoxText = BuildDisplayString(labelledProteins);
+                Dictionary<string, string> parsedSequences = SequenceParser.ParsedSequences;
+                List<LabelledSequence> labelledFastas = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
+                var combinedFastas = SequenceFactory.CreateLabelledSequences(_fastaManipulator.CombineFasta(labelledFastas), SequenceType.Dna);
+                ResultBoxText = BuildDisplayString(combinedFastas);
                 SelectedTab = SelectedTab.Result;
             }
             else

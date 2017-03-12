@@ -126,6 +126,7 @@
     <Compile Include="ViewModels\ConversionEmblFastaViewModel.cs" />
     <Compile Include="ViewModels\ConversionEmblTranslateViewModel.cs" />
     <Compile Include="ViewModels\ConversionFastaCombineViewModel.cs" />
+    <Compile Include="ViewModels\ConversionFastaSplitViewModel.cs" />
     <Compile Include="ViewModels\ConversionGenbankFastaViewModel.cs" />
     <Compile Include="ViewModels\ConversionGenbankTranslateViewModel.cs" />
     <Compile Include="ViewModels\DnaMolecularWeightViewModel.cs" />
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="Views\ConversionFastaCombineView.xaml.cs">
       <DependentUpon>ConversionFastaCombineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConversionFastaSplitView.xaml.cs">
+      <DependentUpon>ConversionFastaSplitView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConversionGenbankFastaView.xaml.cs">
       <DependentUpon>ConversionGenbankFastaView.xaml</DependentUpon>
@@ -207,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConversionFastaCombineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionFastaSplitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

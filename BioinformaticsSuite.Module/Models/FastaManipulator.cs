@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Models
 {
-    class FastaManipulator
+    public interface IFastaManipulator
+    {
+        Dictionary<string, string> CombineFasta(List<LabelledSequence> sequences);
+        Dictionary<string, string> SplitFasta(LabelledSequence sequence, int fragmentLength);
+    }
+
+
+    public class FastaManipulator : IFastaManipulator
     {
         private static readonly StringBuilder SequenceBuilder = new StringBuilder();
 
@@ -39,18 +46,18 @@ namespace BioinformaticsSuite.Module.Models
 
             for (int i = 0; i < originalLength; i += fragmentLength)
             {
-                // Label format : >Fragment Number;Start Index;End Index;Fragment Length;Original Length;
-                SequenceBuilder.Append(">Fragment_")
+                // Label format : >Fragment Number;Source_label;Start Index;End Index;Fragment Length;Original Length;
+                SequenceBuilder.Append(">fragment_")
                     .Append(fragmentNumber)
                     .Append(";")
                     .Append(labelledSequence.Label)
-                    .Append(";Start=")
-                    .Append(i)
-                    .Append(";End=")
+                    .Append(";start=")
+                    .Append(i + 1)
+                    .Append(";end=")
                     .Append(i + fragmentLength)
-                    .Append(";Length=")
+                    .Append(";length=")
                     .Append(fragmentLength)
-                    .Append(";Source_Length=")
+                    .Append(";source_length=")
                     .Append(originalLength)
                     .Append(";");
                 string label = SequenceBuilder.ToString();

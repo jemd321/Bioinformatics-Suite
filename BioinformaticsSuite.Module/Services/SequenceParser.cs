@@ -215,12 +215,7 @@ namespace BioinformaticsSuite.Module.Services
 
         private string IdentifyLineAsEitherSequenceOrLabel(string line)
         {
-            string lineTag;
-            if (line.StartsWith(">"))
-            {
-                lineTag = "label";
-            }
-            else lineTag = "sequence";
+            string lineTag = line.StartsWith(">") ? "label" : "sequence";
             return lineTag;
         }
 

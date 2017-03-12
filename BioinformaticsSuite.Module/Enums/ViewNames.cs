@@ -16,6 +16,7 @@
         public const string ProteinStatisticsView = "ProteinStatisticsView";
 
         public const string ConversionFastaCombineView = "ConversionFastaCombineView";
+        public const string ConversionFastaSplitView = "ConversionFastaSplitView";
         public const string ConversionEmblFastaView = "ConversionEmblFastaView";
         public const string ConversionEmblTranslateView = "ConversionEmblTranslateView";
         public const string ConversionGenbankFastaView = "ConversionGenbankFastaView";

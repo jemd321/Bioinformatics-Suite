@@ -69,6 +69,9 @@ namespace BioinformaticsSuite.Module.ViewModels
                 case MethodNames.ConversionFastaCombine:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionFastaCombineView, UriKind.Relative));
                     break;
+                case MethodNames.ConversionFastaSplit:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionFastaSplitView, UriKind.Relative));
+                    break;
                 case MethodNames.ConversionEmblFasta:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionEmblFastaView, UriKind.Relative));
                     break;
