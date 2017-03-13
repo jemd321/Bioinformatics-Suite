@@ -20,7 +20,7 @@ namespace BioinformaticsSuite.Module.Services
         private static readonly Regex FileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
 
         public List<string> GenbankRecords { get; private set; }
-        public string ErrorMessage { get; private set; }
+        public string ErrorMessage { get; private set; } = string.Empty;
 
         public bool TryParseGenbankFile(string genbankFile)
         {

@@ -100,7 +100,7 @@
     <Compile Include="Services\EmblParserTests.cs" />
     <Compile Include="Services\GenbankParserTests.cs" />
     <Compile Include="Services\SequenceFactoryTests.cs" />
-    <Compile Include="Services\SequenceParserTests.cs" />
+    <Compile Include="Services\FastaParserTests.cs" />
     <Compile Include="Services\SequenceValidatorTests.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModelTests.cs" />
     <Compile Include="ViewModels\DnaStatisticsViewModelTests.cs" />

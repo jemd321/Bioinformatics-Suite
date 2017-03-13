@@ -11,12 +11,11 @@ namespace BioinformaticsSuite.ModuleTests.Models
         [TestMethod()]
         public void ConvertGenbankFastaDnaTest()
         {
-            // Arrange
             var genbankConverter = SetupMock();
             string testString =
                 "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    " +
                 "ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
-            List<string> testCase = new List<string>() {testString};
+            var testCase = new List<string> {testString};
             string expectedlabel = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.";
             string expectedSequence = "CCACGCGTCCGGGTGGTGCCAAATTCTGGGGCCTAGGCATTTCCCTCGCTTTATGTTTTT";
 
@@ -31,7 +30,6 @@ namespace BioinformaticsSuite.ModuleTests.Models
         [TestMethod()]
         public void ConvertGenbankFastaProteinTest()
         {
-            // Arrange
             var genbankConverter = SetupMock();
             string testString =
                 "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    " +
