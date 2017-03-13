@@ -16,12 +16,15 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "EMBL to FASTA DNA converter";
         private readonly IEmblConverter _emblConverter;
+        private readonly IEmblParser _emblParser;
 
         public ConversionEmblFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IEmblConverter emblConverter) : base(sequenceFactory, fastaParser, eventAggregator)
+            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser, eventAggregator)
         {
             _emblConverter = emblConverter;
-            if (emblConverter == null) throw new ArgumentNullException(nameof(emblConverter));
+            _emblParser = emblParser;
+            if (_emblConverter == null) throw new ArgumentNullException(nameof(emblConverter));
+            if (_emblParser == null) throw new ArgumentNullException(nameof(emblParser));
         }
 
         public string Title
@@ -33,16 +36,21 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            List<string> emblRecords = ParseEmbl(InputBoxText);
-            Dictionary<string, string> labelledFastas = _emblConverter.ConvertEmblFastaDna(emblRecords);
-            List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
-            ResultBoxText = BuildDisplayString(labelledSequences);
+            if (_emblParser.TryParseEmblFile(InputBoxText))
+            {
+                List<string> emblRecords = _emblParser.EmblRecords;
+                Dictionary<string, string> labelledFastas = _emblConverter.ConvertEmblFastaDna(emblRecords);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
+                ResultBoxText = BuildDisplayString(labelledSequences);
+            }
+            else
+            {
+                RaiseInvalidInputNotification(_emblParser.ErrorMessage);
+                _emblParser.ResetSequences();
+                return;
+            }
             SelectedTab = SelectedTab.Result;
-        }
-
-        private List<string> ParseEmbl(string input)
-        {
-            return new List<string>();
+            _emblParser.ResetSequences();
         }
     }
 }

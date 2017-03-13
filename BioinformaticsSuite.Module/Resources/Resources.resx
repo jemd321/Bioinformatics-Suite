@@ -127,6 +127,12 @@
   <data name="MultipleLabelledSequences" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>MultipleLabelledSequences.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="SampleEmblFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleEmblFile.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SampleGenbankFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleGenbankFile.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SingleLabelledSequence" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SingleLabelledSequence.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -12,6 +12,7 @@ namespace BioinformaticsSuite.Module.Services
         List<string> GenbankRecords { get; }
         string ErrorMessage { get; }
         bool TryParseGenbankFile(string genbankFile);
+        void ResetSequences();
     }
 
     public class GenbankParser : IGenbankParser
@@ -23,7 +24,7 @@ namespace BioinformaticsSuite.Module.Services
 
         public bool TryParseGenbankFile(string genbankFile)
         {
-            var whitespaceChars = new char[] {' ', '\n', '\r'};
+            var whitespaceChars = new [] {' ', '\n', '\r'};
             genbankFile = genbankFile.TrimEnd(whitespaceChars);
 
             if (!genbankFile.EndsWith("//"))
@@ -50,6 +51,12 @@ namespace BioinformaticsSuite.Module.Services
         {
             string[] genbankRecords = FileSeparatorRegex.Split(genbankRecord);
             return genbankRecords;
+        }
+
+        public void ResetSequences()
+        {
+            ErrorMessage = "";
+            GenbankRecords = new List<string>();
         }
     }
 }

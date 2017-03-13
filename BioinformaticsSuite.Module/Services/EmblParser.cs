@@ -13,17 +13,20 @@ namespace BioinformaticsSuite.Module.Services
         List<string> EmblRecords { get; }
         string ErrorMessage { get; }
         bool TryParseEmblFile(string emblFile);
+        void ResetSequences();
     }
 
     public class EmblParser : IEmblParser
     {
-        private static readonly Regex FileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
+        private readonly Regex _fileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
 
         public List<string> EmblRecords { get; private set; }
-        public string ErrorMessage { get; private set; }
+        public string ErrorMessage { get; private set; } = string.Empty;
 
         public bool TryParseEmblFile(string emblFile)
         {
+            var whitespaceChars = new [] { ' ', '\n', '\r' };
+            emblFile = emblFile.Trim(whitespaceChars);
             if (!emblFile.EndsWith("//"))
             {
                 ErrorMessage = "Invalid Embl format - each record must end with '//'";
@@ -43,10 +46,16 @@ namespace BioinformaticsSuite.Module.Services
             return true;
         }
 
-        private static IEnumerable<string> ParseEmbl(string emblRecord)
+        private IEnumerable<string> ParseEmbl(string emblRecord)
         {
-            string[] genbankRecords = FileSeparatorRegex.Split(emblRecord);
+            string[] genbankRecords = _fileSeparatorRegex.Split(emblRecord);
             return genbankRecords;
+        }
+
+        public void ResetSequences()
+        {
+            ErrorMessage = "";
+            EmblRecords = new List<string>();
         }
     }
 }

@@ -18,9 +18,9 @@ namespace BioinformaticsSuite.Module.Models
     {
         private static readonly Regex AccessionRegex = new Regex(@"AC.*?;", RegexOptions.Compiled);
         private static readonly Regex DescriptionRegex = new Regex(@"DE.*", RegexOptions.Compiled);
-        private static readonly Regex SequenceRegex = new Regex(@";.*\/\/", RegexOptions.Compiled);
+        private static readonly Regex SequenceRegex = new Regex(@"SQ.*;", RegexOptions.Compiled);
 
-        private static readonly Regex SequenceReplaceRegex = new Regex(@"[;\s\d]", RegexOptions.Compiled);
+        private static readonly Regex SequenceReplaceRegex = new Regex(@"[;\s\d\/]", RegexOptions.Compiled);
 
         private static readonly StringBuilder RecordBuilder = new StringBuilder();
 
@@ -31,7 +31,7 @@ namespace BioinformaticsSuite.Module.Models
             {
                 string label = ExtractLabel(emblRecord);
                 string sequence = ExtractSequence(emblRecord);
-                labelledFastas.Add(label, sequence);
+                labelledFastas.Add(label, sequence.ToUpper());
             }
             return labelledFastas;
         }
@@ -42,7 +42,7 @@ namespace BioinformaticsSuite.Module.Models
             foreach (string emblRecord in emblRecords)
             {
                 string label = ExtractLabel(emblRecord);
-                string sequence = ExtractSequence(emblRecord);
+                string sequence = ExtractSequence(emblRecord).ToUpper();
                 labelledFastas.Add(label, Translation.TranslateDnaToProtein(sequence));
             }
             return labelledFastas;
@@ -50,10 +50,10 @@ namespace BioinformaticsSuite.Module.Models
 
         private static string ExtractLabel(string emblRecord)
         {
-            var trimAcChars = new char[] {' ', 'A', 'C', ';'};
+            var trimAcChars = new char[] {' ', 'A', 'C', ';', '\r', '\n'};
             string accession = AccessionRegex.Match(emblRecord).Value.Trim(trimAcChars);
 
-            var trimDeChars = new char[] {' ', 'D', 'E', ';'};
+            var trimDeChars = new char[] {' ', 'D', 'E', ';', '\r', '\n'};
             string description = DescriptionRegex.Match(emblRecord).Value.Trim(trimDeChars);
 
             // >ACCESSION|DESCRIPTION - label format
@@ -64,7 +64,13 @@ namespace BioinformaticsSuite.Module.Models
 
         private static string ExtractSequence(string emblRecord)
         {
-            string sequence = SequenceRegex.Match(emblRecord).Value;
+            var sequenceHeader = SequenceRegex.Match(emblRecord);
+            var headerIndex = sequenceHeader.Index;
+            var headerLength = sequenceHeader.Length;
+            var sequenceStartIndex = headerIndex + headerLength;
+
+            var sequenceLength = emblRecord.Length - sequenceStartIndex;
+            string sequence = emblRecord.Substring(sequenceStartIndex, sequenceLength);
             return SequenceReplaceRegex.Replace(sequence, "");
         }
     }

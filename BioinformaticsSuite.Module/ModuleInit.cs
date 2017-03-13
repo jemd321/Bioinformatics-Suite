@@ -61,6 +61,8 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<IFastaManipulator, FastaManipulator>();
             _container.RegisterType<IGenbankConverter, GenbankConverter>();
             _container.RegisterType<IGenbankParser, GenbankParser>();
+            _container.RegisterType<IEmblConverter, EmblConverter>();
+            _container.RegisterType<IEmblParser, EmblParser>();
 
             // StartUp Views Registration
             _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,

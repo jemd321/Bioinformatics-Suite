@@ -87,6 +87,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\EmblConverterTests.cs" />
     <Compile Include="Models\FastaManipulatorTests.cs" />
     <Compile Include="Models\GenbankConverterTests.cs" />
     <Compile Include="Models\MolecularWeightCalculatorTests.cs" />
@@ -96,6 +97,8 @@
     <Compile Include="Models\RestrictionDigestTests.cs" />
     <Compile Include="Models\TranslatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmblParserTests.cs" />
+    <Compile Include="Services\GenbankParserTests.cs" />
     <Compile Include="Services\SequenceFactoryTests.cs" />
     <Compile Include="Services\SequenceParserTests.cs" />
     <Compile Include="Services\SequenceValidatorTests.cs" />

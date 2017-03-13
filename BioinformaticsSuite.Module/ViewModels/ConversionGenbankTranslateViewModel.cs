@@ -43,13 +43,15 @@ namespace BioinformaticsSuite.Module.ViewModels
                 Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaProtein(genbankRecords);
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
                 ResultBoxText = BuildDisplayString(labelledSequences);
-                SelectedTab = SelectedTab.Result;
             }
             else
             {
                 RaiseInvalidInputNotification(_genbankParser.ErrorMessage);
+                _genbankParser.ResetSequences();
                 return;
             }
+            SelectedTab = SelectedTab.Result;
+            _genbankParser.ResetSequences();
         }
     }
 }

@@ -141,6 +141,50 @@ namespace BioinformaticsSuite.Module.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.
+        ///XX
+        ///AC   AB000263;
+        ///XX
+        ///DT   24-APR-1997 (Rel. 51, Created)
+        ///DT   25-APR-1997 (Rel. 51, Last updated, Version 2)
+        ///XX
+        ///DE   Human mRNA for prepro cortistatin like peptide, complete cds.
+        ///XX
+        ///KW   prepro cortistatin like peptide.
+        ///XX
+        ///OS   Homo sapiens (human)
+        ///OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+        ///OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+        ///OC   Homo.
+        ///XX
+        ///RN   [1]
+        ///RP   1-368 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SampleEmblFile {
+            get {
+                return ResourceManager.GetString("SampleEmblFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LOCUS       SCU49845     5028 bp    DNA             PLN       21-JUN-1999
+        ///DEFINITION  Saccharomyces cerevisiae TCP1-beta gene, partial cds, and Axl2p
+        ///            (AXL2) and Rev7p (REV7) genes, complete cds.
+        ///ACCESSION   U49845
+        ///VERSION     U49845.1  GI:1293613
+        ///KEYWORDS    .
+        ///SOURCE      Saccharomyces cerevisiae (baker&apos;s yeast)
+        ///  ORGANISM  Saccharomyces cerevisiae
+        ///            Eukaryota; Fungi; Ascomycota; Saccharomycotina; Saccharomycetes;
+        ///            Saccharomycetales; Saccharomycetaceae; Saccharomyce [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SampleGenbankFile {
+            get {
+                return ResourceManager.GetString("SampleGenbankFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &gt;SequenceLabel
         ///TGTAATTGGTAAGGTGGTAACCACTGACCGTTACTAACGCCCAACTATAAAGTTTAGAGG
         ///TTACTTGGGGTTCGTCCATGAATGAGCACGCGTACGTATAAATGCCATATACCGGTGAAA

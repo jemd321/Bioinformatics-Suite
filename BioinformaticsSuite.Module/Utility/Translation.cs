@@ -76,26 +76,26 @@ namespace BioinformaticsSuite.Module.Utility
 
         public static string TranslateDnaToProtein(string dnaSequence)
         {
-            string rna = ConvertDnatoRna(dnaSequence);
+            string rna = ConvertDnatoRna(dnaSequence.ToUpper());
             string protein = ConvertRnaToProtein(rna);
             return protein;
         }
 
         public static string TranscribeDnaToRna(string dnaSequence)
         {
-            string rna = ConvertDnatoRna(dnaSequence);
+            string rna = ConvertDnatoRna(dnaSequence.ToUpper());
             return rna;
         }
 
         public static string TranslateRnaToProtein(string rnaSequence)
         {
-            string protein = ConvertRnaToProtein(rnaSequence);
+            string protein = ConvertRnaToProtein(rnaSequence.ToUpper());
             return protein;
         }
 
         private static string ConvertDnatoRna(string dna)
         {
-            return dna.Replace('T', 'U');
+            return dna.ToUpper().Replace('T', 'U');
         }
 
         private static string ConvertRnaToProtein(string rnaReadingFrame)

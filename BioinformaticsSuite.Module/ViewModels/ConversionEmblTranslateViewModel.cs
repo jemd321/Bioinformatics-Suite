@@ -15,12 +15,17 @@ namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionEmblTranslateViewModel : SequenceViewModel
     {
-        private string _title = "Convert EMBL format to a protein sequence in FASTA";
-        private static readonly Regex FileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
+        private string _title = "EMBL to FASTA Protein converter";
+        private readonly IEmblConverter _emblConverter;
+        private readonly IEmblParser _emblParser;
 
         public ConversionEmblTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser, eventAggregator)
+            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser, eventAggregator)
         {
+            _emblConverter = emblConverter;
+            _emblParser = emblParser;
+            if (_emblConverter == null) throw new ArgumentNullException(nameof(emblConverter));
+            if (_emblParser == null) throw new ArgumentNullException(nameof(emblParser));
         }
 
         public string Title
@@ -32,26 +37,21 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            if (_emblParser.TryParseEmblFile(InputBoxText))
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                var translatedSequences = new Dictionary<string, string>();
-                foreach (var labelledSequence in parsedSequences)
-                {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
-                    translatedSequences.Add(labelledSequence.Key, proteinSequence);
-                }
-                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
-                ResultBoxText = BuildDisplayString(labelledProteins);
-                SelectedTab = SelectedTab.Result;
+                List<string> emblRecords = _emblParser.EmblRecords;
+                Dictionary<string, string> labelledFastas = _emblConverter.ConvertEmblFastaProtein(emblRecords);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, SequenceType.Protein);
+                ResultBoxText = BuildDisplayString(labelledSequences);
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
+                RaiseInvalidInputNotification(_emblParser.ErrorMessage);
+                _emblParser.ResetSequences();
+                return;
             }
-            FastaParser.ResetSequences();
+            SelectedTab = SelectedTab.Result;
+            _emblParser.ResetSequences();
         }
     }
 }

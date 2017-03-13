@@ -8,6 +8,14 @@ using BioinformaticsSuite.Module.Models;
 
 namespace BioinformaticsSuite.Module.Services
 {
+    public interface IFastaParser
+    {
+        bool TryParseInput(string sequence, SequenceType sequenceType);
+        string ErrorMessage { get; }
+        Dictionary<string, string> ParsedSequences { get; }
+        void ResetSequences();
+    }
+
     public class FastaParser : IFastaParser
     {
         private SequenceType _sequenceType;
@@ -252,13 +260,5 @@ namespace BioinformaticsSuite.Module.Services
             ErrorMessage = "";
             _parsedSequences = new Dictionary<string, string>();
         }
-    }
-
-    public interface IFastaParser
-    {
-        bool TryParseInput(string sequence, SequenceType sequenceType);
-        string ErrorMessage { get; }
-        Dictionary<string, string> ParsedSequences { get; }
-        void ResetSequences();
     }
 }
