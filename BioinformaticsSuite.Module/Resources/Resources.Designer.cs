@@ -61,6 +61,77 @@ namespace BioinformaticsSuite.Module.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &gt;SequenceLabel
+        ///TGTAATTGGTAAGGTGGTAACCACTGACCGTTACTAACGCCCAACTATAAAGTTTAGAGG
+        ///TTACTTGGGGTTCGTCCATGAATGAGCACGCGTACGTATAAATGCCATATACCGGTGAAA
+        ///AGTCTTGTCACCTAGTGACGTCGAGAGACTGCATCAACTTGTGTTACCTTAAACCGCTGC
+        ///GAATAGGTCCTTTAGGTTATATGCTTCACGACTGAGTCCGCCTCCATAGAGACCTTCGTC
+        ///CTGTTCAACATCAACGTGTCCGGGATGTGGTGGGACCTTAACATTCTGTGAGGATTGCCA
+        ///CGGGGCACCCTTCCCXCTTTATACGATGTATTATGGTTCTTTACCGGTTTGAACCACGGC
+        ///ATTGATGATCAGAACAGTGCTGATTGTGCACATCGAAAAGCACGGCCTCTATGTCCGCGT
+        ///CCTCCCGCCTGACGACGTGTATGGGATACGCTCGGCACTTTTAACTGTGAATTCCATTCT
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DnaInvalidLabelledSequence {
+            get {
+                return ResourceManager.GetString("DnaInvalidLabelledSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;Sequence1
+        ///ATGCTTAGTGGACTAAGAGGCGCGGGCGGCCGGTATTAGGTATCACCCGCCCTCCACAAT
+        ///CCGCGTGCGGGCATCTCGATTCTTTTTTCTGAACTCTGTCCTTCGATGTCTTGGAAAATA
+        ///ACATAATTTCTTGCATGTTGTTCGTACCCCAGGACGGGAGCGCGTAACCGTCAATACGTG
+        ///TCGATCGTAACACTTCTGTATATGGGCTAAGCCATAGTGGGCGTGTCTGGTATCTCCAAG
+        ///TGCCTACGCCGTCAGACAAGAGACTGAGTCCCCTACTGCCGAACGGCATGGTTGCCTTCC
+        ///CCGTTCATATATGATATAACGGGTTTCCAGTACTTAACGCAAACCTATATATAAATCCCC
+        ///AGAGGCGTGTTCAAGGGCTTTAGACAGTGGGATCGATCCGTTCGATTAGTGCAGGGAAAA
+        ///AAACAATCCTTACGGGAGACGATGAATCGGTGGGAGACTACACCTCTGGAACCTTAATTA
+        ///TATG [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DnaMultipleLabelledSequences {
+            get {
+                return ResourceManager.GetString("DnaMultipleLabelledSequences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;SequenceLabel
+        ///TGTAATTGGTAAGGTGGTAACCACTGACCGTTACTAACGCCCAACTATAAAGTTTAGAGG
+        ///TTACTTGGGGTTCGTCCATGAATGAGCACGCGTACGTATAAATGCCATATACCGGTGAAA
+        ///AGTCTTGTCACCTAGTGACGTCGAGAGACTGCATCAACTTGTGTTACCTTAAACCGCTGC
+        ///GAATAGGTCCTTTAGGTTATATGCTTCACGACTGAGTCCGCCTCCATAGAGACCTTCGTC
+        ///CTGTTCAACATCAACGTGTCCGGGATGTGGTGGGACCTTAACATTCTGTGAGGATTGCCA
+        ///CGGGGCACCCTTCCCGCTTTATACGATGTATTATGGTTCTTTACCGGTTTGAACCACGGC
+        ///ATTGATGATCAGAACAGTGCTGATTGTGCACATCGAAAAGCACGGCCTCTATGTCCGCGT
+        ///CCTCCCGCCTGACGACGTGTATGGGATACGCTCGGCACTTTTAACTGTGAATTCCATTCT
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DnaSingleLabelledSequence {
+            get {
+                return ResourceManager.GetString("DnaSingleLabelledSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TTAACCCCCTTAGTTCACGGGGTTACTTAAAGGAAGTTATCACGGGGAATCCCACATTGA
+        ///TCTGGCTGGGTCCAACGTTATAATTGGACGACTTTATGCGGCTCGACTGCCAAAGGTGGG
+        ///CGGGGTCAGATAAGGACAGATGGGGAATGTTCTCTCCCTACTTGTGTATGAATGCGATGA
+        ///TCTGGACGGACACCAGCACACTCTACACGGAGTAAGTCTAACAGATCAGATTGGATGTTC
+        ///AGAAGGACGTCATGCCGTCGGGATTCCCGAGTTGCGGATATGTCAGAGCACACTATCGGA
+        ///CCGTCGCAGAGGATGTCCAGCAAAAACATCTTACATATTGCTATCCGAAGGACGTCCGGG
+        ///GACGTTGGCAAACCACAACCGGGGTTTTAGTCTGCACCTGCAAGTTTTGTGTAACTTTCG
+        ///TGCCTGCACCTCTCCGGGGAGAAAGGTATATCAGCCCTCACTAAAGACGAACCCTATATT
+        ///CACCCTGTCGTACCGG [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DnaUnlabelledSequence {
+            get {
+                return ResourceManager.GetString("DnaUnlabelledSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AatI agg|cct
         ///AatII gacgt|c
         ///Acc16I tgc|gca
@@ -105,38 +176,36 @@ namespace BioinformaticsSuite.Module.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &gt;SequenceLabel
-        ///TGTAATTGGTAAGGTGGTAACCACTGACCGTTACTAACGCCCAACTATAAAGTTTAGAGG
-        ///TTACTTGGGGTTCGTCCATGAATGAGCACGCGTACGTATAAATGCCATATACCGGTGAAA
-        ///AGTCTTGTCACCTAGTGACGTCGAGAGACTGCATCAACTTGTGTTACCTTAAACCGCTGC
-        ///GAATAGGTCCTTTAGGTTATATGCTTCACGACTGAGTCCGCCTCCATAGAGACCTTCGTC
-        ///CTGTTCAACATCAACGTGTCCGGGATGTGGTGGGACCTTAACATTCTGTGAGGATTGCCA
-        ///CGGGGCACCCTTCCCXCTTTATACGATGTATTATGGTTCTTTACCGGTTTGAACCACGGC
-        ///ATTGATGATCAGAACAGTGCTGATTGTGCACATCGAAAAGCACGGCCTCTATGTCCGCGT
-        ///CCTCCCGCCTGACGACGTGTATGGGATACGCTCGGCACTTTTAACTGTGAATTCCATTCT
-        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &gt;RNA Sample Single Sequence 1
+        ///UGUAAUUGGU AAGGUGGUAA CCACUGACCG UUACUAACGC CCAACUAUAA AGUUUAGAGG 
+        ///UUACUUGGGG UUCGUCCAUG AAUGAGCACG CGUACGUAUA AAUGCCAUAU ACCGGUGAAA 
+        ///AGUCUUGUCA CCUAGUGACG UCGAGAGACU GCAUCAACUU GUGUUACCUU AAACCGCUGC 
+        ///GAAUAGGUCC UUUAGGUUAU AUGCUUCACG ACUGAGUCCG CCUCCAUAGA GACCUUCGUC 
+        ///CUGUUCAACA UCAACGUGUC CGGGAUGUGG UGGGACCUUA ACAUUCUGUG AGGAUUGCCA 
+        ///CGGGGCACCC UUCCCGCUUU AUACGAUGUA UUAUGGUUCU UUACCGGUUU GAACCACGGC 
+        ///AUUGAUGAUC AGAACAGUGC UGAUUGUGCA CAUCGAAAAG CACGGCCUCU AUGUCCGCGU 
+        ///CCUCC [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string InvalidLabelledSequence {
+        internal static string RnaMultipleSequences {
             get {
-                return ResourceManager.GetString("InvalidLabelledSequence", resourceCulture);
+                return ResourceManager.GetString("RnaMultipleSequences", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &gt;Sequence1
-        ///ATGCTTAGTGGACTAAGAGGCGCGGGCGGCCGGTATTAGGTATCACCCGCCCTCCACAAT
-        ///CCGCGTGCGGGCATCTCGATTCTTTTTTCTGAACTCTGTCCTTCGATGTCTTGGAAAATA
-        ///ACATAATTTCTTGCATGTTGTTCGTACCCCAGGACGGGAGCGCGTAACCGTCAATACGTG
-        ///TCGATCGTAACACTTCTGTATATGGGCTAAGCCATAGTGGGCGTGTCTGGTATCTCCAAG
-        ///TGCCTACGCCGTCAGACAAGAGACTGAGTCCCCTACTGCCGAACGGCATGGTTGCCTTCC
-        ///CCGTTCATATATGATATAACGGGTTTCCAGTACTTAACGCAAACCTATATATAAATCCCC
-        ///AGAGGCGTGTTCAAGGGCTTTAGACAGTGGGATCGATCCGTTCGATTAGTGCAGGGAAAA
-        ///AAACAATCCTTACGGGAGACGATGAATCGGTGGGAGACTACACCTCTGGAACCTTAATTA
-        ///TATG [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &gt;RNA Sample Single Sequence
+        ///UGUAAUUGGU AAGGUGGUAA CCACUGACCG UUACUAACGC CCAACUAUAA AGUUUAGAGG 
+        ///UUACUUGGGG UUCGUCCAUG AAUGAGCACG CGUACGUAUA AAUGCCAUAU ACCGGUGAAA 
+        ///AGUCUUGUCA CCUAGUGACG UCGAGAGACU GCAUCAACUU GUGUUACCUU AAACCGCUGC 
+        ///GAAUAGGUCC UUUAGGUUAU AUGCUUCACG ACUGAGUCCG CCUCCAUAGA GACCUUCGUC 
+        ///CUGUUCAACA UCAACGUGUC CGGGAUGUGG UGGGACCUUA ACAUUCUGUG AGGAUUGCCA 
+        ///CGGGGCACCC UUCCCGCUUU AUACGAUGUA UUAUGGUUCU UUACCGGUUU GAACCACGGC 
+        ///AUUGAUGAUC AGAACAGUGC UGAUUGUGCA CAUCGAAAAG CACGGCCUCU AUGUCCGCGU 
+        ///CCUCCCG [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string MultipleLabelledSequences {
+        internal static string RnaSingleSequence {
             get {
-                return ResourceManager.GetString("MultipleLabelledSequences", resourceCulture);
+                return ResourceManager.GetString("RnaSingleSequence", resourceCulture);
             }
         }
         
@@ -181,41 +250,6 @@ namespace BioinformaticsSuite.Module.Resources {
         internal static string SampleGenbankFile {
             get {
                 return ResourceManager.GetString("SampleGenbankFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &gt;SequenceLabel
-        ///TGTAATTGGTAAGGTGGTAACCACTGACCGTTACTAACGCCCAACTATAAAGTTTAGAGG
-        ///TTACTTGGGGTTCGTCCATGAATGAGCACGCGTACGTATAAATGCCATATACCGGTGAAA
-        ///AGTCTTGTCACCTAGTGACGTCGAGAGACTGCATCAACTTGTGTTACCTTAAACCGCTGC
-        ///GAATAGGTCCTTTAGGTTATATGCTTCACGACTGAGTCCGCCTCCATAGAGACCTTCGTC
-        ///CTGTTCAACATCAACGTGTCCGGGATGTGGTGGGACCTTAACATTCTGTGAGGATTGCCA
-        ///CGGGGCACCCTTCCCGCTTTATACGATGTATTATGGTTCTTTACCGGTTTGAACCACGGC
-        ///ATTGATGATCAGAACAGTGCTGATTGTGCACATCGAAAAGCACGGCCTCTATGTCCGCGT
-        ///CCTCCCGCCTGACGACGTGTATGGGATACGCTCGGCACTTTTAACTGTGAATTCCATTCT
-        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SingleLabelledSequence {
-            get {
-                return ResourceManager.GetString("SingleLabelledSequence", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to TTAACCCCCTTAGTTCACGGGGTTACTTAAAGGAAGTTATCACGGGGAATCCCACATTGA
-        ///TCTGGCTGGGTCCAACGTTATAATTGGACGACTTTATGCGGCTCGACTGCCAAAGGTGGG
-        ///CGGGGTCAGATAAGGACAGATGGGGAATGTTCTCTCCCTACTTGTGTATGAATGCGATGA
-        ///TCTGGACGGACACCAGCACACTCTACACGGAGTAAGTCTAACAGATCAGATTGGATGTTC
-        ///AGAAGGACGTCATGCCGTCGGGATTCCCGAGTTGCGGATATGTCAGAGCACACTATCGGA
-        ///CCGTCGCAGAGGATGTCCAGCAAAAACATCTTACATATTGCTATCCGAAGGACGTCCGGG
-        ///GACGTTGGCAAACCACAACCGGGGTTTTAGTCTGCACCTGCAAGTTTTGTGTAACTTTCG
-        ///TGCCTGCACCTCTCCGGGGAGAAAGGTATATCAGCCCTCACTAAAGACGAACCCTATATT
-        ///CACCCTGTCGTACCGG [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string UnlabelledSequence {
-            get {
-                return ResourceManager.GetString("UnlabelledSequence", resourceCulture);
             }
         }
     }

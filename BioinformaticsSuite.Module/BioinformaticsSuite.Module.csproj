@@ -141,8 +141,10 @@
     <Compile Include="Enums\MethodNames.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModel.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModel.cs" />
+    <Compile Include="ViewModels\ProteinMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\ProteinOpenReadingFrameViewModel.cs" />
     <Compile Include="ViewModels\ProteinStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\RnaTranslateViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModel.cs" />
     <Compile Include="Enums\ViewNames.cs" />
     <Compile Include="Views\ConversionEmblFastaView.xaml.cs">
@@ -193,11 +195,17 @@
     <Compile Include="Views\PopupViews\DnaHelpPopupView.xaml.cs">
       <DependentUpon>DnaHelpPopupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProteinMolecularWeightView.xaml.cs">
+      <DependentUpon>ProteinMolecularWeightView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProteinOpenReadingFrameView.xaml.cs">
       <DependentUpon>ProteinOpenReadingFrameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProteinStatisticsView.xaml.cs">
       <DependentUpon>ProteinStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RnaTranslateView.xaml.cs">
+      <DependentUpon>RnaTranslateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -268,11 +276,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ProteinMolecularWeightView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProteinOpenReadingFrameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProteinStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RnaTranslateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +329,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SampleGenbankFile.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RnaSingleSequence.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RnaMultipleSequences.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

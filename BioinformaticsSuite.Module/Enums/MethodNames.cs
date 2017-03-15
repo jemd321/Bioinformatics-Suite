@@ -12,8 +12,11 @@
         public const string DnaTranscribe = "DnaTranscribe";
         public const string DnaTranslate = "DnaTranslate";
 
+        public const string RnaTranslate = "RnaTranslate";
+
         public const string ProteinOpenReadingFrame = "ProteinOpenReadingFrame";
         public const string ProteinStatistics = "ProteinStatistics";
+        public const string ProteinMolecularWeight = "ProteinMolecularWeight";
 
         public const string ConversionFastaCombine = "ConversionFastaCombine";
         public const string ConversionFastaSplit = "ConversionFastaSplit";

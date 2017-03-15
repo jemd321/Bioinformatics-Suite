@@ -18,6 +18,7 @@ namespace BioinformaticsSuite.Module.Services
 
     public class EmblParser : IEmblParser
     {
+        // Identifies '//' that indicates end of record
         private readonly Regex _fileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
 
         public List<string> EmblRecords { get; private set; }
@@ -33,6 +34,8 @@ namespace BioinformaticsSuite.Module.Services
                 return false;
             }
             EmblRecords = ParseEmbl(emblFile).ToList();
+
+            // Regex split generates an empty string as the last record
             string last = EmblRecords.Last();
             if (string.IsNullOrWhiteSpace(last))
             {

@@ -21,8 +21,8 @@ namespace BioinformaticsSuite.Module
 
         public ModuleInit(IUnityContainer container, IRegionManager regionManager)
         {
-            this._container = container;
-            this._regionManager = regionManager;
+            _container = container;
+            _regionManager = regionManager;
         }
 
         public void Initialize()
@@ -39,8 +39,11 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<object, DnaTranscribeView>(ViewNames.DnaTranscribeView);
             _container.RegisterType<object, DnaTranslateView>(ViewNames.DnaTranslateView);
 
+            _container.RegisterType<object, RnaTranslateView>(ViewNames.RnaTranslateView);
+
             _container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
             _container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);
+            _container.RegisterType<object, ProteinMolecularWeightView>(ViewNames.ProteinMolecularWeightView);
 
             _container.RegisterType<object, ConversionFastaCombineView>(ViewNames.ConversionFastaCombineView);
             _container.RegisterType<object, ConversionFastaSplitView>(ViewNames.ConversionFastaSplitView);
@@ -66,7 +69,7 @@ namespace BioinformaticsSuite.Module
 
             // StartUp Views Registration
             _regionManager.RegisterViewWithRegion(RegionNames.MethodSelectionRegion,
-                () => this._container.Resolve<MethodSelectionView>());
+                () => _container.Resolve<MethodSelectionView>());
             _regionManager.RegisterViewWithRegion(RegionNames.SequenceRegion,
                 () => _container.Resolve<IntroView>());
         }

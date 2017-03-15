@@ -19,6 +19,7 @@
                             <Setter Property="Margin" Value="0,0,0,0"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="FontSize" Value="14"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ToggleButton">
@@ -112,13 +113,7 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="RnaMethod1" GroupName ="Methods" Content="Not Implemented"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top" >
-                    </RadioButton>
-
-                    <RadioButton x:Name="RnaMethod2" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
-                    </RadioButton>
-
-                    <RadioButton x:Name="RnaMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="RnaTranslate" GroupName ="Methods" Content="Translate RNA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="RnaTranslate" VerticalAlignment="Top" >
                     </RadioButton>
                 </StackPanel>
 
@@ -166,13 +161,13 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="ProteinMethod1" GroupName ="Methods" Content="Open Reading Frames"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinOpenReadingFrame" VerticalAlignment="Top" >
+                    <RadioButton x:Name="OpenReadingFrames" GroupName ="Methods" Content="Open Reading Frames"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinOpenReadingFrame" VerticalAlignment="Top" >
                     </RadioButton>
 
-                    <RadioButton x:Name="ProteinMethod2" GroupName ="Methods" Content="Protein Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinStatistics" VerticalAlignment="Top">
+                    <RadioButton x:Name="ProteinStatistics" GroupName ="Methods" Content="Protein Statistics"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinStatistics" VerticalAlignment="Top">
                     </RadioButton>
 
-                    <RadioButton x:Name="ProteinMethod3" GroupName ="Methods" Content=""  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ReadingFrame" VerticalAlignment="Top">
+                    <RadioButton x:Name="ProteinMolecularWeight" GroupName ="Methods" Content="Protein Molecular Weight"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinMolecularWeight" VerticalAlignment="Top">
                     </RadioButton>
                 </StackPanel>
             </TabItem>

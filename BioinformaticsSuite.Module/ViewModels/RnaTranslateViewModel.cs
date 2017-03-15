@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
@@ -12,11 +11,11 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class DnaTranslateViewModel : SequenceViewModel
+    public class RnaTranslateViewModel : SequenceViewModel
     {
-        private string _title = "Translate DNA";
+        private string _title = "Translate RNA";
 
-        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator) 
+        public RnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator) 
             : base(sequenceFactory, fastaParser, eventAggregator) { }
 
         public string Title
@@ -27,7 +26,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
+            const SequenceType sequenceType = SequenceType.Rna;
             bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
@@ -35,11 +34,11 @@ namespace BioinformaticsSuite.Module.ViewModels
                 var translatedSequences = new Dictionary<string, string>();
                 foreach (var labelledSequence in parsedSequences)
                 {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
+                    string rnaSequence = labelledSequence.Value;
+                    string proteinSequence = Translation.TranslateRnaToProtein(rnaSequence);
                     translatedSequences.Add(labelledSequence.Key, proteinSequence);
                 }
-                List<LabelledSequence> labelledProteins  = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
+                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
                 ResultBoxText = BuildDisplayString(labelledProteins);
                 SelectedTab = SelectedTab.Result;
             }

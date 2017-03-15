@@ -17,6 +17,7 @@ namespace BioinformaticsSuite.Module.Services
 
     public class GenbankParser : IGenbankParser
     {
+        // Identifies '//' that indicates end of record
         private static readonly Regex FileSeparatorRegex = new Regex(@"(?<!http:)\/\/", RegexOptions.Compiled);
 
         public List<string> GenbankRecords { get; private set; }
@@ -24,7 +25,7 @@ namespace BioinformaticsSuite.Module.Services
 
         public bool TryParseGenbankFile(string genbankFile)
         {
-            var whitespaceChars = new [] {' ', '\n', '\r'};
+            var whitespaceChars = new[] {' ', '\n', '\r'};
             genbankFile = genbankFile.TrimEnd(whitespaceChars);
 
             if (!genbankFile.EndsWith("//"))
@@ -34,6 +35,8 @@ namespace BioinformaticsSuite.Module.Services
             }
 
             GenbankRecords = ParseGenbank(genbankFile).ToList();
+
+            // Regex split generates an empty string as the last record
             string last = GenbankRecords.Last();
             if (string.IsNullOrWhiteSpace(last))
             {
