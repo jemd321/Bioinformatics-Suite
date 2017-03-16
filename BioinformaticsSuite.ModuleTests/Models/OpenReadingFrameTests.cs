@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using BioinformaticsSuite.Module.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class OpenReadingFrameTests
     {
         /*

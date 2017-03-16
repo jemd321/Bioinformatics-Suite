@@ -19,9 +19,9 @@ namespace BioinformaticsSuite.Module.Models
             {
                 if (_complement == null)
                 {
-                    return _complement = FindComplement(this.Sequence);
+                    return _complement = FindComplement(Sequence);
                 }
-                else return _complement;
+                return _complement;
             }
         }
 
@@ -33,7 +33,7 @@ namespace BioinformaticsSuite.Module.Models
                 {
                     return _reverseComplement = FindReverseComplement(ReversedSequence);
                 }
-                else return _reverseComplement;
+                return _reverseComplement;
             }
         }
 

@@ -1,34 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Practices.ObjectBuilder2;
-using NuGet;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaRestricitionDigestViewModel : SequenceViewModel
     {
         private readonly IRestrictionDigest _restrictionDigest;
-        private string _title = "Restriction Digest";
         private List<string> _comboBoxEnzymes = new List<string>();
         private string _enzymeBox1Selection;
         private string _enzymeBox2Selection;
         private string _enzymeBox3Selection;
+        private string _title = "Restriction Digest";
 
         public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
             IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser)
         {
-            this._restrictionDigest = restrictionDigest;
+            _restrictionDigest = restrictionDigest;
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));
             ImportEnzymes();
         }
@@ -56,11 +49,13 @@ namespace BioinformaticsSuite.Module.ViewModels
             get { return _enzymeBox2Selection; }
             set { SetProperty(ref _enzymeBox2Selection, value); }
         }
+
         public string EnzymeBox3Selection
         {
             get { return _enzymeBox3Selection; }
             set { SetProperty(ref _enzymeBox3Selection, value); }
         }
+
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
@@ -76,8 +71,10 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (isParsedSuccessfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
-                var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes, labelledSequences);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                    SequenceType.Dna);
+                var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes,
+                    labelledSequences);
                 ResultBoxText = BuildDisplayString(labelledDigestFragments);
                 SelectedTab = SelectedTab.Result;
             }
@@ -93,21 +90,20 @@ namespace BioinformaticsSuite.Module.ViewModels
             ComboBoxEnzymes.Add("No Enzyme");
             var enzymes = Resources.Resources.Enzymes.Split('\n');
             enzymes.Where(e => e != "").Select(e => e.TrimEnd('\r')).ForEach(ComboBoxEnzymes.Add);
-
         }
 
         private List<string> CollateEnzymeSelections()
         {
             var enzymes = new List<string>();
-            if (!string.IsNullOrEmpty(EnzymeBox1Selection) && EnzymeBox1Selection != "No Enzyme")
+            if (!string.IsNullOrEmpty(EnzymeBox1Selection) && (EnzymeBox1Selection != "No Enzyme"))
             {
                 enzymes.Add(EnzymeBox1Selection.Split(' ').Last().ToUpper());
             }
-            if (!string.IsNullOrEmpty(EnzymeBox2Selection) && EnzymeBox2Selection != "No Enzyme")
+            if (!string.IsNullOrEmpty(EnzymeBox2Selection) && (EnzymeBox2Selection != "No Enzyme"))
             {
                 enzymes.Add(EnzymeBox2Selection.Split(' ').Last().ToUpper());
             }
-            if (!string.IsNullOrEmpty(EnzymeBox3Selection) && EnzymeBox3Selection != "No Enzyme")
+            if (!string.IsNullOrEmpty(EnzymeBox3Selection) && (EnzymeBox3Selection != "No Enzyme"))
             {
                 enzymes.Add(EnzymeBox3Selection.Split(' ').Last().ToUpper());
             }

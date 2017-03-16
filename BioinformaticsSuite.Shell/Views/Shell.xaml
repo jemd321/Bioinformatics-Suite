@@ -6,18 +6,18 @@
         xmlns:prism="http://www.codeplex.com/prism"
         mc:Ignorable="d"
         Title="Bioinformatics Suite" Height="Auto" Width="Auto"
-        Icon ="Icons-Land-Medical-Body-DNA.ico"
+        Icon="Icons-Land-Medical-Body-DNA.ico"
         MinHeight="300"
         MinWidth="530">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
-            <ColumnDefinition Width="1*" MinWidth="300"/>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="1*" MinWidth="300" />
         </Grid.ColumnDefinitions>
 
         <!-- MethodRegion -->
@@ -27,7 +27,7 @@
             <ContentControl x:Name="MethodSelectionRegion"
                             prism:RegionManager.RegionName="MethodSelectionRegion"
                             VerticalContentAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"/>
+                            HorizontalContentAlignment="Stretch" />
         </Border>
 
         <!-- SequenceRegion -->
@@ -36,7 +36,7 @@
             <ContentControl x:Name="SequenceRegion"
                             prism:RegionManager.RegionName="SequenceRegion"
                             VerticalContentAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"/>
+                            HorizontalContentAlignment="Stretch" />
         </Border>
     </Grid>
 </Window>

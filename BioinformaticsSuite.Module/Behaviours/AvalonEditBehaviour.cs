@@ -11,11 +11,12 @@ namespace BioinformaticsSuite.Module.Behaviours
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(AvalonEditBehaviour),
-            new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback));
+                new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    PropertyChangedCallback));
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (string) GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -45,7 +46,7 @@ namespace BioinformaticsSuite.Module.Behaviours
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var behavior = dependencyObject as AvalonEditBehaviour;
-            var editor = behavior.AssociatedObject as TextEditor;
+            var editor = behavior.AssociatedObject;
             if (editor?.Document == null) return;
             var caretOffset = editor.CaretOffset;
             editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue.ToString();

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Models
 {
@@ -32,7 +29,7 @@ namespace BioinformaticsSuite.Module.Models
             // Label format eg. >100 base sequence from 4 sequences
             string combinedLabel = ">" + sequenceLength + " base sequence from " + sequenceCount + " sequences";
             SequenceBuilder.Clear();
-            return new Dictionary<string, string> { { combinedLabel, combinedSequence } };
+            return new Dictionary<string, string> {{combinedLabel, combinedSequence}};
         }
 
         // Split one FASTA sequence into multiple sequences based on a user supplied desired fragment length

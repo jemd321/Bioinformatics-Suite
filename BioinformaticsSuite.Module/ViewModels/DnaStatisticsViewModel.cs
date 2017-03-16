@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.Utility;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class DnaStatisticsViewModel : SequenceViewModel
     {
-        private string _title = "DNA Statistics";
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
+        private string _title = "DNA Statistics";
 
         public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
             : base(sequenceFactory, fastaParser)
@@ -35,11 +31,12 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (isParsedSuccessfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                    sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
                     decimal sequenceLength = labelledSequence.Sequence.Length;
-                    int [] baseCount = labelledSequence.Sequence.CountDnaBases();
+                    int[] baseCount = labelledSequence.Sequence.CountDnaBases();
                     decimal[] basePercent = CalculateBasePercentage(baseCount, sequenceLength);
 
                     BuildDisplayString(labelledSequence, sequenceLength, baseCount, basePercent);
@@ -57,15 +54,16 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private static decimal[] CalculateBasePercentage(int[] baseCount, decimal sequenceLength)
         {
-            decimal aPercent = (decimal)baseCount[0] / sequenceLength * 100;
-            decimal cPercent = (decimal)baseCount[1] / sequenceLength * 100;
-            decimal gPercent = (decimal)baseCount[2] / sequenceLength * 100;
-            decimal tPercent = (decimal)baseCount[3] / sequenceLength * 100;
+            decimal aPercent = baseCount[0]/sequenceLength*100;
+            decimal cPercent = baseCount[1]/sequenceLength*100;
+            decimal gPercent = baseCount[2]/sequenceLength*100;
+            decimal tPercent = baseCount[3]/sequenceLength*100;
             return new[] {aPercent, cPercent, gPercent, tPercent};
         }
 
         // Concatenates labels and sequences for display in the sequence text box.
-        private void BuildDisplayString(LabelledSequence labelledSequence, decimal sequenceLength, int[] baseCount, decimal[] basePercent)
+        private void BuildDisplayString(LabelledSequence labelledSequence, decimal sequenceLength, int[] baseCount,
+            decimal[] basePercent)
         {
             int aCount = baseCount[0];
             int cCount = baseCount[1];

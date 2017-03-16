@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.Utility;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -15,7 +10,10 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "Translate RNA";
 
-        public RnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser) : base(sequenceFactory, fastaParser) { }
+        public RnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
+            : base(sequenceFactory, fastaParser)
+        {
+        }
 
         public string Title
         {
@@ -37,7 +35,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                     string proteinSequence = Translation.TranslateRnaToProtein(rnaSequence);
                     translatedSequences.Add(labelledSequence.Key, proteinSequence);
                 }
-                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences, SequenceType.Protein);
+                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences,
+                    SequenceType.Protein);
                 ResultBoxText = BuildDisplayString(labelledProteins);
                 SelectedTab = SelectedTab.Result;
             }

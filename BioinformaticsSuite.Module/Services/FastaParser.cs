@@ -2,32 +2,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
 using BioinformaticsSuite.Module.Enums;
-using BioinformaticsSuite.Module.Models;
 
 namespace BioinformaticsSuite.Module.Services
 {
     public interface IFastaParser
     {
-        bool TryParseInput(string sequence, SequenceType sequenceType);
         string ErrorMessage { get; }
         Dictionary<string, string> ParsedSequences { get; }
+        bool TryParseInput(string sequence, SequenceType sequenceType);
         void ResetSequences();
     }
 
     public class FastaParser : IFastaParser
     {
-        private SequenceType _sequenceType;
-        private Dictionary<string, string> _parsedSequences = new Dictionary<string, string>();
-        private readonly StringBuilder _sequenceBuilder =  new StringBuilder();
         private readonly StringBuilder _errorMessageBuilder = new StringBuilder();
-        private readonly ISequenceValidator _sequenceValidator;
         private readonly Regex _lineParser = new Regex("\n", RegexOptions.Compiled);
+        private readonly StringBuilder _sequenceBuilder = new StringBuilder();
+        private readonly ISequenceValidator _sequenceValidator;
+        private Dictionary<string, string> _parsedSequences = new Dictionary<string, string>();
+        private SequenceType _sequenceType;
 
         public FastaParser(ISequenceValidator sequenceValidator)
         {
-            this._sequenceValidator = sequenceValidator;
+            _sequenceValidator = sequenceValidator;
         }
 
         public string ErrorMessage { get; private set; }
@@ -35,14 +33,14 @@ namespace BioinformaticsSuite.Module.Services
 
         public bool TryParseInput(string input, SequenceType sequenceType)
         {
-            this._sequenceType = sequenceType;
+            _sequenceType = sequenceType;
 
             if (string.IsNullOrWhiteSpace(input))
             {
                 ErrorMessage = "No sequences entered";
                 return false;
             }
-          
+
             List<string> lines = _lineParser.Split(input).ToList();
             lines = RemoveEmptyLines(lines);
             lines = RemoveTerminators(lines);
@@ -54,17 +52,20 @@ namespace BioinformaticsSuite.Module.Services
                 isParsedSuccessfully = ParseLabelledSequences(lines);
                 return isParsedSuccessfully;
             }
-            else
-            {
-                isParsedSuccessfully = ParseUnlabelledSequence(lines);
-                return isParsedSuccessfully;
-            }
+            isParsedSuccessfully = ParseUnlabelledSequence(lines);
+            return isParsedSuccessfully;
+        }
+
+        public void ResetSequences()
+        {
+            ErrorMessage = "";
+            _parsedSequences = new Dictionary<string, string>();
         }
 
         // Parses only one sequence if it has no label
         private bool ParseUnlabelledSequence(List<string> inputLines)
         {
-            foreach(string line in inputLines)
+            foreach (string line in inputLines)
             {
                 _sequenceBuilder.Append(Regex.Replace(line, "\\s", ""));
             }
@@ -78,12 +79,10 @@ namespace BioinformaticsSuite.Module.Services
                 _parsedSequences.Add(">Unlabelled_Sequence", parsedSequence);
                 return true;
             }
-            else
-            {
-                const int errorLineNumber = 0;
-                ErrorMessage = BuildErrorMessage(errorLineNumber, _sequenceValidator.ErrorIndex, _sequenceValidator.ErrorContent);
-                return false;
-            }
+            const int errorLineNumber = 0;
+            ErrorMessage = BuildErrorMessage(errorLineNumber, _sequenceValidator.ErrorIndex,
+                _sequenceValidator.ErrorContent);
+            return false;
         }
 
         // Parses single or multiple labelled sequences
@@ -125,39 +124,36 @@ namespace BioinformaticsSuite.Module.Services
                 string lineTag = IdentifyLineAsEitherSequenceOrLabel(line);
                 switch (lineTag)
                 {
-                        case "label":
+                    case "label":
                         if (previousLineIsLabel)
                         {
                             ErrorMessage = "Each label must have a sequence attached";
                             return false;
                         }
-                        else
+                        if (!_sequenceValidator.ValidateLabel(line))
                         {
-                            if (!_sequenceValidator.ValidateLabel(line))
-                            {
-                                ErrorMessage = "Labels must not consist solely of '>'";
-                                return false;
-                            }
-                            sequence = _sequenceBuilder.ToString();
-                            if (sequence == "")
-                            {
-                                ErrorMessage = "Each label must have a sequence attached";
-                                break;
-                            }
-                            _sequenceBuilder.Clear();
-                            if (LabelledSequenceIsDuplicate(label))
-                            {
-                                ErrorMessage = "Duplicate sequence detected (" + label + ")";
-                            }
-                            else
-                            {
-                                _parsedSequences.Add(label, sequence);
-                                label = line;
-                            }
+                            ErrorMessage = "Labels must not consist solely of '>'";
+                            return false;
+                        }
+                        sequence = _sequenceBuilder.ToString();
+                        if (sequence == "")
+                        {
+                            ErrorMessage = "Each label must have a sequence attached";
                             break;
                         }
+                        _sequenceBuilder.Clear();
+                        if (LabelledSequenceIsDuplicate(label))
+                        {
+                            ErrorMessage = "Duplicate sequence detected (" + label + ")";
+                        }
+                        else
+                        {
+                            _parsedSequences.Add(label, sequence);
+                            label = line;
+                        }
+                        break;
 
-                        case "sequence":
+                    case "sequence":
                         line = line.ToUpper();
                         bool isValidSequence = _sequenceValidator.ValidateSequence(line, _sequenceType);
                         if (isValidSequence)
@@ -166,12 +162,10 @@ namespace BioinformaticsSuite.Module.Services
                             previousLineIsLabel = false;
                             break;
                         }
-                        else
-                        {
-                            int errorLineNumber = i;
-                            ErrorMessage = BuildErrorMessage(errorLineNumber, _sequenceValidator.ErrorIndex, _sequenceValidator.ErrorContent);
-                            return false;
-                        }                            
+                        int errorLineNumber = i;
+                        ErrorMessage = BuildErrorMessage(errorLineNumber, _sequenceValidator.ErrorIndex,
+                            _sequenceValidator.ErrorContent);
+                        return false;
                 }
             }
             sequence = _sequenceBuilder.ToString();
@@ -190,14 +184,14 @@ namespace BioinformaticsSuite.Module.Services
             }
 
             _sequenceBuilder.Clear();
-            return true;          
+            return true;
         }
 
         private string BuildErrorMessage(int errorLineNumber, int errorCharNumber, string errorContent)
         {
             _errorMessageBuilder.Append("Invalid input was detected on line: ");
             _errorMessageBuilder.Append(errorLineNumber + 1);
-            _errorMessageBuilder.Append(", at character: ");            
+            _errorMessageBuilder.Append(", at character: ");
             _errorMessageBuilder.Append(errorCharNumber + 1);
             _errorMessageBuilder.Append(". An invalid character (");
             _errorMessageBuilder.Append(errorContent);
@@ -211,7 +205,7 @@ namespace BioinformaticsSuite.Module.Services
         {
             bool isDuplicate = false;
             foreach (var labelledSequence in ParsedSequences)
-            {               
+            {
                 string existinglabel = labelledSequence.Key;
                 if (label == existinglabel)
                 {
@@ -253,12 +247,6 @@ namespace BioinformaticsSuite.Module.Services
                 lines[i] = Regex.Replace(lines[i], "\\s", "");
             }
             return lines;
-        }
-
-        public void ResetSequences()
-        {
-            ErrorMessage = "";
-            _parsedSequences = new Dictionary<string, string>();
         }
     }
 }

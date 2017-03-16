@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class MotifFinderTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void TryParseMotifTest()
         {
             var motifFinder = CreateTestInstance();
@@ -47,7 +47,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
             Assert.IsFalse(motifFinder.TryParseMotif(invalidProteinMotif, SequenceType.Protein, out actualProteinMotif));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FindMotifTest()
         {
             var motifFinder = CreateTestInstance();
@@ -59,7 +59,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
             var testRnaSequence = new Rna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG");
 
             var testProteinSequence = new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY");
-           
+
             const string parsedDnaMotif = "ACGT[AG][CT][GC][AT][TG][CA][CGT][AGT][ACT][ACG][ACGT][ACGT]";
             const string parsedRnaMotif = "ACGU[AG][CU][GC][AU][UG][CA][CGU][AGU][ACU][ACG][ACGU][ACGU]";
             const string parsedProteinMotif = "ABCDEFGHIKLMNPQRSTVWY";
@@ -68,9 +68,9 @@ namespace BioinformaticsSuite.ModuleTests.Models
             var actualRnaMotifs = motifFinder.FindMotif(parsedRnaMotif, testRnaSequence);
             var actualProteinMotifs = motifFinder.FindMotif(parsedProteinMotif, testProteinSequence);
 
-            var expectedDnaIndices = new List<int>() { 1, 16, 21, 36 };
-            var expectedRnaIndices = new List<int>() { 1, 16, 21, 36 };
-            var expectedProteinIndices = new List<int>() { 1, 21, 26, 46 };
+            var expectedDnaIndices = new List<int> {1, 16, 21, 36};
+            var expectedRnaIndices = new List<int> {1, 16, 21, 36};
+            var expectedProteinIndices = new List<int> {1, 21, 26, 46};
 
             var actualDnaIndices = ParseMatchCollections(actualDnaMotifs);
             var actualRnaIndices = ParseMatchCollections(actualRnaMotifs);
@@ -84,7 +84,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
 
         private static IMotifFinder CreateTestInstance()
         {
-             IMotifFinder motifFinder = new MotifFinder();
+            IMotifFinder motifFinder = new MotifFinder();
             return motifFinder;
         }
 

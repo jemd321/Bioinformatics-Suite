@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BioinformaticsSuite.Module.Utility;
-using NuGet;
 
 namespace BioinformaticsSuite.Module.Models
 {

@@ -2,19 +2,17 @@
 
 namespace BioinformaticsSuite.ModuleTests.ViewModels
 {
-    [TestClass()]
+    [TestClass]
     public class DnaStatisticsViewModelTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void DnaStatisticsViewModelTest()
         {
-
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void OnRunTest()
         {
-
         }
     }
 }

@@ -7,14 +7,15 @@ namespace BioinformaticsSuite.Module.Services
 {
     public class SequenceFactory : ISequenceFactory
     {
-        public List<LabelledSequence> CreateLabelledSequences(Dictionary<string, string> sequences, SequenceType sequenceType)
+        public List<LabelledSequence> CreateLabelledSequences(Dictionary<string, string> sequences,
+            SequenceType sequenceType)
         {
             List<LabelledSequence> labelledSequences = new List<LabelledSequence>();
 
             switch (sequenceType)
             {
                 case SequenceType.Dna:
-                     labelledSequences = CreateDnaInstances(sequences);
+                    labelledSequences = CreateDnaInstances(sequences);
                     break;
                 case SequenceType.Protein:
                     labelledSequences = CreateProteinInstances(sequences);
@@ -24,6 +25,13 @@ namespace BioinformaticsSuite.Module.Services
                     break;
             }
             return labelledSequences;
+        }
+
+        //this doesn't really belong in this class. Move elsewhere.
+        public string ImportFromTxtFile(FileInfo fileInfo)
+        {
+            string unparsedSequence = fileInfo.FullName;
+            return unparsedSequence;
         }
 
         private List<LabelledSequence> CreateDnaInstances(Dictionary<string, string> sequences)
@@ -63,13 +71,6 @@ namespace BioinformaticsSuite.Module.Services
                 labelledSequences.Add(new Rna(label, sequence));
             }
             return labelledSequences;
-        }
-
-        //this doesn't really belong in this class. Move elsewhere.
-        public string ImportFromTxtFile(FileInfo fileInfo)
-        {
-            string unparsedSequence = fileInfo.FullName;
-            return unparsedSequence;
         }
     }
 

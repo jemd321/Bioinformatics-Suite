@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using BioinformaticsSuite.Module.Utility;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionEmblFastaViewModel : SequenceViewModel
     {
-        private string _title = "EMBL to FASTA DNA converter";
         private readonly IEmblConverter _emblConverter;
         private readonly IEmblParser _emblParser;
+        private string _title = "EMBL to FASTA DNA converter";
 
         public ConversionEmblFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
             IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser)
@@ -40,7 +34,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 List<string> emblRecords = _emblParser.EmblRecords;
                 Dictionary<string, string> labelledFastas = _emblConverter.ConvertEmblFastaDna(emblRecords);
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas,
+                    sequenceType);
                 ResultBoxText = BuildDisplayString(labelledSequences);
             }
             else

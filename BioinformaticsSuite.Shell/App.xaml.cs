@@ -3,7 +3,7 @@
 namespace BioinformaticsSuite.Shell
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
@@ -13,7 +13,5 @@ namespace BioinformaticsSuite.Shell
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
         }
-
-
     }
 }

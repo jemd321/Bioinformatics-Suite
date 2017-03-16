@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BioinformaticsSuite.Module.Utility;
 
 namespace BioinformaticsSuite.Module.Models
@@ -50,10 +47,10 @@ namespace BioinformaticsSuite.Module.Models
 
         private static string ExtractLabel(string emblRecord)
         {
-            var trimAcChars = new char[] {' ', 'A', 'C', ';', '\r', '\n'};
+            var trimAcChars = new[] {' ', 'A', 'C', ';', '\r', '\n'};
             string accession = AccessionRegex.Match(emblRecord).Value.Trim(trimAcChars);
 
-            var trimDeChars = new char[] {' ', 'D', 'E', ';', '\r', '\n'};
+            var trimDeChars = new[] {' ', 'D', 'E', ';', '\r', '\n'};
             string description = DescriptionRegex.Match(emblRecord).Value.Trim(trimDeChars);
 
             // >ACCESSION|DESCRIPTION - label format
@@ -74,7 +71,4 @@ namespace BioinformaticsSuite.Module.Models
             return SequenceReplaceRegex.Replace(sequence, "");
         }
     }
-
-
-
 }

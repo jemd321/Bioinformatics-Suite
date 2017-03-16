@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using BioinformaticsSuite.Module.Enums;
-using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Services
 {
-    [TestClass()]
+    [TestClass]
     public class FastaParserTests
-    {   
+    {
         private const SequenceType SequenceType = Module.Enums.SequenceType.Dna;
 
         public IFastaParser InstantiateParser()
@@ -18,7 +16,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             return fastaParser;
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelAndSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -32,12 +30,12 @@ namespace BioinformaticsSuite.ModuleTests.Services
             CollectionAssert.AreEquivalent(expectedSequences, actualSequences);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelAndMultiLineSequence()
         {
             var sequenceParser = InstantiateParser();
             var testCase = ">HelloWorld\nACTAACTA\nACTAACTA";
-            var expectedSequences = new Dictionary<string, string> { { ">HelloWorld", "ACTAACTAACTAACTA" } };
+            var expectedSequences = new Dictionary<string, string> {{">HelloWorld", "ACTAACTAACTAACTA"}};
 
             bool isSuccess = sequenceParser.TryParseInput(testCase, SequenceType);
             var actualSequences = sequenceParser.ParsedSequences;
@@ -47,7 +45,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
         }
 
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseEmptyBox()
         {
             var sequenceParser = InstantiateParser();
@@ -61,7 +59,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.AreEqual(expectedError, actualError);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOnlyLabel()
         {
             var sequenceParser = InstantiateParser();
@@ -73,12 +71,12 @@ namespace BioinformaticsSuite.ModuleTests.Services
         }
 
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOnlySequence()
         {
             var sequenceParser = InstantiateParser();
             var testCase = "ACTA";
-            var expectedSequences = new Dictionary<string, string> { { ">Unlabelled_Sequence", "ACTA" } };
+            var expectedSequences = new Dictionary<string, string> {{">Unlabelled_Sequence", "ACTA"}};
 
             bool isSuccess = sequenceParser.TryParseInput(testCase, SequenceType);
             var actualSequences = sequenceParser.ParsedSequences;
@@ -87,12 +85,12 @@ namespace BioinformaticsSuite.ModuleTests.Services
             CollectionAssert.AreEquivalent(expectedSequences, actualSequences);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOnlyMultiLineSequence()
         {
             var sequenceParser = InstantiateParser();
             var testCase = "ACTA\nACTA";
-            var expectedSequences = new Dictionary<string, string> { { ">Unlabelled_Sequence", "ACTAACTA" } };
+            var expectedSequences = new Dictionary<string, string> {{">Unlabelled_Sequence", "ACTAACTA"}};
 
             bool isSuccess = sequenceParser.TryParseInput(testCase, SequenceType);
             var actualSequences = sequenceParser.ParsedSequences;
@@ -101,7 +99,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             CollectionAssert.AreEquivalent(expectedSequences, actualSequences);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelWithNoSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -112,18 +110,18 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelWithNoSequenceFollowedByLabelAndSequence()
         {
             var sequenceParser = InstantiateParser();
             var testCase = ">HelloWorld\n\n>HelloOtherWorld\nACTA";
-           
+
             bool isSuccess = sequenceParser.TryParseInput(testCase, SequenceType);
 
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelWithSequenceFollowedLabelWithNoSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -134,7 +132,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSequenceFollowedByLabel()
         {
             var sequenceParser = InstantiateParser();
@@ -145,7 +143,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSequenceFollowedByLabelAndSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -156,7 +154,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseInvalidSingleSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -167,7 +165,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelAndInvalidSequence()
         {
             var sequenceParser = InstantiateParser();
@@ -178,7 +176,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             Assert.IsFalse(isSuccess);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLabelAndInvalidMutliLineSequence()
         {
             var sequenceParser = InstantiateParser();

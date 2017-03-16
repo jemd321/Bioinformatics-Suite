@@ -2,44 +2,42 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using BioinformaticsSuite.Module.Views;
 using Microsoft.Win32;
 using NuGet;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public abstract class SequenceViewModel : INotifyPropertyChanged
-    {  
+    {
+        private string _inputBoxText;
+        private string _resultBoxText;
+        private SelectedTab _selectedTab;
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
 
         private int _selectedTextBoxIndex;
-        private SelectedTab _selectedTab;
-        private string _inputBoxText;
-        private string _resultBoxText;
 
         // Unity requires public constructors to resolve, do not make protected.
-        public SequenceViewModel() { }
+        public SequenceViewModel()
+        {
+        }
 
         public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
         {
             FastaParser = fastaParser;
             SequenceFactory = sequenceFactory;
-            if(SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
-            if(FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
+            if (SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
+            if (FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
 
             NotificationRequest = new InteractionRequest<INotification>();
 
@@ -47,7 +45,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             ClearCommand = new DelegateCommand(OnClear);
             OpenCommand = new DelegateCommand(OnOpen);
             SaveCommand = new DelegateCommand(OnSave);
-
         }
 
         public ISequenceFactory SequenceFactory { get; }
@@ -76,7 +73,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                     case 1:
                         _selectedTab = SelectedTab.Result;
                         break;
-                    default: throw new Exception("Invalid sequence box tab index supplied");
+                    default:
+                        throw new Exception("Invalid sequence box tab index supplied");
                 }
             }
         }
@@ -96,7 +94,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                     case SelectedTab.Result:
                         SelectedTextBoxIndex = 1;
                         break;
-                    default: throw new Exception("Invalid sequence box tab enum selected");
+                    default:
+                        throw new Exception("Invalid sequence box tab enum selected");
                 }
             }
         }
@@ -113,7 +112,14 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref _resultBoxText, value); }
         }
 
-        public virtual void OnRun() {}
+        // The following events and methods are a copy of the bindable base PRISM class, which allows viewmodels to inherit the dependency
+        // property logic for INotifyPropertyChanged. This has been copied here since you can't inherit from multiple classes, do not edit!
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnRun()
+        {
+        }
 
         public void OnClear()
         {
@@ -125,7 +131,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                 case SelectedTab.Result:
                     ResultBoxText = "";
                     break;
-                default: throw new Exception("Invalid sequence box tab selected for clear dialog");
+                default:
+                    throw new Exception("Invalid sequence box tab selected for clear dialog");
             }
         }
 
@@ -140,13 +147,14 @@ namespace BioinformaticsSuite.Module.ViewModels
                     SelectedTab = SelectedTab.Input;
                     OpenFile();
                     break;
-                default: throw new Exception("Invalid sequence box tab selected for open dialog") ;
+                default:
+                    throw new Exception("Invalid sequence box tab selected for open dialog");
             }
         }
 
         public void OnSave()
         {
-            var dialog = new SaveFileDialog { OverwritePrompt = true, Filter = "FASTA File (*.txt)|*.txt" };
+            var dialog = new SaveFileDialog {OverwritePrompt = true, Filter = "FASTA File (*.txt)|*.txt"};
             var result = dialog.ShowDialog();
             if (string.IsNullOrWhiteSpace(dialog.FileName)) return;
             using (var writer = new StreamWriter(dialog.FileName))
@@ -159,14 +167,15 @@ namespace BioinformaticsSuite.Module.ViewModels
                     case SelectedTab.Result:
                         writer.WriteLine(ResultBoxText);
                         break;
-                    default: throw new Exception("Invalid sequence box tab selected for save dialog");
+                    default:
+                        throw new Exception("Invalid sequence box tab selected for save dialog");
                 }
             }
         }
 
         private void OpenFile()
         {
-            var dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
+            var dialog = new OpenFileDialog {Filter = "FASTA File (*.txt)|*.txt"};
             var result = dialog.ShowDialog();
             if (result == false) return;
 
@@ -194,22 +203,17 @@ namespace BioinformaticsSuite.Module.ViewModels
             return displayString;
         }
 
-        // The following events and methods are a copy of the bindable base PRISM class, which allows viewmodels to inherit the dependency
-        // property logic for INotifyPropertyChanged. This has been copied here since you can't inherit from multiple classes, do not edit!
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (object.Equals(storage, value)) return false;
+            if (Equals(storage, value)) return false;
 
             storage = value;
-            this.OnPropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
 
             return true;
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -217,7 +221,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var propertyName = PropertySupport.ExtractPropertyName(propertyExpression);
-            this.OnPropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
         }
-    }  
+    }
 }

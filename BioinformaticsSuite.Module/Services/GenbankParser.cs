@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Services
 {
@@ -50,16 +47,16 @@ namespace BioinformaticsSuite.Module.Services
             return true;
         }
 
-        private static IEnumerable<string> ParseGenbank(string genbankRecord)
-        {
-            string[] genbankRecords = FileSeparatorRegex.Split(genbankRecord);
-            return genbankRecords;
-        }
-
         public void ResetSequences()
         {
             ErrorMessage = "";
             GenbankRecords = new List<string>();
+        }
+
+        private static IEnumerable<string> ParseGenbank(string genbankRecord)
+        {
+            string[] genbankRecords = FileSeparatorRegex.Split(genbankRecord);
+            return genbankRecords;
         }
     }
 }

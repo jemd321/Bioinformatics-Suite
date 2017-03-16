@@ -1,31 +1,24 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Resources;
 using BioinformaticsSuite.Module.Enums;
-using BioinformaticsSuite.Module.Views;
 
 namespace BioinformaticsSuite.Module.Models
 {
     public interface IMotifFinder
     {
+        string InvalidMotifMessage { get; }
         MatchCollection FindMotif(string parsedMotif, LabelledSequence labelledSequence);
         bool TryParseMotif(string motif, SequenceType motifSequenceType, out string parsedMotif);
-        string InvalidMotifMessage { get; }
     }
 
     public class MotifFinder : IMotifFinder
     {
-        private SequenceType _sequenceType;
-        private readonly Regex _dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex _rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex _proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY*]", RegexOptions.Compiled);
         private static readonly StringBuilder RegexBuilder = new StringBuilder();
+        private readonly Regex _dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
+        private readonly Regex _proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY*]", RegexOptions.Compiled);
+        private readonly Regex _rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
+        private SequenceType _sequenceType;
 
         public string InvalidMotifMessage { get; private set; }
 
@@ -33,7 +26,7 @@ namespace BioinformaticsSuite.Module.Models
         public MatchCollection FindMotif(string parsedMotif, LabelledSequence labelledSequence)
         {
             var motifRegex = new Regex(parsedMotif);
-            var matches = motifRegex.Matches(labelledSequence.Sequence);         
+            var matches = motifRegex.Matches(labelledSequence.Sequence);
             return matches;
         }
 
@@ -51,22 +44,21 @@ namespace BioinformaticsSuite.Module.Models
                         parsedMotif = BuildDnaMotifPattern(motif);
                         return true;
                     }
-                    else return false;
+                    return false;
                 case SequenceType.Rna:
                     if (IsValidRnaMotif(motif))
                     {
                         parsedMotif = BuildRnaMotifPattern(motif);
                         return true;
                     }
-                    else return false;
+                    return false;
                 case SequenceType.Protein:
                     if (IsValidProteinMotif(motif))
                     {
                         parsedMotif = motif;
                         return true;
-
                     }
-                    else return false;
+                    return false;
                 default:
                     throw new Exception("Sequence Type not recognised");
             }
@@ -158,7 +150,8 @@ namespace BioinformaticsSuite.Module.Models
                     case 'N':
                         RegexBuilder.Append("[ACGT]");
                         break;
-                    default: throw new ArgumentException("Invalid Nucleotide in Motif - Parsing Method has missed it");
+                    default:
+                        throw new ArgumentException("Invalid Nucleotide in Motif - Parsing Method has missed it");
                 }
             }
             string resultMotif = RegexBuilder.ToString();
@@ -220,7 +213,8 @@ namespace BioinformaticsSuite.Module.Models
                     case 'N':
                         RegexBuilder.Append("[ACGU]");
                         break;
-                    default: throw new ArgumentException("Invalid Nucleotide in Motif");
+                    default:
+                        throw new ArgumentException("Invalid Nucleotide in Motif");
                 }
             }
             string resultMotif = RegexBuilder.ToString();

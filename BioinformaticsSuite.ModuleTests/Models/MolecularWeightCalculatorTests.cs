@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class MolecularWeightCalculatorTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void CalculateMolecularWeightTest()
         {
             var weightCalculator = CreateTestInstance();

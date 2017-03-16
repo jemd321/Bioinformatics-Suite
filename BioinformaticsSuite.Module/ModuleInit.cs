@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BioinformaticsSuite.Module.Enums;
+﻿using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.Views;
@@ -15,7 +9,7 @@ using Prism.Regions;
 namespace BioinformaticsSuite.Module
 {
     public class ModuleInit : IModule
-    {        
+    {
         private readonly IUnityContainer _container;
         private readonly IRegionManager _regionManager;
 
@@ -74,6 +68,5 @@ namespace BioinformaticsSuite.Module
             _regionManager.RegisterViewWithRegion(RegionNames.SequenceRegion,
                 () => _container.Resolve<IntroView>());
         }
-
     }
 }

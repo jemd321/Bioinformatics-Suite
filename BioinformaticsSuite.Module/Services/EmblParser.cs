@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Services
 {
@@ -26,7 +22,7 @@ namespace BioinformaticsSuite.Module.Services
 
         public bool TryParseEmblFile(string emblFile)
         {
-            var whitespaceChars = new [] { ' ', '\n', '\r' };
+            var whitespaceChars = new[] {' ', '\n', '\r'};
             emblFile = emblFile.Trim(whitespaceChars);
             if (!emblFile.EndsWith("//"))
             {
@@ -49,16 +45,16 @@ namespace BioinformaticsSuite.Module.Services
             return true;
         }
 
-        private IEnumerable<string> ParseEmbl(string emblRecord)
-        {
-            string[] genbankRecords = _fileSeparatorRegex.Split(emblRecord);
-            return genbankRecords;
-        }
-
         public void ResetSequences()
         {
             ErrorMessage = "";
             EmblRecords = new List<string>();
+        }
+
+        private IEnumerable<string> ParseEmbl(string emblRecord)
+        {
+            string[] genbankRecords = _fileSeparatorRegex.Split(emblRecord);
+            return genbankRecords;
         }
     }
 }

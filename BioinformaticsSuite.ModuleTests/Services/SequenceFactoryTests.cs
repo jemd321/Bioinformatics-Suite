@@ -6,30 +6,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Services
 {
-    [TestClass()]
+    [TestClass]
     public class SequenceFactoryTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void CreateDnaInstancesTest()
         {
             var sequenceFactory = CreateSequenceFactory();
-            var testCase = new Dictionary<string, string>()
+            var testCase = new Dictionary<string, string>
             {
                 {"DnaTest1", "ACTA"},
                 {"DnaTest2", "ACTAACTA"}
             };
 
             var actualDna = sequenceFactory.CreateLabelledSequences(testCase, SequenceType.Dna);
-            
+
             Assert.IsInstanceOfType(actualDna, typeof(List<LabelledSequence>));
             CollectionAssert.AllItemsAreInstancesOfType(actualDna, typeof(Dna));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateProteinInstancesTest()
         {
             var sequenceFactory = CreateSequenceFactory();
-            var testCase = new Dictionary<string, string>()
+            var testCase = new Dictionary<string, string>
             {
                 {"ProteinTest1", "PTRS"},
                 {"ProteinTest2", "PSRTCF"}
@@ -41,11 +41,11 @@ namespace BioinformaticsSuite.ModuleTests.Services
             CollectionAssert.AllItemsAreInstancesOfType(actualProtein, typeof(Protein));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateRnaInstancesTest()
         {
             var sequenceFactory = CreateSequenceFactory();
-            var testCase = new Dictionary<string, string>()
+            var testCase = new Dictionary<string, string>
             {
                 {"RnaTest1", "AUCG"},
                 {"RnaTest2", "CGUAC"}

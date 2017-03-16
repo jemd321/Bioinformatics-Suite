@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using Microsoft.Practices.ObjectBuilder2;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionFastaSplitViewModel : SequenceViewModel
     {
-        private string _title = "Split FASTA sequences into mutliple sequences";
-        private string _sequenceLengthBoxText;
         private readonly IFastaManipulator _fastaManipulator;
+        private string _sequenceLengthBoxText;
+        private string _title = "Split FASTA sequences into mutliple sequences";
 
         public ConversionFastaSplitViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
             IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser)
         {
             _fastaManipulator = fastaManipulator;
-            if (fastaManipulator == null) { throw new ArgumentNullException(nameof(fastaManipulator)); }
+            if (fastaManipulator == null)
+            {
+                throw new ArgumentNullException(nameof(fastaManipulator));
+            }
         }
 
         public string Title
@@ -41,7 +39,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             const SequenceType sequenceType = SequenceType.Dna;
             int splitLength;
-            if(!ValidateSequenceLengthBox(out splitLength)) return;
+            if (!ValidateSequenceLengthBox(out splitLength)) return;
             bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
@@ -49,13 +47,18 @@ namespace BioinformaticsSuite.Module.ViewModels
                 int shortestSequenceLength = parsedSequences.Select(parsedSequence => parsedSequence.Value.Length).Min();
                 if (splitLength >= shortestSequenceLength)
                 {
-                    RaiseInvalidInputNotification("Desired sequence length cannot be longer than then shortest sequence entered (" + shortestSequenceLength + ")");
+                    RaiseInvalidInputNotification(
+                        "Desired sequence length cannot be longer than then shortest sequence entered (" +
+                        shortestSequenceLength + ")");
                     return;
                 }
 
 
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, SequenceType.Dna);
-                var splitFastasList = labelledSequences.Select(labelledSequence => _fastaManipulator.SplitFasta(labelledSequence, splitLength)).ToList();
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                    SequenceType.Dna);
+                var splitFastasList =
+                    labelledSequences.Select(
+                        labelledSequence => _fastaManipulator.SplitFasta(labelledSequence, splitLength)).ToList();
                 foreach (var splitFastas in splitFastasList)
                 {
                     SequenceFactory.CreateLabelledSequences(splitFastas, SequenceType.Dna);

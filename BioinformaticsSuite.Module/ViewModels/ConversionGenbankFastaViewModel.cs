@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using BioinformaticsSuite.Module.Utility;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
     public class ConversionGenbankFastaViewModel : SequenceViewModel
     {
-        private string _title = "Genbank to FASTA DNA converter";
         private readonly IGenbankConverter _genbankConverter;
         private readonly IGenbankParser _genbankParser;
+        private string _title = "Genbank to FASTA DNA converter";
 
         public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
             IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser)
@@ -42,7 +34,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 var genbankRecords = _genbankParser.GenbankRecords;
                 Dictionary<string, string> labelledFastas = _genbankConverter.ConvertGenbankFastaDna(genbankRecords);
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas, sequenceType);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(labelledFastas,
+                    sequenceType);
                 ResultBoxText = BuildDisplayString(labelledSequences);
             }
             else

@@ -2,10 +2,10 @@
 
 namespace BioinformaticsSuite.ModuleTests.ViewModels
 {
-    [TestClass()]
+    [TestClass]
     public class MethodSelectionViewModelTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void MethodSelectionViewModelTest()
         {
             Assert.Fail();

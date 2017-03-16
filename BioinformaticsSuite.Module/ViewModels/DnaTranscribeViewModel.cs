@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.Generic;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.Utility;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -16,7 +10,8 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "DNA Transcriber";
 
-        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser) : base(sequenceFactory, fastaParser)
+        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
+            : base(sequenceFactory, fastaParser)
         {
         }
 
@@ -40,7 +35,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                     string proteinSequence = Translation.TranscribeDnaToRna(dnaSequence);
                     transcribedSequences.Add(labelledSequence.Key, proteinSequence);
                 }
-                List<LabelledSequence> labelledRna = SequenceFactory.CreateLabelledSequences(transcribedSequences, SequenceType.Rna);
+                List<LabelledSequence> labelledRna = SequenceFactory.CreateLabelledSequences(transcribedSequences,
+                    SequenceType.Rna);
                 ResultBoxText = BuildDisplayString(labelledRna);
                 SelectedTab = SelectedTab.Result;
             }

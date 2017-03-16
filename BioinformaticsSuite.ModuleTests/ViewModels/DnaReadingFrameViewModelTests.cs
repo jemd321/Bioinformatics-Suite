@@ -2,16 +2,16 @@
 
 namespace BioinformaticsSuite.ModuleTests.ViewModels
 {
-    [TestClass()]
+    [TestClass]
     public class DnaReadingFrameViewModelTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void DnaReadingFrameViewModelTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void OnSubmitTest()
         {
             Assert.Fail();

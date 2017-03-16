@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
@@ -37,7 +33,8 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (isParsedSuccessfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                    sequenceType);
                 foreach (var labelledSequence in labelledSequences)
                 {
                     _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);

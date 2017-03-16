@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
-using BioinformaticsSuite.Module.Views.PopupViews;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.ViewModels
@@ -19,18 +14,17 @@ namespace BioinformaticsSuite.Module.ViewModels
     public class DnaFindMotifViewModel : SequenceViewModel
     {
         private readonly IMotifFinder _motifFinder;
-        private string _title = "Find Motifs";
         private string _motifBoxText;
+        private string _title = "Find Motifs";
 
         public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
             IMotifFinder motifFinder) : base(sequenceFactory, fastaParser)
         {
-            this._motifFinder = motifFinder;
+            _motifFinder = motifFinder;
             if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));
 
             HelpPopupViewRequest = new InteractionRequest<INotification>();
             RaiseHelpPopupCommand = new DelegateCommand(RaiseHelpPopupView);
-
         }
 
         public InteractionRequest<INotification> HelpPopupViewRequest { get; private set; }
@@ -50,7 +44,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void RaiseHelpPopupView()
         {
-            HelpPopupViewRequest.Raise(new Notification() {Title = "", Content = ""});
+            HelpPopupViewRequest.Raise(new Notification {Title = "", Content = ""});
         }
 
         public override void OnRun()
@@ -71,7 +65,8 @@ namespace BioinformaticsSuite.Module.ViewModels
                 if (isParsedSuccessfully)
                 {
                     var parsedSequences = FastaParser.ParsedSequences;
-                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences, sequenceType);
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
 
                     var labelledMatches = new Dictionary<string, MatchCollection>();
                     foreach (var labelledSequence in labelledSequences)
@@ -89,11 +84,13 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification("A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" + _motifFinder.InvalidMotifMessage);
+                RaiseInvalidInputNotification(
+                    "A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" +
+                    _motifFinder.InvalidMotifMessage);
             }
             FastaParser.ResetSequences();
         }
-           
+
         // Concatenates labels and sequences for display in the sequence text box.
         private string BuildDisplayString(Dictionary<string, MatchCollection> labelledMatches)
         {

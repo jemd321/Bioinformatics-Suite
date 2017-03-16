@@ -24,9 +24,9 @@ namespace BioinformaticsSuite.Module.Models
             {
                 if (_reversedSequence == null)
                 {
-                    return _reversedSequence = ReverseSequence(this.Sequence);
+                    return _reversedSequence = ReverseSequence(Sequence);
                 }
-                else return _reversedSequence;
+                return _reversedSequence;
             }
         }
 

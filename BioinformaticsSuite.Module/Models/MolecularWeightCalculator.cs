@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Utility;
-using Microsoft.Practices.ObjectBuilder2;
 
 namespace BioinformaticsSuite.Module.Models
 {
@@ -29,7 +25,8 @@ namespace BioinformaticsSuite.Module.Models
         private const decimal RnaWeightCorrection = 159;
 
         private const decimal ProteinWaterWeight = 18.02m;
-        private static readonly Dictionary<char, decimal> AminoAcidWeights = new Dictionary<char, decimal>()
+
+        private static readonly Dictionary<char, decimal> AminoAcidWeights = new Dictionary<char, decimal>
         {
             {'A', 71.08m},
             {'C', 103.14m},
@@ -51,21 +48,21 @@ namespace BioinformaticsSuite.Module.Models
             {'V', 99.14m},
             {'W', 186.21m},
             {'Y', 163.18m},
-            {'*', 0.0m }
+            {'*', 0.0m}
         };
 
         public void CalculateMolecularWeight(LabelledSequence labelledSequence)
         {
             switch (labelledSequence.SequenceType)
             {
-                 case SequenceType.Dna:
-                    labelledSequence.MolecularWeight = CalculateDnaMolecularWeight((Dna)labelledSequence);
+                case SequenceType.Dna:
+                    labelledSequence.MolecularWeight = CalculateDnaMolecularWeight((Dna) labelledSequence);
                     break;
-                 case SequenceType.Rna:
-                    labelledSequence.MolecularWeight = CalculateRnaMolecularWeight((Rna)labelledSequence);
+                case SequenceType.Rna:
+                    labelledSequence.MolecularWeight = CalculateRnaMolecularWeight((Rna) labelledSequence);
                     break;
                 case SequenceType.Protein:
-                    labelledSequence.MolecularWeight = CalculateProteinMolecularWeight((Protein)labelledSequence);
+                    labelledSequence.MolecularWeight = CalculateProteinMolecularWeight((Protein) labelledSequence);
                     break;
                 default:
                     throw new Exception("labelled sequence type not correctly labelled");
@@ -80,8 +77,8 @@ namespace BioinformaticsSuite.Module.Models
             var cCount = baseCount[1];
             var gCount = baseCount[2];
             var tCount = baseCount[3];
-            decimal molecularWeight = (aCount*DnaAWeight) + (cCount*DnaCWeight) + (gCount*DnaGWeight) +
-                                      (tCount*DnaTWeight) - DnaWeightCorrection;
+            decimal molecularWeight = aCount*DnaAWeight + cCount*DnaCWeight + gCount*DnaGWeight +
+                                      tCount*DnaTWeight - DnaWeightCorrection;
             molecularWeight /= 1000;
             return Math.Round(molecularWeight, 3);
         }
@@ -93,8 +90,8 @@ namespace BioinformaticsSuite.Module.Models
             var cCount = baseCount[1];
             var gCount = baseCount[2];
             var uCount = baseCount[3];
-            decimal molecularWeight = (aCount * RnaAWeight) + (cCount * RnaCWeight) + (gCount * RnaGWeight) +
-                                      (uCount * RnaUWeight) + RnaWeightCorrection;
+            decimal molecularWeight = aCount*RnaAWeight + cCount*RnaCWeight + gCount*RnaGWeight +
+                                      uCount*RnaUWeight + RnaWeightCorrection;
             molecularWeight /= 1000;
             return Math.Round(molecularWeight, 3);
         }
@@ -110,7 +107,8 @@ namespace BioinformaticsSuite.Module.Models
                 decimal weight;
                 if (!AminoAcidWeights.TryGetValue(count.Key, out weight))
                 {
-                    throw new Exception("Amino acid key not found, have invalid amino acids made it through UI input validation?");
+                    throw new Exception(
+                        "Amino acid key not found, have invalid amino acids made it through UI input validation?");
                 }
                 molecularWeight += count.Value*weight;
             }

@@ -13,13 +13,14 @@ namespace BioinformaticsSuite.Module.Models
     public class OpenReadingFrameFinder : IOpenReadingFrameFinder
     {
         private readonly StringBuilder _labelBuilder = new StringBuilder();
-        private string _sequenceLabel;
         private readonly IReadingFrameFactory _readingFrameFactory;
+        private string _sequenceLabel;
 
         public OpenReadingFrameFinder(IReadingFrameFactory readingFrameFactory)
         {
-            this._readingFrameFactory = readingFrameFactory;
+            _readingFrameFactory = readingFrameFactory;
         }
+
         public bool FoundOrf { get; private set; }
 
         public Dictionary<string, string> FindOpenReadingFrames(Dna dna)
@@ -47,7 +48,7 @@ namespace BioinformaticsSuite.Module.Models
                 }
             }
             return labelledOrfs;
-        }      
+        }
 
         // Remove stop codon
         private static string TrimOrf(string untrimmedOrf)

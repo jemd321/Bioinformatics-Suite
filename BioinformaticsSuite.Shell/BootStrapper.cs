@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using BioinformaticsSuite.Module;
 using Prism.Modularity;
-using Prism.Regions;
 using Prism.Unity;
 
 namespace BioinformaticsSuite.Shell
@@ -12,7 +11,7 @@ namespace BioinformaticsSuite.Shell
         {
             base.ConfigureModuleCatalog();
 
-            var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+            var moduleCatalog = (ModuleCatalog) ModuleCatalog;
             moduleCatalog.AddModule(typeof(ModuleInit));
         }
 
@@ -26,7 +25,7 @@ namespace BioinformaticsSuite.Shell
         {
             base.InitializeShell();
 
-            Application.Current.MainWindow = (Window) this.Shell;
+            Application.Current.MainWindow = (Window) Shell;
             Application.Current.MainWindow.Show();
         }
     }

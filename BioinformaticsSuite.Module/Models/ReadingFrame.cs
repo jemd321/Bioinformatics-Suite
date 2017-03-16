@@ -15,7 +15,7 @@ namespace BioinformaticsSuite.Module.Models
 
         public ReadingFrame(Dna dna)
         {
-            this._dna = dna;
+            _dna = dna;
             Label = dna.Label;
             LabelledFrames = SplitIntoFrames(dna.Sequence);
         }
@@ -72,16 +72,16 @@ namespace BioinformaticsSuite.Module.Models
                 reverse3 = TrimBases(reverse3, remainder);
             }
 
-            var labelledFrames = new Dictionary<string, string>()
+            var labelledFrames = new Dictionary<string, string>
             {
                 {Label + " +1", forward1},
                 {Label + " +2", forward2},
                 {Label + " +3", forward3},
                 {Label + " -1", reverse1},
                 {Label + " -2", reverse2},
-                {Label + " -3", reverse3},
+                {Label + " -3", reverse3}
             };
-            
+
             return labelledFrames;
         }
 

@@ -1,24 +1,24 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
 using BioinformaticsSuite.Module.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BioinformaticsSuite.Module.Services.Tests
+namespace BioinformaticsSuite.ModuleTests.Services
 {
-    [TestClass()]
+    [TestClass]
     public class EmblParserTests
     {
         private const string EmblFile =
             "ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000263;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccg        60\r\n//ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000262;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccc        60\r\n//";
 
-        [TestMethod()]
+        [TestMethod]
         public void TryParseEmblFileTest()
         {
             var emblParser = SetupMock();
-            var expectedRecords = new List<string>() { "ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000263;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccg        60\r\n", "ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000262;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccc        60\r\n" };
+            var expectedRecords = new List<string>
+            {
+                "ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000263;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccg        60\r\n",
+                "ID   AB000263; SV 1; linear; mRNA; STD; HUM; 368 BP.\r\nXX\r\nAC   AB000262;\r\nXX\r\nDE   Human mRNA for prepro cortistatin like peptide, complete cds.\r\nXX\r\nSQ   Sequence 368 BP; 79 A; 123 C; 105 G; 61 T; 0 other;\r\n     acaagatgcc attgtccccc ggcctcctgc tgctgctgct ctccggggcc acggccaccc        60\r\n"
+            };
             var isValid = emblParser.TryParseEmblFile(EmblFile);
             var errorMessage = emblParser.ErrorMessage;
             var records = emblParser.EmblRecords;
@@ -28,7 +28,7 @@ namespace BioinformaticsSuite.Module.Services.Tests
             CollectionAssert.AreEqual(expectedRecords, records);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResetSequencesTest()
         {
             const string badEmbl = ">AFASFSFASD DESCRIPTION AWDAWDAWD ORIGIN";
@@ -38,7 +38,7 @@ namespace BioinformaticsSuite.Module.Services.Tests
             emblParser.ResetSequences();
             var errorMessage = emblParser.ErrorMessage;
             var records = emblParser.EmblRecords;
- 
+
             Assert.AreEqual("", errorMessage);
             Assert.AreEqual(0, records.Count);
 

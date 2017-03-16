@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Services
 {
-    [TestClass()]
+    [TestClass]
     public class SequenceValidatorTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ValidateSequenceTest()
         {
             var sequenceValidator = CreateTestInstance();
@@ -21,7 +21,7 @@ namespace BioinformaticsSuite.ModuleTests.Services
             const string invalidTestRna = "ACGY";
             const int expectedRnaErrorIndex = 4;
             const string expectedRnaErrorContent = "Y";
-     
+
             const string validTestProtein = "ACDEFGHIKLMNPQRSTVWY";
             const string invalidTestProtein = "ZCDEFGHIKLMNPQRSTVWY";
             const int expectedProteinErrorIndex = 1;

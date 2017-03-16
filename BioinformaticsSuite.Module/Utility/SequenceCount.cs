@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BioinformaticsSuite.Module.Utility
 {
@@ -15,7 +12,7 @@ namespace BioinformaticsSuite.Module.Utility
             int gCount = sequence.Count(n => n == 'G');
             int tCount = sequence.Count(n => n == 'T');
 
-            int[] countArray = new[] {aCount, cCount, gCount, tCount};
+            int[] countArray = {aCount, cCount, gCount, tCount};
             return countArray;
         }
 
@@ -26,7 +23,7 @@ namespace BioinformaticsSuite.Module.Utility
             int gCount = sequence.Count(n => n == 'G');
             int uCount = sequence.Count(n => n == 'U');
 
-            int[] countArray = new[] { aCount, cCount, gCount, uCount };
+            int[] countArray = {aCount, cCount, gCount, uCount};
             return countArray;
         }
 
@@ -54,7 +51,7 @@ namespace BioinformaticsSuite.Module.Utility
             int y = protein.Count(x => x == 'Y');
             int stop = protein.Count(x => x == '*');
 
-            var count = new Dictionary<char, int>()
+            var count = new Dictionary<char, int>
             {
                 {'A', a},
                 {'C', c},
@@ -76,13 +73,9 @@ namespace BioinformaticsSuite.Module.Utility
                 {'V', v},
                 {'W', w},
                 {'Y', y},
-                {'*', stop }
+                {'*', stop}
             };
             return count;
         }
-
-
     }
-
-
 }

@@ -7,7 +7,7 @@ namespace BioinformaticsSuite.Module.Utility
     {
         public static string Reverse(this string input)
         {
-            return new string(input.ToCharArray().Reverse().ToArray());          
+            return new string(input.ToCharArray().Reverse().ToArray());
         }
 
         public static string Complement(this string input)
@@ -15,10 +15,26 @@ namespace BioinformaticsSuite.Module.Utility
             var complement = new StringBuilder();
             foreach (char sequenceBase in input)
             {
-                if (sequenceBase == 'A') { complement.Append('T'); };
-                if (sequenceBase == 'T') { complement.Append('A'); };
-                if (sequenceBase == 'C') { complement.Append('G'); };
-                if (sequenceBase == 'G') { complement.Append('C'); };
+                if (sequenceBase == 'A')
+                {
+                    complement.Append('T');
+                }
+                ;
+                if (sequenceBase == 'T')
+                {
+                    complement.Append('A');
+                }
+                ;
+                if (sequenceBase == 'C')
+                {
+                    complement.Append('G');
+                }
+                ;
+                if (sequenceBase == 'G')
+                {
+                    complement.Append('C');
+                }
+                ;
             }
             return complement.ToString();
         }

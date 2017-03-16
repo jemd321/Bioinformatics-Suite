@@ -1,8 +1,4 @@
-﻿using System;
-using System.Windows;
-using BioinformaticsSuite.Module;
-using BioinformaticsSuite.Module.Enums;
-using Prism.Events;
+﻿using System.Windows;
 
 namespace BioinformaticsSuite.Shell.Views
 {

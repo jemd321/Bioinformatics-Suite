@@ -1,21 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BioinformaticsSuite.Module.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BioinformaticsSuite.Module.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BioinformaticsSuite.Module.Models.Tests
+namespace BioinformaticsSuite.ModuleTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class FastaManipulatorTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void CombineFastaTest()
         {
             var fastaManipulator = SetupMock();
-            var testSequences = new List<LabelledSequence>() { new Dna("test1", "ACGTCCGGTGCACCGGCCGGACGT"), new Dna("test2", "CCGGTGCACCGGCCGG") };
+            var testSequences = new List<LabelledSequence>
+            {
+                new Dna("test1", "ACGTCCGGTGCACCGGCCGGACGT"),
+                new Dna("test2", "CCGGTGCACCGGCCGG")
+            };
             var expectedLabel = ">40 base sequence from 2 sequences";
             var expectedSequence = "ACGTCCGGTGCACCGGCCGGACGTCCGGTGCACCGGCCGG";
 
@@ -26,16 +27,16 @@ namespace BioinformaticsSuite.Module.Models.Tests
             Assert.AreEqual(expectedSequence, combinedSequence.First().Value);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SplitFastaTest()
         {
             var fastaManipulator = SetupMock();
             var testSequence = new Dna("test", "ACGTCCGGTGCACCGGCCGGACGT");
             var testFragmentLength = 12;
-            var expectedSplitSequences = new Dictionary<string, string>()
+            var expectedSplitSequences = new Dictionary<string, string>
             {
-                {">fragment_1;test;start=1;end=12;length=12;source_length=24;", "ACGTCCGGTGCA" },
-                {">fragment_2;test;start=13;end=24;length=12;source_length=24;", "CCGGCCGGACGT" }
+                {">fragment_1;test;start=1;end=12;length=12;source_length=24;", "ACGTCCGGTGCA"},
+                {">fragment_2;test;start=13;end=24;length=12;source_length=24;", "CCGGCCGGACGT"}
             };
 
             var actualSplitSequences = fastaManipulator.SplitFasta(testSequence, testFragmentLength);

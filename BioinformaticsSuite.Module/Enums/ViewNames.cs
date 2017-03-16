@@ -25,6 +25,5 @@
         public const string ConversionEmblTranslateView = "ConversionEmblTranslateView";
         public const string ConversionGenbankFastaView = "ConversionGenbankFastaView";
         public const string ConversionGenbankTranslateView = "ConversionGenbankTranslateView";
-
     }
 }

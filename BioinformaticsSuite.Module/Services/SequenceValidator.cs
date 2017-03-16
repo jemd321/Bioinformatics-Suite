@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Text.RegularExpressions;
 using BioinformaticsSuite.Module.Enums;
-using BioinformaticsSuite.Module.Models;
-using Microsoft.Win32;
 
 namespace BioinformaticsSuite.Module.Services
 {
@@ -23,8 +15,8 @@ namespace BioinformaticsSuite.Module.Services
     public class SequenceValidator : ISequenceValidator
     {
         private readonly Regex _dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
-        private readonly Regex _rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
         private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY*]", RegexOptions.Compiled);
+        private readonly Regex _rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
 
         public int ErrorIndex { get; private set; }
         public string ErrorContent { get; private set; }

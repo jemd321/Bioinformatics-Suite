@@ -1,13 +1,12 @@
-﻿using BioinformaticsSuite.Module.Models;
-using BioinformaticsSuite.Module.Utility;
+﻿using BioinformaticsSuite.Module.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class TranslatorTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void TranslateDnaTest()
         {
             string testCase = "ACTGTATTA";
@@ -18,7 +17,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TranslateOddCodonsTest()
         {
             string testCase = "ACTGTATTAA";
@@ -29,5 +28,4 @@ namespace BioinformaticsSuite.ModuleTests.Models
             Assert.AreEqual(expected, actual);
         }
     }
-
 }
