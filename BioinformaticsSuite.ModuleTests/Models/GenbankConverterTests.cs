@@ -36,7 +36,7 @@ namespace BioinformaticsSuite.ModuleTests.Models
                 "ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
             List<string> testCase = new List<string>() { testString };
             string expectedlabel = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.";
-            string expectedSequence = "PRVRVVPNSGAXAFPSLYVF";
+            string expectedSequence = "PRVRVVPNSGA*AFPSLYVF";
 
             var labelledFasta = genbankConverter.ConvertGenbankFastaProtein(testCase);
             var actualLabel = labelledFasta.FirstOrDefault().Key;

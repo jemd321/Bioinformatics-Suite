@@ -35,7 +35,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
         {
             var emblConverter = SetupMock();
             string expectedLabel = ">B000263|Human mRNA for prepro cortistatin like peptide, complete cds.";
-            string expectedSequence = "TRCHCPPASCCCCSPGPRPPLPCPWRVAPPAETASICRKRQEXGKAASXLSSLGGLSGPPRPVPGPSXERKLGRWPGGRKAHPPSNPRAGTECPAGTSSGRPSPPANKTSPMNAHASLITDL";
+            string expectedSequence = "TRCHCPPASCCCCSPGPRPPLPCPWRVAPPAETASICRKRQE*GKAAS*LSSLGGLSGPPRPVPGPS*ERKLGRWPGGRKAHPPSNPRAGTECPAGTSSGRPSPPANKTSPMNAHASLITDL";
 
             Dictionary<string, string> actualLabelledSequence = emblConverter.ConvertEmblFastaProtein(_testCase);
 
@@ -45,7 +45,7 @@ namespace BioinformaticsSuite.Module.Models.Tests
 
         }
 
-        private IEmblConverter SetupMock()
+        private static IEmblConverter SetupMock()
         {
             return new EmblConverter();
         }

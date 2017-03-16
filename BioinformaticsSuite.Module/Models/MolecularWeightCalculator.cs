@@ -114,7 +114,8 @@ namespace BioinformaticsSuite.Module.Models
             }
             // Correct for the weight of water
             molecularWeight += ProteinWaterWeight;
-            return molecularWeight;
+            molecularWeight /= 1000;
+            return Math.Round(molecularWeight, 2);
         }
     }
 }

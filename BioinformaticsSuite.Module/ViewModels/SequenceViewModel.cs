@@ -169,11 +169,11 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void OpenFile()
         {
-            OpenFileDialog dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
+            var dialog = new OpenFileDialog { Filter = "FASTA File (*.txt)|*.txt" };
             var result = dialog.ShowDialog();
             if (result == false) return;
 
-            using (Stream reader = dialog.OpenFile())
+            using (var reader = dialog.OpenFile())
             {
                 InputBoxText = reader.ReadToEnd();
             }
