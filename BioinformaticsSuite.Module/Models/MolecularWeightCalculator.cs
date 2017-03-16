@@ -82,7 +82,8 @@ namespace BioinformaticsSuite.Module.Models
             var tCount = baseCount[3];
             decimal molecularWeight = (aCount*DnaAWeight) + (cCount*DnaCWeight) + (gCount*DnaGWeight) +
                                       (tCount*DnaTWeight) - DnaWeightCorrection;
-            return molecularWeight;
+            molecularWeight /= 1000;
+            return Math.Round(molecularWeight, 3);
         }
 
         private static decimal CalculateRnaMolecularWeight(Rna rna)
@@ -94,7 +95,8 @@ namespace BioinformaticsSuite.Module.Models
             var uCount = baseCount[3];
             decimal molecularWeight = (aCount * RnaAWeight) + (cCount * RnaCWeight) + (gCount * RnaGWeight) +
                                       (uCount * RnaUWeight) + RnaWeightCorrection;
-            return molecularWeight;
+            molecularWeight /= 1000;
+            return Math.Round(molecularWeight, 3);
         }
 
         private static decimal CalculateProteinMolecularWeight(Protein protein)
@@ -115,7 +117,7 @@ namespace BioinformaticsSuite.Module.Models
             // Correct for the weight of water
             molecularWeight += ProteinWaterWeight;
             molecularWeight /= 1000;
-            return Math.Round(molecularWeight, 2);
+            return Math.Round(molecularWeight, 3);
         }
     }
 }

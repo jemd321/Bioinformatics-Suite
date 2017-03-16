@@ -60,7 +60,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 displayStringBuilder.AppendLine(labelledSequence.Label);
                 displayStringBuilder.Append(labelledSequence.MolecularWeight.ToString(CultureInfo.InvariantCulture));
-                displayStringBuilder.AppendLine(" Da");
+                displayStringBuilder.AppendLine(" kDa");
             }
             var displayString = displayStringBuilder.ToString();
             displayStringBuilder.Clear();

@@ -13,18 +13,23 @@ namespace BioinformaticsSuite.ModuleTests.Models
 
             var testDna = new Dna("test", "ACGT");
             var testRna = new Rna("test", "ACGU");
+            var testProtein = new Protein("test", "ACDEFGHIKLMNPQRSTVWY*");
 
-            const decimal expectedDnaWeight = 1173.84m;
-            const decimal expectedRnaWeight = 1444.77m;
+            const decimal expectedDnaWeight = 1.174m;
+            const decimal expectedRnaWeight = 1.445m;
+            const decimal expectedProteinWeight = 2.396m;
 
             weightCalculator.CalculateMolecularWeight(testDna);
             weightCalculator.CalculateMolecularWeight(testRna);
+            weightCalculator.CalculateMolecularWeight(testProtein);
 
             var actualDnaWeight = testDna.MolecularWeight;
             var actualRnaWeight = testRna.MolecularWeight;
+            var actualProteinWeight = testProtein.MolecularWeight;
 
             Assert.AreEqual(expectedDnaWeight, actualDnaWeight);
             Assert.AreEqual(expectedRnaWeight, actualRnaWeight);
+            Assert.AreEqual(expectedProteinWeight, actualProteinWeight);
         }
 
         private IMolecularWeightCalculator CreateTestInstance()
