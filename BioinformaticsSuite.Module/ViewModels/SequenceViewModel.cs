@@ -52,7 +52,6 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public ISequenceFactory SequenceFactory { get; }
         public IFastaParser FastaParser { get; }
-        public IEventAggregator EventAggregator { get; }
 
         public InteractionRequest<INotification> NotificationRequest { get; private set; }
 

@@ -49,8 +49,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 int shortestSequenceLength = parsedSequences.Select(parsedSequence => parsedSequence.Value.Length).Min();
                 if (splitLength >= shortestSequenceLength)
                 {
-                    MessageBoxResult sequenceLengthErrorMessageBox =
-                        MessageBox.Show("Desired sequence length cannot be longer than then shortest sequence entered (" + shortestSequenceLength + ")");
+                    RaiseInvalidInputNotification("Desired sequence length cannot be longer than then shortest sequence entered (" + shortestSequenceLength + ")");
                     return;
                 }
 
@@ -67,7 +66,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
             FastaParser.ResetSequences();
         }
@@ -76,15 +75,13 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             if (SequenceLengthBoxText == "")
             {
-                MessageBoxResult sequenceLengthErrorMessageBox =
-                    MessageBox.Show("Please set the length that your sequences should be split into");
+                RaiseInvalidInputNotification("Please set the length that your sequences should be split into");
                 splitLength = 0;
                 return false;
             }
             if (int.TryParse(SequenceLengthBoxText, out splitLength)) return true;
             {
-                MessageBoxResult sequenceLengthErrorMessageBox =
-                    MessageBox.Show("Desired sequence length must be an integer");
+                RaiseInvalidInputNotification("Desired sequence length must be an integer");
                 return false;
             }
         }

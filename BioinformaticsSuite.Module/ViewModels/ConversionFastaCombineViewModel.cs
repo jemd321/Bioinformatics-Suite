@@ -44,7 +44,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                MessageBoxResult errorMessageBox = MessageBox.Show(FastaParser.ErrorMessage);
+                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
             }
             FastaParser.ResetSequences();
         }
