@@ -1,5 +1,5 @@
 Bioinformatics-Suite
------------------------
+======================
 
 Welcome to Bioinformatics Suite. This program is intended as a personal project
 to support my learning of C# and WPF with MVVM, particularly of concepts such as
@@ -12,12 +12,9 @@ and open reading frames.
 
 Sample sequences for demonstration are available in the BioinformaticsSuite.Module/Resources folder.
 
-The program is still under development, and as of yet only DNA sequence
-manipulation is completed.
 
-
-Supported Features
---------------------
+Features
+=========
 
 DNA
 -----
@@ -38,32 +35,58 @@ DNA
 
 - Translation: produces a protein sequence from DNA.
 
+RNA
+-----
+
+- Translate RNA
+
+- RNA Molecular Weight 
+
+Protein
+--------
+
+- Open Reading Frames
+
+- Protein Statistics
+
+- Protein Molecular Weight
+
+
+
+Format Conversion
+------------------
+
+- EMBL -> Fasta
+
+- Translate EMBL -> Fasta
+
+- Genbank -> Fasta
+
+- Translate Genbank -> Fasta
+
+- Split Fasta sequences
+
+- Combine Fasta sequences
+
+
+Planned Improvements
+-----------------
+
+- Generally improve look of UI
+- Improve Invalid user input notifications, making them more informative and better looking.
+- Make custom save and loading system, since the Win32 system is a pain to test.
+- Improve test coverage of viewModels
+- Investigate performance issues with very large sequences in text boxes
+- Documentation
 
 
 Planned Features
 -----------------
 
-RNA
------
-
-- Translation: produces a protein sequence from RNA.
-
-
-Protein
---------
-
-- Find Open Reading Frames:  Finds regions of protein sequences that can be translated
-			   based on the presence of a start or stop codon in each of
-			   the six reading frames.
-
-- Protein Statistics: Calculates the percentage amino acid makeup of a protein sequence.
-
-
-Conversion
------------
-
-- Conversion between formts from the major bioinformatcs websites.
-  eg. Fasta, Uniprot etc.
+- Extensive help system with links to scientific websites, with separate resizeable windows that can be placed alongside
+  tool windows while working.
+- Explore possibility of graphical sequence annotation
+- More format conversion, and more extensive format validators for non-FASTA format files.
 
 
 Author
