@@ -52,6 +52,7 @@ namespace BioinformaticsSuite.Module.Utility
             int v = protein.Count(x => x == 'V');
             int w = protein.Count(x => x == 'W');
             int y = protein.Count(x => x == 'Y');
+            int stop = protein.Count(x => x == '*');
 
             var count = new Dictionary<char, int>()
             {
@@ -74,7 +75,8 @@ namespace BioinformaticsSuite.Module.Utility
                 {'T', t},
                 {'V', v},
                 {'W', w},
-                {'Y', y}
+                {'Y', y},
+                {'*', stop }
             };
             return count;
         }

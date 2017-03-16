@@ -24,7 +24,7 @@ namespace BioinformaticsSuite.Module.Models
         private SequenceType _sequenceType;
         private readonly Regex _dnaMotifValidator = new Regex("[^ACGTYRWSKMDVHBXN]", RegexOptions.Compiled);
         private readonly Regex _rnaMotifValidator = new Regex("[^ACGUYRWSKMDVHBXN]", RegexOptions.Compiled);
-        private readonly Regex _proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY]", RegexOptions.Compiled);
+        private readonly Regex _proteinMotifValidator = new Regex("[^ACDEFGHIKLMNPQRSTVWY*]", RegexOptions.Compiled);
         private static readonly StringBuilder RegexBuilder = new StringBuilder();
 
         public string InvalidMotifMessage { get; private set; }

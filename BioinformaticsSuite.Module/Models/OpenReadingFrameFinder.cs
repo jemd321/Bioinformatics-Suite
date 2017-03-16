@@ -26,7 +26,7 @@ namespace BioinformaticsSuite.Module.Models
         {
             _sequenceLabel = dna.Label;
             var labelledOrfs = new Dictionary<string, string>();
-            var orfMatcher = new Regex("M[^X]*X", RegexOptions.Compiled);
+            var orfMatcher = new Regex(@"M[^*]*\*", RegexOptions.Compiled);
 
             ReadingFrame readingFrame = _readingFrameFactory.GetReadingFrames(dna);
             foreach (var labelledFrame in readingFrame.LabelledFrames)
@@ -52,7 +52,7 @@ namespace BioinformaticsSuite.Module.Models
         // Remove stop codon
         private static string TrimOrf(string untrimmedOrf)
         {
-            return untrimmedOrf.TrimEnd('X');
+            return untrimmedOrf.TrimEnd('*');
         }
 
         private string BuildLabel(Match match)

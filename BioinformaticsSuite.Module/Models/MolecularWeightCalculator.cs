@@ -50,7 +50,8 @@ namespace BioinformaticsSuite.Module.Models
             {'T', 101.11m},
             {'V', 99.14m},
             {'W', 186.21m},
-            {'Y', 163.18m}
+            {'Y', 163.18m},
+            {'*', 0.0m }
         };
 
         public void CalculateMolecularWeight(LabelledSequence labelledSequence)

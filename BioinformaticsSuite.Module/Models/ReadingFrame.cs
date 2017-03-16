@@ -72,7 +72,7 @@ namespace BioinformaticsSuite.Module.Models
                 reverse3 = TrimBases(reverse3, remainder);
             }
 
-            Dictionary<string, string> labelledFrames = new Dictionary<string, string>()
+            var labelledFrames = new Dictionary<string, string>()
             {
                 {Label + " +1", forward1},
                 {Label + " +2", forward2},

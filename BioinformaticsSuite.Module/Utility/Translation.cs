@@ -69,9 +69,9 @@ namespace BioinformaticsSuite.Module.Utility
             {"GUC", 'V'},
             {"GUA", 'V'},
             {"GUG", 'V'},
-            {"UAA", 'X'},
-            {"UGA", 'X'},
-            {"UAG", 'X'}
+            {"UAA", '*'},
+            {"UGA", '*'},
+            {"UAG", '*'}
         };
 
         public static string TranslateDnaToProtein(string dnaSequence)

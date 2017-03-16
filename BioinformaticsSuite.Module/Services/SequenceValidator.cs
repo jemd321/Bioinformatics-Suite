@@ -24,7 +24,7 @@ namespace BioinformaticsSuite.Module.Services
     {
         private readonly Regex _dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
         private readonly Regex _rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
-        private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY]", RegexOptions.Compiled);
+        private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY*]", RegexOptions.Compiled);
 
         public int ErrorIndex { get; private set; }
         public string ErrorContent { get; private set; }
