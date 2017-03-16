@@ -12,15 +12,15 @@ using Prism.Events;
 
 namespace BioinformaticsSuite.Module.ViewModels
 {
-    public class DnaMolecularWeightViewModel : SequenceViewModel
+    public class RnaMolecularWeightViewModel : SequenceViewModel
     {
         private readonly IMolecularWeightCalculator _molecularWeightCalculator;
-        private string _title = "DNA Molecular Weight";
+        private string _title = "RNA Molecular Weight";
 
-        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
+        public RnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
             IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, fastaParser, eventAggregator)
         {
-            this._molecularWeightCalculator = molecularWeightCalculator;
+            _molecularWeightCalculator = molecularWeightCalculator;
             if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));
         }
 
@@ -32,7 +32,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
+            const SequenceType sequenceType = SequenceType.Rna;
             bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
             if (isParsedSuccessfully)
             {
@@ -41,7 +41,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                 foreach (var labelledSequence in labelledSequences)
                 {
                     _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
-                }   
+                }
                 ResultBoxText = BuildDisplayString(labelledSequences);
                 SelectedTab = SelectedTab.Result;
             }

@@ -115,6 +115,8 @@
 
                     <RadioButton x:Name="RnaTranslate" GroupName ="Methods" Content="Translate RNA"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="RnaTranslate" VerticalAlignment="Top" >
                     </RadioButton>
+                    <RadioButton x:Name="RnaMolecularWeight" GroupName ="Methods" Content="RNA Molecular Weight"  Style="{StaticResource MethodSelectionButtonTemplate}" Command="{Binding Path=SelectMethodCommand}" CommandParameter="RnaMolecularWeight" VerticalAlignment="Top" >
+                    </RadioButton>
                 </StackPanel>
 
             </TabItem>

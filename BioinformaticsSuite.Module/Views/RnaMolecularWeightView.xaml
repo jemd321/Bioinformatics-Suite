@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.ProteinMolecularWeightView"
+﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.RnaMolecularWeightView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <views:SequenceView>
-        <TextBlock Text="Calculate the molecular weight in kilo-Daltons of given Proteins"/>
+        <TextBlock Text="Returns the molecular weight of given RNA sequences in kilo-Daltons"  TextWrapping="Wrap"/>
     </views:SequenceView>
 </UserControl>

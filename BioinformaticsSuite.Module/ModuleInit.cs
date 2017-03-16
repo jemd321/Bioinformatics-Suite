@@ -40,6 +40,7 @@ namespace BioinformaticsSuite.Module
             _container.RegisterType<object, DnaTranslateView>(ViewNames.DnaTranslateView);
 
             _container.RegisterType<object, RnaTranslateView>(ViewNames.RnaTranslateView);
+            _container.RegisterType<object, RnaMolecularWeightView>(ViewNames.RnaMolecularWeightView);
 
             _container.RegisterType<object, ProteinOpenReadingFrameView>(ViewNames.ProteinOpenReadingFrameView);
             _container.RegisterType<object, ProteinStatisticsView>(ViewNames.ProteinStatisticsView);

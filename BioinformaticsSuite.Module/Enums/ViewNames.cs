@@ -13,6 +13,7 @@
         public const string DnaTranslateView = "DnaTranslateView";
 
         public const string RnaTranslateView = "RnaTranslateView";
+        public const string RnaMolecularWeightView = "RnaMolecularWeightView";
 
         public const string ProteinOpenReadingFrameView = "ProteinOpenReadingFrameView";
         public const string ProteinStatisticsView = "ProteinStatisticsView";

@@ -144,6 +144,7 @@
     <Compile Include="ViewModels\ProteinMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\ProteinOpenReadingFrameViewModel.cs" />
     <Compile Include="ViewModels\ProteinStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\RnaMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\RnaTranslateViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModel.cs" />
     <Compile Include="Enums\ViewNames.cs" />
@@ -203,6 +204,9 @@
     </Compile>
     <Compile Include="Views\ProteinStatisticsView.xaml.cs">
       <DependentUpon>ProteinStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RnaMolecularWeightView.xaml.cs">
+      <DependentUpon>RnaMolecularWeightView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RnaTranslateView.xaml.cs">
       <DependentUpon>RnaTranslateView.xaml</DependentUpon>
@@ -285,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProteinStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RnaMolecularWeightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

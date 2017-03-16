@@ -37,6 +37,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             switch (methodName)
             {
+                // Dna Methods
                 case MethodNames.DnaFindMotif:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaFindMotifView, UriKind.Relative));
                     break;
@@ -59,10 +60,15 @@ namespace BioinformaticsSuite.Module.ViewModels
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.DnaTranslateView, UriKind.Relative));
                     break;
 
+                    // Rna Methods
                 case MethodNames.RnaTranslate:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.RnaTranslateView, UriKind.Relative));
                     break;
+                case MethodNames.RnaMolecularWeight:
+                    _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.RnaMolecularWeightView, UriKind.Relative));
+                    break;
 
+                    // Protein Methods
                 case MethodNames.ProteinOpenReadingFrame:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinOpenReadingFrameView, UriKind.Relative));
                     break;
@@ -73,6 +79,7 @@ namespace BioinformaticsSuite.Module.ViewModels
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ProteinMolecularWeightView, UriKind.Relative));
                     break;
 
+                    // Conversion Methods
                 case MethodNames.ConversionFastaCombine:
                     _regionManager.RequestNavigate(RegionNames.SequenceRegion, new Uri(ViewNames.ConversionFastaCombineView, UriKind.Relative));
                     break;
@@ -94,5 +101,4 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
     }
-
 }
