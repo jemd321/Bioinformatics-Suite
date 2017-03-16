@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
@@ -51,13 +50,9 @@ namespace BioinformaticsSuite.ModuleTests.Models
         public void FindMotifTest()
         {
             var motifFinder = CreateTestInstance();
-            var resultStringBuilder = new StringBuilder();
 
             var testDnaSequence = new Dna("test2", "ACGTACGATCGTTGAGACGTACGTACGATCGTTGAG");
-
-
             var testRnaSequence = new Rna("test2", "ACGUACGAUCGUUGAGACGUACGUACGAUCGUUGAG");
-
             var testProteinSequence = new Protein("test2", "ABCDEFGHIKLMNPQRSTVWYABCDABCDEFGHIKLMNPQRSTVWY");
 
             const string parsedDnaMotif = "ACGT[AG][CT][GC][AT][TG][CA][CGT][AGT][ACT][ACG][ACGT][ACGT]";

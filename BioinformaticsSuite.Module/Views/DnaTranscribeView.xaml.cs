@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using BioinformaticsSuite.Module.ViewModels;
+﻿using BioinformaticsSuite.Module.ViewModels;
 
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
     ///     Interaction logic for DnaTranscribeView.xaml
     /// </summary>
-    public partial class DnaTranscribeView : UserControl
+    public partial class DnaTranscribeView
     {
         public DnaTranscribeView(DnaTranscribeViewModel viewModel)
         {

@@ -34,12 +34,5 @@ namespace BioinformaticsSuite.Module.Models
         {
             return sequence.Reverse();
         }
-
-        // broken, needs fixed when the translate method is implemented
-        private string Translate(string dnaSequence)
-        {
-            var protein = Translation.TranslateDnaToProtein(dnaSequence);
-            return protein;
-        }
     }
 }

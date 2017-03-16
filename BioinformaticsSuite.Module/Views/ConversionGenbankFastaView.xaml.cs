@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using BioinformaticsSuite.Module.ViewModels;
+﻿using BioinformaticsSuite.Module.ViewModels;
 
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
     ///     Interaction logic for ConversionGenbankFasta.xaml
     /// </summary>
-    public partial class ConversionGenbankFastaView : UserControl
+    public partial class ConversionGenbankFastaView
     {
         public ConversionGenbankFastaView(ConversionGenbankFastaViewModel viewModel)
         {

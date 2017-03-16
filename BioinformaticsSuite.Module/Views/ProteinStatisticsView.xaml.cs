@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using BioinformaticsSuite.Module.ViewModels;
+﻿using BioinformaticsSuite.Module.ViewModels;
 
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
     ///     Interaction logic for ProteinStatisticsView.xaml
     /// </summary>
-    public partial class ProteinStatisticsView : UserControl
+    public partial class ProteinStatisticsView
     {
         public ProteinStatisticsView(ProteinStatisticsViewModel viewModel)
         {

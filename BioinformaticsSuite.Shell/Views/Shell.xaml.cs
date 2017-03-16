@@ -1,8 +1,6 @@
-﻿using System.Windows;
-
-namespace BioinformaticsSuite.Shell.Views
+﻿namespace BioinformaticsSuite.Shell.Views
 {
-    public partial class Shell : Window
+    public partial class Shell
     {
         public Shell()
         {

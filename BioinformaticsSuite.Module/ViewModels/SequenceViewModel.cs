@@ -50,7 +50,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         public ISequenceFactory SequenceFactory { get; }
         public IFastaParser FastaParser { get; }
 
-        public InteractionRequest<INotification> NotificationRequest { get; private set; }
+        public InteractionRequest<INotification> NotificationRequest { get; }
 
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }

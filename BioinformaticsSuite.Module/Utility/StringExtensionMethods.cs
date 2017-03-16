@@ -19,22 +19,18 @@ namespace BioinformaticsSuite.Module.Utility
                 {
                     complement.Append('T');
                 }
-                ;
                 if (sequenceBase == 'T')
                 {
                     complement.Append('A');
-                }
-                ;
+                }                
                 if (sequenceBase == 'C')
                 {
                     complement.Append('G');
-                }
-                ;
+                }                
                 if (sequenceBase == 'G')
                 {
                     complement.Append('C');
                 }
-                ;
             }
             return complement.ToString();
         }

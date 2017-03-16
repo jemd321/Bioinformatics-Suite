@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -14,7 +13,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private bool _isChecked;
 
-        public MethodSelectionViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public MethodSelectionViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);

@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using BioinformaticsSuite.Module.ViewModels;
+﻿using BioinformaticsSuite.Module.ViewModels;
 
 namespace BioinformaticsSuite.Module.Views
 {
     /// <summary>
     ///     Interaction logic for IntroView.xaml
     /// </summary>
-    public partial class IntroView : UserControl
+    public partial class IntroView
     {
         public IntroView(IntroViewModel viewModel)
         {

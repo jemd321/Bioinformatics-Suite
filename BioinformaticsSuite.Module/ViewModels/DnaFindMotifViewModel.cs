@@ -27,7 +27,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             RaiseHelpPopupCommand = new DelegateCommand(RaiseHelpPopupView);
         }
 
-        public InteractionRequest<INotification> HelpPopupViewRequest { get; private set; }
+        public InteractionRequest<INotification> HelpPopupViewRequest { get; }
         public ICommand RaiseHelpPopupCommand { get; private set; }
 
         public string Title

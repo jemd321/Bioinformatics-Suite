@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views"
              xmlns:mvvm="http://prismlibrary.com/"
              mc:Ignorable="d"
              d:DesignHeight="300"
@@ -54,31 +53,31 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton x:Name="DnaFindMotif" FontSize="14" GroupName="Methods" Content="Find Motif"
+                    <RadioButton x:Name="DnaFindMotif" GroupName="Methods" Content="Find Motif"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaFindMotif"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaMolecularWeight" FontSize="14" GroupName="Methods"
+                    <RadioButton x:Name="DnaMolecularWeight" GroupName="Methods"
                                  Content="Molecular Weight" Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaMolecularWeight"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaReadingFrame" FontSize="14" GroupName="Methods" Content="ReadingFrame"
+                    <RadioButton x:Name="DnaReadingFrame" GroupName="Methods" Content="ReadingFrame"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaReadingFrame"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaRestrictionDigest" FontSize="14" GroupName="Methods"
+                    <RadioButton x:Name="DnaRestrictionDigest" GroupName="Methods"
                                  Content="Restriction Digest" Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaRestrictionDigest"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaStatistics" FontSize="14" GroupName="Methods" Content="DNA Statistics"
+                    <RadioButton x:Name="DnaStatistics" GroupName="Methods" Content="DNA Statistics"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaStatistics"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaTranscribe" FontSize="14" GroupName="Methods" Content="Transcribe"
+                    <RadioButton x:Name="DnaTranscribe" GroupName="Methods" Content="Transcribe"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaTranscribe"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaTranslate" FontSize="14" GroupName="Methods" Content="Translate"
+                    <RadioButton x:Name="DnaTranslate" GroupName="Methods" Content="Translate"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaTranslate"
                                  VerticalAlignment="Top" />

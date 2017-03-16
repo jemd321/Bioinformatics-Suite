@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.Views.PopupViews
@@ -8,7 +7,7 @@ namespace BioinformaticsSuite.Module.Views.PopupViews
     /// <summary>
     ///     Interaction logic for DnaHelpPopupView.xaml
     /// </summary>
-    public partial class DnaHelpPopupView : UserControl, IInteractionRequestAware
+    public partial class DnaHelpPopupView : IInteractionRequestAware
     {
         public DnaHelpPopupView()
         {
@@ -20,10 +19,7 @@ namespace BioinformaticsSuite.Module.Views.PopupViews
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (FinishInteraction != null)
-            {
-                FinishInteraction();
-            }
+            FinishInteraction?.Invoke();
         }
     }
 }
