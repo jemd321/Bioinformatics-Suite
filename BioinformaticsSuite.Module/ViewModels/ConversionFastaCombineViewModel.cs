@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "Combine multiple FASTA sequences into a single sequence";
         private readonly IFastaManipulator _fastaManipulator;
 
-        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser, eventAggregator)
+        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser)
         {
             _fastaManipulator = fastaManipulator;
             if(fastaManipulator == null) { throw new ArgumentNullException(nameof(fastaManipulator));}

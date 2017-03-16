@@ -16,8 +16,7 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "Translate DNA";
 
-        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator) 
-            : base(sequenceFactory, fastaParser, eventAggregator) { }
+        public DnaTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser) : base(sequenceFactory, fastaParser) { }
 
         public string Title
         {

@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "DNA Statistics";
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
 
-        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator
-             ) : base(sequenceFactory, fastaParser, eventAggregator)
+        public DnaStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
+            : base(sequenceFactory, fastaParser)
         {
         }
 

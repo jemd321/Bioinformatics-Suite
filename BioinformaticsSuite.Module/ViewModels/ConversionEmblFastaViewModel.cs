@@ -18,8 +18,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IEmblConverter _emblConverter;
         private readonly IEmblParser _emblParser;
 
-        public ConversionEmblFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser, eventAggregator)
+        public ConversionEmblFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser)
         {
             _emblConverter = emblConverter;
             _emblParser = emblParser;

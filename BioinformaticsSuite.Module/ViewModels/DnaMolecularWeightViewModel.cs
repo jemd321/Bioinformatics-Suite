@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IMolecularWeightCalculator _molecularWeightCalculator;
         private string _title = "DNA Molecular Weight";
 
-        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, fastaParser, eventAggregator)
+        public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, fastaParser)
         {
             this._molecularWeightCalculator = molecularWeightCalculator;
             if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));

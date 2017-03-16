@@ -16,9 +16,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
         private readonly IOpenReadingFrameFinder _openReadingFrameFinder;
 
-        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator, IOpenReadingFrameFinder openReadingFrameFinder) : base(sequenceFactory, fastaParser, eventAggregator)
+        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IOpenReadingFrameFinder openReadingFrameFinder) 
+            : base(sequenceFactory, fastaParser)
         {
-            this._openReadingFrameFinder = openReadingFrameFinder;
+            _openReadingFrameFinder = openReadingFrameFinder;
             if(this._openReadingFrameFinder == null) throw new ArgumentNullException(nameof(openReadingFrameFinder));
         }
 

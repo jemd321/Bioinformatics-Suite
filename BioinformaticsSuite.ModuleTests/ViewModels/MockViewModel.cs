@@ -12,8 +12,7 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
 {
     class MockViewModel : SequenceViewModel
     {
-        public MockViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IEventAggregator eventAggregator) : base(sequenceFactory, fastaParser, eventAggregator)
+        public MockViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser) : base(sequenceFactory, fastaParser)
         {
         }      
     }

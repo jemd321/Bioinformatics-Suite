@@ -25,8 +25,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _enzymeBox2Selection;
         private string _enzymeBox3Selection;
 
-        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser, eventAggregator)
+        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser)
         {
             this._restrictionDigest = restrictionDigest;
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));

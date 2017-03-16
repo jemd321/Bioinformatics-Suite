@@ -20,8 +20,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IGenbankConverter _genbankConverter;
         private readonly IGenbankParser _genbankParser;
 
-        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, IEventAggregator eventAggregator,
-            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser, eventAggregator)
+        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser)
         {
             _genbankConverter = genbankConverter;
             _genbankParser = genbankParser;
