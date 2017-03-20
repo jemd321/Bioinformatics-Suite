@@ -102,11 +102,8 @@
     <Compile Include="Services\SequenceFactoryTests.cs" />
     <Compile Include="Services\FastaParserTests.cs" />
     <Compile Include="Services\SequenceValidatorTests.cs" />
-    <Compile Include="ViewModels\DnaReadingFrameViewModelTests.cs" />
-    <Compile Include="ViewModels\DnaStatisticsViewModelTests.cs" />
-    <Compile Include="ViewModels\MethodSelectionViewModelTests.cs" />
     <Compile Include="ViewModels\MockViewModel.cs" />
-    <Compile Include="ViewModels\SequenceViewModelTests.cs" />
+    <Compile Include="ViewModels\ViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BioinformaticsSuite.Module\BioinformaticsSuite.Module.csproj">

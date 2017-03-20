@@ -10,10 +10,10 @@ namespace BioinformaticsSuite.ModuleTests.Models
         [TestMethod]
         public void ReadingFrameTest()
         {
-            Dna dna = new Dna(">test", "ACTGTGAC");
-            ReadingFrame readingFrame = new ReadingFrame(dna);
+            var dna = new Dna(">test", "ACTGTGAC");
+            var readingFrame = new ReadingFrame(dna);
 
-            string expectedLabel = ">test";
+            const string expectedLabel = ">test";
             var expectedFrames = new Dictionary<string, string>
             {
                 {">test +1", "ACTGTG"},
