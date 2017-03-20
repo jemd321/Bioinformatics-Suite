@@ -1,8 +1,10 @@
-﻿using System.Security.AccessControl;
+﻿using System.Linq;
+using System.Security.AccessControl;
 using BioinformaticsSuite.Module.Models;
 using BioinformaticsSuite.Module.Services;
 using BioinformaticsSuite.Module.ViewModels;
 using ICSharpCode.AvalonEdit.Editing;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.ViewModels
@@ -78,7 +80,7 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void ConversionCombineFastaViewModelTest()
         {
-            Assert.Fail();
+
         }
 
         #endregion
@@ -186,13 +188,30 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void RnaMolecularWeightViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new RnaMolecularWeightViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new MolecularWeightCalculator());
+            const string testCase = ">test\r\nACGUUGCAACGU";
+            const string expectedResult = ">test\r\n4.016 kDa\r\n";
+
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actual = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actual);
         }
 
         [TestMethod()]
         public void RnaTranslateViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new RnaTranslateViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()));
+            const string testCase = ">test\r\nACGUUGCAACGU";
+            const string expectedResult = ">test\r\nTLQR\r\n";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actual = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actual);
         }
 
         #endregion
@@ -202,19 +221,47 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void ProteinMolecularWeightViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ProteinMolecularWeightViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new MolecularWeightCalculator());
+            const string testCase = ">test\r\nMPR*";
+            const string expectedResult = ">test\r\n0.403 kDa\r\n";
+
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actual = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actual);
         }
 
         [TestMethod()]
         public void ProteinOpenReadingFramesViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ProteinOpenReadingFrameViewModel(new SequenceFactory(),
+                new FastaParser(new SequenceValidator()), new OpenReadingFrameFinder(new ReadingFrameFactory()));
+            const string testCase = ">test\r\nBCMPR*BRVMEGH*P";
+            const string expectedResult = "";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actual = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actual);
+
         }
 
         [TestMethod()]
         public void ProteinStatisticsViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ProteinStatisticsViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()));
+            const string testCase = ">test\r\nMPR*";
+            const string expectedResult =
+                ">test\r\nA: 0 C: 0 D: 0 E: 0 F: 0 G: 0 H: 0 I: 0 K: 0 L: 0 M: 1 N: 0 P: 1 Q: 0 R: 1 S: 0 T: 0 V: 0 W: 0 Y: 0 *: 1 \r\nA: 0% C: 0% D: 0% E: 0% F: 0% G: 0% H: 0% I: 0% K: 0% L: 0% M: 25.00% N: 0% P: 25.00% Q: 0% R: 25.00% S: 0% T: 0% V: 0% W: 0% Y: 0% *: 25.00% \r\n";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actual = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actual);
         }
 
         #endregion
