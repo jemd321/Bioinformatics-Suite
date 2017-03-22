@@ -74,23 +74,19 @@ namespace BioinformaticsSuite.Module.Utility
             {"UAG", '*'}
         };
 
-        public static string TranslateDnaToProtein(string dnaSequence)
+        public static string TranslateDnaToProtein(string dna)
         {
-            string rna = ConvertDnatoRna(dnaSequence.ToUpper());
-            string protein = ConvertRnaToProtein(rna);
-            return protein;
+            return TranslateRnaToProtein(TranscribeDnaToRna(dna.ToUpper()));
         }
 
         public static string TranscribeDnaToRna(string dnaSequence)
         {
-            string rna = ConvertDnatoRna(dnaSequence.ToUpper());
-            return rna;
+            return ConvertDnatoRna(dnaSequence.ToUpper());
         }
 
         public static string TranslateRnaToProtein(string rnaSequence)
         {
-            string protein = ConvertRnaToProtein(rnaSequence.ToUpper());
-            return protein;
+            return ConvertRnaToProtein(rnaSequence.ToUpper());
         }
 
         private static string ConvertDnatoRna(string dna)
@@ -106,7 +102,7 @@ namespace BioinformaticsSuite.Module.Utility
 
         private static List<string> SplitIntoCodons(string rna)
         {
-            List<string> codonList = new List<string>();
+            var codonList = new List<string>();
 
             int length = rna.Length;
             int remainder = length%3;
@@ -123,7 +119,7 @@ namespace BioinformaticsSuite.Module.Utility
 
         private static string MatchAminoAcids(List<string> codonList)
         {
-            StringBuilder proteinBuilder = new StringBuilder();
+            var proteinBuilder = new StringBuilder();
 
             foreach (string codon in codonList)
             {
@@ -140,8 +136,7 @@ namespace BioinformaticsSuite.Module.Utility
                     throw new Exception("Invalid codon detected during codon translation");
                 }
             }
-            string protein = proteinBuilder.ToString();
-            return protein;
+            return proteinBuilder.ToString();
         }
     }
 }
