@@ -117,18 +117,21 @@ namespace BioinformaticsSuite.Module.ViewModels
             var labeldBuilder = new StringBuilder();
             foreach (var labelledDigest in labelledDisDigestFragments)
             {
-                displayStringBuilder.AppendLine(labelledDigest.Label).AppendLine();
-                var orderFragments = labelledDigest.DigestFramgments.OrderByDescending(n => n.Fragment.Length);
-                foreach (var fragment in orderFragments)
+                string label = labelledDigest.Label;
+                var orderedFragments = labelledDigest.DigestFramgments.OrderByDescending(n => n.Fragment.Length);
+                foreach (var fragment in orderedFragments)
                 {
-                    labeldBuilder.Append(">Fragment: ")
+                    labeldBuilder
+                        .Append(label)
+                        .Append(";Fragment: ")
                         .Append(fragment.CutPosition)
                         .Append("-")
                         .Append(fragment.CutPosition + fragment.Fragment.Length)
-                        .Append(" Enzyme: ")
+                        .Append(";Enzyme: ")
                         .Append(fragment.Enzyme)
-                        .Append(" Length: ")
-                        .Append(fragment.Fragment.Length);
+                        .Append(";Length: ")
+                        .Append(fragment.Fragment.Length)
+                        .Append(";");
                     displayStringBuilder.AppendLine(labeldBuilder.ToString());
                     displayStringBuilder.AppendLine(fragment.Fragment);
                     labeldBuilder.Clear();

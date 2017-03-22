@@ -134,7 +134,20 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void DnaRestricitionDigestViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new DnaRestricitionDigestViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new RestrictionDigest());
+            const string testCase = ">test\r\nATCCGCGTCAGTACTGAAGCTAAC";
+            string[] testEnzymes = { "CG|CG", "GT|AC", "AG|CT" };
+            const string expectedResult = ">test;Fragment: 5-12;Enzyme: CG|CG;Length: 7;\r\nCGTCAGT\r\n>test;Fragment: 12-19;Enzyme: GT|AC;Length: 7;\r\nACTGAAG\r\n>test;Fragment: 0-5;Enzyme: CG|CG;Length: 5;\r\nATCCG\r\n>test;Fragment: 19-24;Enzyme: AG|CT;Length: 5;\r\nCTAAC\r\n";
+
+            viewModel.InputBoxText = testCase;
+            viewModel.EnzymeBox1Selection = testEnzymes[0];
+            viewModel.EnzymeBox2Selection = testEnzymes[1];
+            viewModel.EnzymeBox3Selection = testEnzymes[2];
+
+            viewModel.OnRun();
+            var actualResult = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [TestMethod()]
@@ -246,7 +259,6 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
             var actual = viewModel.ResultBoxText;
 
             Assert.AreEqual(expectedResult, actual);
-
         }
 
         [TestMethod()]
