@@ -238,8 +238,8 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         {
             var viewModel = new ProteinOpenReadingFrameViewModel(new SequenceFactory(),
                 new FastaParser(new SequenceValidator()), new OpenReadingFrameFinder(new ReadingFrameFactory()));
-            const string testCase = ">test\r\nBCMPR*BRVMEGH*P";
-            const string expectedResult = "";
+            const string testCase = ">test\r\nATGACTGTATTAATGACTGTATTAACTGTATTATAG";
+            const string expectedResult = ">test: 1-11 length: 11\r\nMTVLMTVLTVL\r\n>test: 5-11 length: 7\r\nMTVLTVL\r\n";
             viewModel.InputBoxText = testCase;
 
             viewModel.OnRun();

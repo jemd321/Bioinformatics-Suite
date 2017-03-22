@@ -1,27 +1,36 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BioinformaticsSuite.Module.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioinformaticsSuite.ModuleTests.Models
 {
     [TestClass]
     public class OpenReadingFrameTests
     {
-        /*
+        //MTVLMTVLTVL*
         [TestMethod()]
         public void OpenReadingFrameTest()
         {
-            var testProtein = new Protein(">test", "MLMPRSTX");
-            var openReadingFrame = new OpenReadingFrame(testProtein);
-
+            var orfFinder = SetupMock();
+            var testCase = new Dna(">test", "ATGACTGTATTAATGACTGTATTAACTGTATTATAG");
             var expectedLabel = ">test";
             var expectedOrfs = new Dictionary<string, string>()
             {
-                {">test 1-8", "MLMPRST"},
-                {">test 3-8", "MPRST" }
+                {">test: 1-11 length: 11", "MTVLMTVLTVL"},
+                {">test: 5-11 length: 7", "MTVLTVL" }
             };
 
-            Assert.AreEqual(expectedLabel, openReadingFrame.Label);
-            CollectionAssert.AreEquivalent(expectedOrfs, openReadingFrame.OrfList);
+            var actualOrfs = orfFinder.FindOpenReadingFrames(testCase);
+
+            Assert.AreEqual(2, actualOrfs.Count);
+            CollectionAssert.AreEquivalent(expectedOrfs, actualOrfs);
         }
-        */
+
+        private static IOpenReadingFrameFinder SetupMock()
+        {
+            return new OpenReadingFrameFinder(new ReadingFrameFactory());
+        }
+        
     }
 }

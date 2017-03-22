@@ -55,7 +55,6 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         private void BuildDisplayString(string label, Dictionary<string, string> labelledOrfs)
         {
-            _displayStringBuilder.AppendLine(label);
             foreach (var orf in labelledOrfs)
             {
                 _displayStringBuilder.AppendLine(orf.Key);

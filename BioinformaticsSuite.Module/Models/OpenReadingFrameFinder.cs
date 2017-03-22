@@ -14,6 +14,8 @@ namespace BioinformaticsSuite.Module.Models
     {
         private readonly StringBuilder _labelBuilder = new StringBuilder();
         private readonly IReadingFrameFactory _readingFrameFactory;
+        private readonly Regex _orfMatcher = new Regex(@"M[^*]*\*", RegexOptions.Compiled);
+
         private string _sequenceLabel;
 
         public OpenReadingFrameFinder(IReadingFrameFactory readingFrameFactory)
@@ -27,46 +29,47 @@ namespace BioinformaticsSuite.Module.Models
         {
             _sequenceLabel = dna.Label;
             var labelledOrfs = new Dictionary<string, string>();
-            var orfMatcher = new Regex(@"M[^*]*\*", RegexOptions.Compiled);
 
-            ReadingFrame readingFrame = _readingFrameFactory.GetReadingFrames(dna);
+            var readingFrame = _readingFrameFactory.GetReadingFrames(dna);
             foreach (var labelledFrame in readingFrame.LabelledFrames)
             {
                 var frame = Translation.TranslateDnaToProtein(labelledFrame.Value);
                 // Must use a while loop here to ensure that the regex matches overlapping ORFs
-                Match match = orfMatcher.Match(frame);
+                Match match = _orfMatcher.Match(frame);
                 while (match.Success)
                 {
                     FoundOrf = true;
-                    string orf = TrimOrf(match.Value);
+                    string orf = TrimStopCodon(match.Value);
                     if (orf != string.Empty)
                     {
                         string orfLabel = BuildLabel(match);
                         labelledOrfs.Add(orfLabel, orf);
                     }
-                    match = orfMatcher.Match(frame, match.Index + 1);
+                    match = _orfMatcher.Match(frame, match.Index + 1);
                 }
             }
             return labelledOrfs;
         }
 
-        // Remove stop codon
-        private static string TrimOrf(string untrimmedOrf)
+        private static string TrimStopCodon(string untrimmedOrf)
         {
             return untrimmedOrf.TrimEnd('*');
         }
 
+        // Label consists of the length (start-end) followed by the sequence
         private string BuildLabel(Match match)
         {
+            // + 1 to convert to non-0 based index
             int startIndex = match.Index + 1;
-            int endIndex = startIndex + match.Length - 1;
+            // -2 to account for the trimmed stop codon
+            int endIndex = startIndex + match.Length - 2;
 
             _labelBuilder.Append(_sequenceLabel)
                 .Append(": ")
                 .Append(startIndex)
                 .Append("-")
                 .Append(endIndex)
-                .Append(" Length: ")
+                .Append(" length: ")
                 .Append(match.Length - 1);
             string orfLabel = _labelBuilder.ToString();
             _labelBuilder.Clear();
