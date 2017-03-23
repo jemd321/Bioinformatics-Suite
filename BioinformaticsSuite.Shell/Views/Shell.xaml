@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="Bioinformatics Suite" Height="Auto" Width="Auto"
         Icon="Icons-Land-Medical-Body-DNA.ico"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         MinHeight="300"
         MinWidth="530">
 
@@ -22,8 +26,7 @@
 
         <!-- MethodRegion -->
         <Border Grid.Row="1"
-                Grid.Column="0"
-                Background="Gainsboro">
+                Grid.Column="0">
             <ContentControl x:Name="MethodSelectionRegion"
                             prism:RegionManager.RegionName="MethodSelectionRegion"
                             VerticalContentAlignment="Stretch"
