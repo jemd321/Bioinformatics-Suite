@@ -78,19 +78,44 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void ConversionGenbankFastaViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ConversionGenbankFastaViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new GenbankConverter(), new GenbankParser());
+            const string testCase = "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
+            const string expectedResult = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.\r\nCCACGCGTCCGGGTGGTGCCAAATTCTGGGGCCTAGGCATTTCCCTCGCTTTATGTTTTT\r\n";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actualResult = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [TestMethod()]
         public void ConversionGenbankTranslateViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ConversionGenbankTranslateViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new GenbankConverter(), new GenbankParser());
+            const string testCase = "LOCUS       BC035912                2074 bp    mRNA    linear   PRI 19-JAN-2006\nDEFINITION  Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone\n            IMAGE:5494573), complete cds.\nACCESSION   BC035912\nVERSION     BC035912.1\nKEYWORDS    ORIGIN      \n        1 ccacgcgtcc gggtggtgcc aaattctggg gcctaggcat ttccctcgct ttatgttttt\n//";
+            const string expectedResult = ">BC035912.1 Homo sapiens dipeptidyl-peptidase 6, mRNA (cDNA clone IMAGE:5494573), complete cds.\r\nPRVRVVPNSGA*AFPSLYVF\r\n";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actualResult = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [TestMethod()]
         public void ConversionSplitFastaViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ConversionFastaSplitViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new FastaManipulator());
+            const string testCase = ">test\r\nACGTCCGGTGCACCGGCCGGACGT";
+            const string expectedResult = ">fragment_1;test;start=1;end=12;length=12;source_length=24;\r\nACGTCCGGTGCA\r\n>fragment_2;test;start=13;end=24;length=12;source_length=24;\r\nCCGGCCGGACGT\r\n";
+            viewModel.InputBoxText = testCase;
+            viewModel.SequenceLengthBoxText = "12";
+
+            viewModel.OnRun();
+            var actualResult = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [TestMethod()]
