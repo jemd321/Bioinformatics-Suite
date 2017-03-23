@@ -54,17 +54,20 @@ namespace BioinformaticsSuite.Module.ViewModels
                 }
 
 
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                var labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     SequenceType.Dna);
+
                 var splitFastasList =
                     labelledSequences.Select(
                         labelledSequence => _fastaManipulator.SplitFasta(labelledSequence, splitLength)).ToList();
+
+                var labelledSplitSequences = new List<LabelledSequence>();
                 foreach (var splitFastas in splitFastasList)
                 {
-                    SequenceFactory.CreateLabelledSequences(splitFastas, SequenceType.Dna);
+                    labelledSplitSequences = SequenceFactory.CreateLabelledSequences(splitFastas, SequenceType.Dna);
                 }
 
-                ResultBoxText = BuildDisplayString(labelledSequences);
+                ResultBoxText = BuildDisplayString(labelledSplitSequences);
                 SelectedTab = SelectedTab.Result;
             }
             else

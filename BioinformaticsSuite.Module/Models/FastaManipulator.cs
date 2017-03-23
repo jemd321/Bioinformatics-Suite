@@ -47,7 +47,7 @@ namespace BioinformaticsSuite.Module.Models
                 SequenceBuilder.Append(">fragment_")
                     .Append(fragmentNumber)
                     .Append(";")
-                    .Append(labelledSequence.Label)
+                    .Append(labelledSequence.Label.TrimStart('>'))
                     .Append(";start=")
                     .Append(i + 1)
                     .Append(";end=")

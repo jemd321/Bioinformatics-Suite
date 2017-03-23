@@ -121,7 +121,15 @@ namespace BioinformaticsSuite.ModuleTests.ViewModels
         [TestMethod()]
         public void ConversionCombineFastaViewModelTest()
         {
-            Assert.Fail();
+            var viewModel = new ConversionFastaCombineViewModel(new SequenceFactory(), new FastaParser(new SequenceValidator()), new FastaManipulator());
+            const string testCase = ">test1\r\nACGTCCGGTGCACCGGCCGGACGT\r\n>test2\r\nCCGGTGCACCGGCCGG";
+            const string expectedResult = ">40 base sequence from 2 sequences\r\nACGTCCGGTGCACCGGCCGGACGTCCGGTGCACCGGCCGG\r\n";
+            viewModel.InputBoxText = testCase;
+
+            viewModel.OnRun();
+            var actualResult = viewModel.ResultBoxText;
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         #endregion
