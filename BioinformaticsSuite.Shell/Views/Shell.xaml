@@ -26,7 +26,8 @@
 
         <!-- MethodRegion -->
         <Border Grid.Row="1"
-                Grid.Column="0">
+                Grid.Column="0"
+                Background="{DynamicResource PrimaryHueMidBrush}">
             <ContentControl x:Name="MethodSelectionRegion"
                             prism:RegionManager.RegionName="MethodSelectionRegion"
                             VerticalContentAlignment="Stretch"

@@ -7,269 +7,313 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              mvvm:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-        <TabControl x:Name="TabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="200">
-            <TabItem Header="DNA">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
-                            <Setter Property="Width" Value="210" />
-                            <Setter Property="Height" Value="Auto" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="RootElement">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup Name="CheckStates">
-                                                    <VisualState Name="Unchecked" />
-                                                    <VisualState Name="Checked">
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style TargetType="RadioButton" x:Name="CustomRadio">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border x:Name="RootElement">
+                                <Border.Background>
+                                    <SolidColorBrush/>
+                                </Border.Background>
+                                <Grid>
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center">
+                                    </ContentPresenter>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </StackPanel.Resources>
+        
+        
+        
+        <TreeView HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  MinHeight="0">
+            
+            <TreeViewItem Header="Dna">
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaFindMotif" 
+                            GroupName="Methods" 
+                            Content="Find Motif"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaFindMotif"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaMolecularWeight" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaReadingFrame" 
+                            GroupName="Methods" 
+                            Content="ReadingFrame"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaReadingFrame"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaRestrictionDigest" 
+                            GroupName="Methods"
+                            Content="Restriction Digest" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaRestrictionDigest"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaStatistics" 
+                            GroupName="Methods" Content="DNA Statistics"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaStatistics"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaTranscribe" 
+                            GroupName="Methods" 
+                            Content="Transcribe"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaTranscribe"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="DnaTranslate" 
+                            GroupName="Methods" 
+                            Content="Translate" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaTranslate"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+          </TreeView>
+
+        <TreeView HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  MinHeight="0">
+
+            <TreeViewItem Header="Rna">
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="RnaTranslate" 
+                            GroupName="Methods" 
+                            Content="Find Motif"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaFindMotif"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="RnaMolecularWeight" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
+        <TreeView HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  MinHeight="0">
+
+            <TreeViewItem Header="Protein">
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ProteinMolecularWeight" 
+                            GroupName="Methods" 
+                            Content="Find Motif"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaFindMotif"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ProteinOpenReadingFrames" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ProteinStatistics" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
+        <TreeView HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  MinHeight="0">
+
+            <TreeViewItem Header="Conversion">
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionCombineFasta" 
+                            GroupName="Methods" 
+                            Content="Find Motif"
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaFindMotif"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionSplitFasta" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionGenbankFasta" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionGenbankTranslate" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionEmblFasta" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <RadioButton 
+                            x:Name="ConversionEmblTranslate" 
+                            GroupName="Methods"
+                            Content="Molecular Weight" 
+                            Command="{Binding Path=SelectMethodCommand}" 
+                            CommandParameter="DnaMolecularWeight"/>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
+        <!--
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
+                        <Setter Property="Width" Value="150" />
+                        <Setter Property="Height" Value="Auto" />
+                        <Setter Property="Margin" Value="0,0,0,0" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="RootElement">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CheckStates">
+                                                <VisualState Name="Unchecked" />
+                                                <VisualState Name="Checked">
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BorderBrush"
                                                                             Storyboard.TargetProperty="Color"
-                                                                            To="LightSteelBlue" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
+                                                                            To="#81D4FA" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
 
-                                            <Border.Background>
-                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue" />
-                                            </Border.Background>
+                                        <Border.Background>
+                                            <SolidColorBrush x:Name="BorderBrush"/>
+                                        </Border.Background>
 
-                                            <Grid Margin="15,5,0,5">
-                                                <ContentPresenter
+                                        <Grid Margin="15,5,0,5">
+                                            <ContentPresenter
                                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
 
-                    <RadioButton x:Name="DnaFindMotif" GroupName="Methods" Content="Find Motif"
+                <RadioButton x:Name="awaf" GroupName="Methods" Content="Find Motif"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaFindMotif"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaMolecularWeight" GroupName="Methods"
+                <RadioButton x:Name="DnaMolecularWeight" GroupName="Methods"
                                  Content="Molecular Weight" Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaMolecularWeight"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaReadingFrame" GroupName="Methods" Content="ReadingFrame"
+                <RadioButton x:Name="DnaReadingFrame" GroupName="Methods" Content="ReadingFrame"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaReadingFrame"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaRestrictionDigest" GroupName="Methods"
+                <RadioButton x:Name="DnaRestrictionDigest" GroupName="Methods"
                                  Content="Restriction Digest" Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaRestrictionDigest"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaStatistics" GroupName="Methods" Content="DNA Statistics"
+                <RadioButton x:Name="DnaStatistics" GroupName="Methods" Content="DNA Statistics"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaStatistics"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaTranscribe" GroupName="Methods" Content="Transcribe"
+                <RadioButton x:Name="DnaTranscribe" GroupName="Methods" Content="Transcribe"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaTranscribe"
                                  VerticalAlignment="Top" />
-                    <RadioButton x:Name="DnaTranslate" GroupName="Methods" Content="Translate"
+                <RadioButton x:Name="DnaTranslate" GroupName="Methods" Content="Translate"
                                  Style="{StaticResource MethodSelectionButtonTemplate}"
                                  Command="{Binding Path=SelectMethodCommand}" CommandParameter="DnaTranslate"
                                  VerticalAlignment="Top" />
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="RNA">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
-                            <Setter Property="Width" Value="210" />
-                            <Setter Property="Height" Value="Auto" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="RootElement">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup Name="CheckStates">
-                                                    <VisualState Name="Unchecked" />
-                                                    <VisualState Name="Checked">
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
-                                                                            Storyboard.TargetProperty="Color"
-                                                                            To="LightSteelBlue" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-
-                                            <Border.Background>
-                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue" />
-                                            </Border.Background>
-
-                                            <Grid Margin="15,5,0,5">
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <RadioButton x:Name="RnaTranslate" GroupName="Methods" Content="Translate RNA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="RnaTranslate"
-                                 VerticalAlignment="Top" />
-                    <RadioButton x:Name="RnaMolecularWeight" GroupName="Methods" Content="RNA Molecular Weight"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="RnaMolecularWeight"
-                                 VerticalAlignment="Top" />
-                </StackPanel>
-
-            </TabItem>
-            <TabItem Header="Protein">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
-                            <Setter Property="Width" Value="210" />
-                            <Setter Property="Height" Value="Auto" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="RootElement">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup Name="CheckStates">
-                                                    <VisualState Name="Unchecked" />
-                                                    <VisualState Name="Checked">
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
-                                                                            Storyboard.TargetProperty="Color"
-                                                                            To="LightSteelBlue" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-
-                                            <Border.Background>
-                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue" />
-                                            </Border.Background>
-
-                                            <Grid Margin="15,5,0,5">
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <RadioButton x:Name="OpenReadingFrames" GroupName="Methods" Content="Open Reading Frames"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}"
-                                 CommandParameter="ProteinOpenReadingFrame" VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ProteinStatistics" GroupName="Methods" Content="Protein Statistics"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinStatistics"
-                                 VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ProteinMolecularWeight" GroupName="Methods" Content="Protein Molecular Weight"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ProteinMolecularWeight"
-                                 VerticalAlignment="Top" />
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Conversion">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="ToggleButton" x:Key="MethodSelectionButtonTemplate">
-                            <Setter Property="Width" Value="210" />
-                            <Setter Property="Height" Value="Auto" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="RootElement">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup Name="CheckStates">
-                                                    <VisualState Name="Unchecked" />
-                                                    <VisualState Name="Checked">
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="BorderBrush"
-                                                                            Storyboard.TargetProperty="Color"
-                                                                            To="LightSteelBlue" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-
-                                            <Border.Background>
-                                                <SolidColorBrush x:Name="BorderBrush" Color="AliceBlue" />
-                                            </Border.Background>
-
-                                            <Grid Margin="15,5,0,5">
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <RadioButton x:Name="ConversionFastaCombine" GroupName="Methods" Content="Combine FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionFastaCombine"
-                                 VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ConversionFastaSplit" GroupName="Methods" Content="Split FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionFastaSplit"
-                                 VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ConversionEmblFasta" GroupName="Methods" Content="EMBL to FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionEmblFasta"
-                                 VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ConversionEmblTranslate" GroupName="Methods" Content="EMBL Protein to FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}"
-                                 CommandParameter="ConversionEmblTranslate" VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ConversionGenbankFasta" GroupName="Methods" Content="Genbank to FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}" CommandParameter="ConversionGenbankFasta"
-                                 VerticalAlignment="Top" />
-
-                    <RadioButton x:Name="ConversionGenbankTranslate" GroupName="Methods"
-                                 Content="Genbank Protein to FASTA"
-                                 Style="{StaticResource MethodSelectionButtonTemplate}"
-                                 Command="{Binding Path=SelectMethodCommand}"
-                                 CommandParameter="ConversionGenbankTranslate" VerticalAlignment="Top" />
-                </StackPanel>
-            </TabItem>
-        </TabControl>
-    </Grid>
+            </StackPanel>
+        -->
+    </StackPanel>
 </UserControl>

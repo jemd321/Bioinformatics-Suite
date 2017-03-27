@@ -26,7 +26,7 @@
                 <Border Grid.Row="0"
                         Height="25"
                         VerticalAlignment="Top"
-                        Background="Gainsboro">
+                        Background="#90A4AE">
                     <Label x:Name="TitleLabel"
                            Margin="5,0,0,0"
                            FontSize="12"
@@ -78,7 +78,7 @@
                 </ScrollViewer>
 
                 <Border Grid.Row="1" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                        Background="Gainsboro">
+                        Background="#ECEFF1">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -89,16 +89,16 @@
                                           Margin="10,10,10,10" ContentSource="Content" />
 
                         <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                                BorderBrush="DimGray" BorderThickness="1" Background="AliceBlue">
-                            <StackPanel Orientation="Horizontal" Width="200" VerticalAlignment="Bottom">
+                                BorderBrush="DimGray" BorderThickness="1" Background="#ECEFF1">
+                            <StackPanel Orientation="Horizontal" Width="300" VerticalAlignment="Bottom">
                                 <Button x:Name="RunButton" Content="Run" Command="{Binding Path=RunCommand}"
-                                        Height="Auto" Width="40" Margin="10,10,5,10" />
+                                        Height="Auto" Margin="10,10,5,10" />
                                 <Button x:Name="ClearButton" Content="Clear" Command="{Binding Path=ClearCommand}"
-                                        Height="Auto" Margin="5,10,10,10" />
+                                        Height="Auto" Margin="5,10,5,10" />
                                 <Button x:Name="OpenButton" Content="Open" Command="{Binding Path=OpenCommand}"
-                                        Height="Auto" Margin="5,10,10,10" />
+                                        Height="Auto" Margin="5,10,5,10" />
                                 <Button x:Name="SaveButton" Content="Save" Command="{Binding Path=SaveCommand}"
-                                        Height="Auto" Margin="5,10,10,10" />
+                                        Height="Auto" Margin="5,10,0,10" />
                             </StackPanel>
                         </Border>
                     </Grid>
