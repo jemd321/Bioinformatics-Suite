@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="300"
              mvvm:ViewModelLocator.AutoWireViewModel="True">
@@ -344,15 +345,77 @@
             </StackPanel.Resources>
             
             <StackPanel Orientation="Horizontal"
-                        Height="25">
+                        Height="30"                        
+                        HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" x:Key="IconButton">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Padding" Value="8"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualStateGroup.Transitions>
+                                                    <VisualTransition GeneratedDuration="0:0:0.3" To="Normal">
+                                                        <VisualTransition.GeneratedEasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </VisualTransition.GeneratedEasingFunction>
+                                                    </VisualTransition>
+                                                </VisualStateGroup.Transitions>
+                                                <VisualState Name="Normal"/>
+                                                <VisualState Name="MouseOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="MouseOverBorder" Storyboard.TargetProperty="Opacity"
+                                                             To="0.1" Duration="0"/>
+                                                        <DoubleAnimation Storyboard.TargetName="MouseOverBorder" Storyboard.TargetProperty="Opacity"
+                                                             To="0.1" Duration="0"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
 
+                                        <Border x:Name="MouseOverBorder"
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Opacity="0"
+                                                Background="{TemplateBinding Foreground}">
+                                        </Border>
+                                        <Border Grid.Row="0"
+                                                Grid.Column="0">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center">
+                                            </ContentPresenter>
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
+                
+                <Button Style="{StaticResource IconButton}"
+                        Margin="0,6,10,0"
+                        Command="{Binding Path=ShrinkMethodSelectionViewCommand}">
+                    <materialDesign:PackIcon Kind="FormatHorizontalAlignLeft"                                     
+                                         Height="24"
+                                         Width="24"                                                      
+                                         Foreground="White"/>
+                </Button>
             </StackPanel>
 
             <TreeView HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       Style="{StaticResource CustomMaterialDesignTreeView}">
                 <TreeViewItem  Style="{StaticResource CustomMaterialDesignTreeViewItem}"
-                               Margin="0,5,0,5"
+                               Margin="0,0,0,5"
                                IsExpanded="True">
                     <TreeViewItem.Header>
                         <TextBlock Foreground="White"

@@ -24,7 +24,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0"
-                        Height="25"
+                        Height="30"
                         VerticalAlignment="Top"
                         Background="#607D8B">
                     <Label x:Name="TitleLabel"
