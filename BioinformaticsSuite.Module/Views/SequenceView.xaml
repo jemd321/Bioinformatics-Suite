@@ -26,11 +26,12 @@
                 <Border Grid.Row="0"
                         Height="25"
                         VerticalAlignment="Top"
-                        Background="#90A4AE">
+                        Background="#607D8B">
                     <Label x:Name="TitleLabel"
                            Margin="5,0,0,0"
-                           FontSize="12"
-                           FontWeight="Bold"
+                           FontSize="14"
+                           FontWeight="Heavy"
+                           Foreground="White"
                            Content="{Binding Path=Title}" />
                 </Border>
 
