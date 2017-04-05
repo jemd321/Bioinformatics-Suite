@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using Prism.Commands;
@@ -10,21 +11,56 @@ namespace BioinformaticsSuite.Module.ViewModels
     public class MethodSelectionViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
-
-        private bool _isChecked;
+        private double _methodSelectionViewWidth = 220;
+        private Visibility _methodsVisibility = Visibility.Visible; 
+        private Visibility _expandButtonVisibility = Visibility.Collapsed;
 
         public MethodSelectionViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
+            ResizeMethodSelectionViewCommand = new DelegateCommand(OnResizeMethodSelectionView);
             SelectMethodCommand = new DelegateCommand<string>(OnMethodSelection);
         }
 
         public ICommand SelectMethodCommand { get; private set; }
+        public ICommand ResizeMethodSelectionViewCommand { get; private set; }
 
-        public bool IsChecked
+        public double MethodSelectionViewWidth
         {
-            get { return _isChecked; }
-            set { SetProperty(ref _isChecked, value); }
+            get { return _methodSelectionViewWidth; }
+            set { SetProperty(ref _methodSelectionViewWidth, value); }
+        }
+
+        public Visibility MethodsVisibility
+        {
+            get { return _methodsVisibility; }
+            set { SetProperty(ref _methodsVisibility, value); }
+        }
+
+        public Visibility ExpandButtonVisibility
+        {
+            get { return _expandButtonVisibility; }
+            set { SetProperty(ref _expandButtonVisibility, value); }
+        }
+
+
+
+        private void OnResizeMethodSelectionView()
+        {
+            if (MethodsVisibility == Visibility.Visible)
+            {
+                // Hide methods and make expand button visible
+                MethodSelectionViewWidth = 30;
+                MethodsVisibility = Visibility.Collapsed;
+                ExpandButtonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                // Expand Methods and hide expand button
+                MethodSelectionViewWidth = 220;
+                MethodsVisibility = Visibility.Visible;
+                ExpandButtonVisibility = Visibility.Collapsed;
+            }
         }
 
         private void OnMethodSelection(string methodName)
