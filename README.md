@@ -1,14 +1,11 @@
 Bioinformatics-Suite
 ======================
 
-Welcome to Bioinformatics Suite. This program is intended as a personal project
-to support my learning of C# and WPF with MVVM, particularly of concepts such as
-dependency injection,loosely coupled structure and scalability.
+Welcome to Bioinformatics Suite. This application is a toolkit for manipulating DNA, RNA and protein
+sequences, and converting them between different formats.
 
-This application is a toolkit for manipulating DNA, RNA and protein
-sequences via conversion between commonly used bioinformatic formats, finding the 
-results of various processes such as translation, restriction digest products 
-and open reading frames.
+This program is intended as a personal project to learn C#, WPF with MVVM, PRISM and design concepts such as
+dependency injection, loosely coupled/modular structure and scalability.
 
 Sample sequences for demonstration are available in the BioinformaticsSuite.Module/Resources folder.
 
@@ -56,26 +53,24 @@ Protein
 Format Conversion
 ------------------
 
-- EMBL -> Fasta
+- EMBL -> FASTA
 
-- Translate EMBL -> Fasta
+- Translate EMBL -> FASTA
 
-- Genbank -> Fasta
+- Genbank -> FASTA
 
-- Translate Genbank -> Fasta
+- Translate Genbank -> FASTA
 
-- Split Fasta sequences
+- Split FASTA sequences
 
-- Combine Fasta sequences
+- Combine FASTA sequences
 
 
 Planned Improvements
 -----------------
 
-- Generally improve look of UI
 - Improve Invalid user input notifications, making them more informative and better looking.
-- Make custom save and loading system, since the Win32 system is a pain to test.
-- Improve test coverage of viewModels
+- Make custom save and loading system, since Win32 file dialogs violate MVVM and aren't really testable.
 - Investigate performance issues with very large sequences in text boxes
 - Documentation
 
