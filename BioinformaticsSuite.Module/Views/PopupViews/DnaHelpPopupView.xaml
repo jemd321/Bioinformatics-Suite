@@ -6,14 +6,28 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel Margin="10">
-            <TextBlock TextWrapping="Wrap" TextAlignment="Left" FontSize="14">
-                <Bold FontSize="20">DNA IUPAC Codes</Bold><LineBreak />
+        <StackPanel Background="#ECEFF1">
+            <TextBlock FontSize="20"
+                       FontWeight="Heavy"
+                       Background="#607D8B"
+                       Foreground="White"
+                       Padding="10">
+                DNA IUPAC Codes
+            </TextBlock>
+            <TextBlock FontSize="14"
+                       Margin="10">
                 A : Adenine <LineBreak />
                 C : Cytosine <LineBreak />
                 G : Guanine <LineBreak />
-                T : Thymine <LineBreak />
-                <Bold FontSize="16">Ambiguous Bases:</Bold> <LineBreak />
+                T : Thymine
+            </TextBlock>
+            <TextBlock FontSize="16"
+                       FontWeight="Heavy"
+                       Margin="10,0,0,0">
+                Ambiguous Bases:
+            </TextBlock>
+            <TextBlock FontSize="14"
+                       Margin="10">
                 R : A or G <LineBreak />
                 Y : C or T<LineBreak />
                 S : G or C<LineBreak />
