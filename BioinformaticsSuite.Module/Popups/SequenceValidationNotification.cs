@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.Popups
 {
-    class SequenceValidationNotification
+    public class SequenceValidationNotification : Confirmation
     {
+        public SequenceValidationNotification()
+        {
+            
+        }
+
+
     }
 }

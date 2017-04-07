@@ -8,40 +8,30 @@ namespace BioinformaticsSuite.Module.Services
 {
     public interface IFastaParser
     {
-        string ErrorMessage { get; }
+        ValidationErrorMessage ErrorMessage { get; }
         Dictionary<string, string> ParsedSequences { get; }
-        bool TryParseInput(string sequence, SequenceType sequenceType);
+        bool TryParseInput(string input);
         void ResetSequences();
     }
 
     public class FastaParser : IFastaParser
     {
-        private readonly StringBuilder _errorMessageBuilder = new StringBuilder();
         private readonly Regex _lineParser = new Regex("\n", RegexOptions.Compiled);
         private readonly StringBuilder _sequenceBuilder = new StringBuilder();
-        private readonly ISequenceValidator _sequenceValidator;
         private Dictionary<string, string> _parsedSequences = new Dictionary<string, string>();
-        private SequenceType _sequenceType;
 
-        public FastaParser(ISequenceValidator sequenceValidator)
-        {
-            _sequenceValidator = sequenceValidator;
-        }
-
-        public string ErrorMessage { get; private set; }
+        public ValidationErrorMessage ErrorMessage { get; private set; }
         public Dictionary<string, string> ParsedSequences => _parsedSequences;
 
-        public bool TryParseInput(string input, SequenceType sequenceType)
+        public bool TryParseInput(string input)
         {
-            _sequenceType = sequenceType;
-
             if (string.IsNullOrWhiteSpace(input))
             {
-                ErrorMessage = "No sequences entered";
+                ErrorMessage = BuildErrorMessage(0, null, "No input sequences entered");
                 return false;
             }
 
-            List<string> lines = _lineParser.Split(input).ToList();
+            var lines = _lineParser.Split(input).ToList();
             lines = RemoveEmptyLines(lines);
             lines = RemoveTerminators(lines);
 
@@ -58,7 +48,7 @@ namespace BioinformaticsSuite.Module.Services
 
         public void ResetSequences()
         {
-            ErrorMessage = "";
+            ErrorMessage = null;
             _parsedSequences = new Dictionary<string, string>();
         }
 
@@ -80,8 +70,7 @@ namespace BioinformaticsSuite.Module.Services
                 return true;
             }
             const int errorLineNumber = 0;
-            ErrorMessage = BuildErrorMessage(errorLineNumber, _sequenceValidator.ErrorIndex,
-                _sequenceValidator.ErrorContent);
+            ErrorMessage = _sequenceValidator.ErrorMessage);
             return false;
         }
 
@@ -187,18 +176,9 @@ namespace BioinformaticsSuite.Module.Services
             return true;
         }
 
-        private string BuildErrorMessage(int errorLineNumber, int errorCharNumber, string errorContent)
+        private ValidationErrorMessage BuildErrorMessage(int errorIndex, string errorContent, string errorMessage)
         {
-            _errorMessageBuilder.Append("Invalid input was detected on line: ");
-            _errorMessageBuilder.Append(errorLineNumber + 1);
-            _errorMessageBuilder.Append(", at character: ");
-            _errorMessageBuilder.Append(errorCharNumber + 1);
-            _errorMessageBuilder.Append(". An invalid character (");
-            _errorMessageBuilder.Append(errorContent);
-            _errorMessageBuilder.Append(") was found.");
-            string errorMessage = _errorMessageBuilder.ToString();
-            _errorMessageBuilder.Clear();
-            return errorMessage;
+            return new ValidationErrorMessage(_sequenceType, errorIndex, errorContent, errorMessage);
         }
 
         private bool LabelledSequenceIsDuplicate(string label)

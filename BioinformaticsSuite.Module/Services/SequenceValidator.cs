@@ -1,12 +1,12 @@
 ﻿using System.Text.RegularExpressions;
 using BioinformaticsSuite.Module.Enums;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace BioinformaticsSuite.Module.Services
 {
     public interface ISequenceValidator
     {
-        int ErrorIndex { get; }
-        string ErrorContent { get; }
+        ValidationErrorMessage ErrorMessage { get; }
         bool ValidateLabel(string label);
         bool ValidateSequence(string sequence, SequenceType sequenceType);
     }
@@ -15,11 +15,10 @@ namespace BioinformaticsSuite.Module.Services
     public class SequenceValidator : ISequenceValidator
     {
         private readonly Regex _dnaRegex = new Regex("[^ACGT]", RegexOptions.Compiled);
-        private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY*]", RegexOptions.Compiled);
         private readonly Regex _rnaRegex = new Regex("[^ACGU]", RegexOptions.Compiled);
+        private readonly Regex _proteinRegex = new Regex("[^ACDEFGHIKLMNQPRSTVWY*]", RegexOptions.Compiled);
 
-        public int ErrorIndex { get; private set; }
-        public string ErrorContent { get; private set; }
+        public ValidationErrorMessage ErrorMessage { get;  private set; }
 
         public bool ValidateLabel(string label)
         {
@@ -45,7 +44,7 @@ namespace BioinformaticsSuite.Module.Services
         {
             var match = _dnaRegex.Match(sequence);
             if (!match.Success) return true;
-            LogErrorInfo(match);
+            BuildErrorMessage(match, SequenceType.Dna);
             return false;
         }
 
@@ -53,7 +52,7 @@ namespace BioinformaticsSuite.Module.Services
         {
             var match = _rnaRegex.Match(sequence);
             if (!match.Success) return true;
-            LogErrorInfo(match);
+            BuildErrorMessage(match, SequenceType.Rna);
             return false;
         }
 
@@ -61,14 +60,32 @@ namespace BioinformaticsSuite.Module.Services
         {
             var match = _proteinRegex.Match(sequence);
             if (!match.Success) return true;
-            LogErrorInfo(match);
+            BuildErrorMessage(match, SequenceType.Protein);
             return false;
         }
 
-        private void LogErrorInfo(Match match)
+        private void BuildErrorMessage(Match match, SequenceType sequenceType)
         {
-            ErrorIndex = match.Index + 1;
-            ErrorContent = match.Value;
+            int errorIndex = match.Index + 1;
+            string errorContent = match.Value;
+
+            string errorMessage;
+            switch (sequenceType)
+            {
+                case SequenceType.Dna:
+                    errorMessage = "Invalid DNA base detected";
+                    break;
+                case SequenceType.Rna:
+                    errorMessage = "Invalid RNA base detected";
+                    break;
+                case SequenceType.Protein:
+                    errorMessage = "Invalid Amino acid detected";
+                    break;
+                default:
+                    errorMessage = "";
+                    break;
+            }
+            ErrorMessage = new ValidationErrorMessage(sequenceType, errorIndex, errorContent, errorMessage);
         }
     }
 }

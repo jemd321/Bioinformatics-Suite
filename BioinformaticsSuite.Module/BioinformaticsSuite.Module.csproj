@@ -110,6 +110,7 @@
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
     <Compile Include="Models\RestrictionDigest.cs" />
+    <Compile Include="Popups\SequenceValidationNotification.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,6 +118,7 @@
     </Compile>
     <Compile Include="Services\EmblParser.cs" />
     <Compile Include="Services\GenbankParser.cs" />
+    <Compile Include="Services\ParsingErrorMessage.cs" />
     <Compile Include="Services\SequenceFactory.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="Models\Dna.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Models\OpenReadingFrameFinder.cs" />
     <Compile Include="Models\Protein.cs" />
     <Compile Include="Models\ReadingFrame.cs" />
+    <Compile Include="Services\ValidationErrorMessage.cs" />
     <Compile Include="Utility\SequenceCount.cs" />
     <Compile Include="Utility\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +152,7 @@
     <Compile Include="Enums\MethodNames.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModel.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModel.cs" />
+    <Compile Include="ViewModels\PopupViewModels\SequenceValidatationPopupViewModel.cs" />
     <Compile Include="ViewModels\ProteinMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\ProteinOpenReadingFrameViewModel.cs" />
     <Compile Include="ViewModels\ProteinStatisticsViewModel.cs" />

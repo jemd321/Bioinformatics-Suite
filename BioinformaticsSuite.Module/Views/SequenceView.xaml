@@ -7,12 +7,17 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="clr-namespace:BioinformaticsSuite.Module.Behaviours"
              xmlns:interactionRequest="http://prismlibrary.com/"
+             xmlns:popupViews="clr-namespace:BioinformaticsSuite.Module.Views.PopupViews"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <i:Interaction.Triggers>
-        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
-            <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding SequenceValidationPopup, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction>
+                <interactionRequest:PopupWindowAction.WindowContent>
+                    <popupViews:SequenceValidationPopupView/>
+                </interactionRequest:PopupWindowAction.WindowContent>
+            </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
@@ -42,6 +47,35 @@
                         <TabControl.Resources>
                             <Style TargetType="TabPanel">
                                 <Setter Property="HorizontalAlignment" Value="Right" />
+                            </Style>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type TabItem}">
+                                            <Border x:Name="Border"
+                                                    VerticalAlignment="Bottom"
+                                                    Width="140"
+                                                    Height="22"
+                                                    Background="#CFD8DC">
+                                                <ContentPresenter ContentSource="Header"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Left"
+                                                                  Margin="20,0,0,0">
+                                                </ContentPresenter>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border"
+                                                            Property="Background"
+                                                            Value="#ECEFF1"/>
+                                                    <Setter TargetName="Border"
+                                                            Property="Height"
+                                                            Value="26"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </TabControl.Resources>
                         <TabItem Header="Input">
