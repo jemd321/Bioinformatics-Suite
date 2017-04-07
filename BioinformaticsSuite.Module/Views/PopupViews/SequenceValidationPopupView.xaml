@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="BioinformaticsSuite.Module.Views.PopupViews.SequenceValidationPopupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views.PopupViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Background="#ECEFF1"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+        <TextBlock FontSize="18"
+                   Background="#607D8B"
+                   Foreground="White"
+                   Padding="10">
+            Invalid Sequence Input
+        </TextBlock>
+        <Grid Margin="0,10,0,10"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Expected Sequence Type:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Sequence Label:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Index:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Character:</TextBlock>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
+        </Grid>
+
+        <Button Name="CloseButton" Width="75" HorizontalAlignment="Right" Margin="0,0,10,0" Content="Close"
+                    Click="CloseButton_Click" />
+    </StackPanel>
+</UserControl>

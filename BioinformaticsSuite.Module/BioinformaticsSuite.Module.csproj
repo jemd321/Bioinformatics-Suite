@@ -204,6 +204,9 @@
     <Compile Include="Views\PopupViews\DnaHelpPopupView.xaml.cs">
       <DependentUpon>DnaHelpPopupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PopupViews\SequenceValidationPopupView.xaml.cs">
+      <DependentUpon>SequenceValidationPopupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProteinMolecularWeightView.xaml.cs">
       <DependentUpon>ProteinMolecularWeightView.xaml</DependentUpon>
     </Compile>
@@ -285,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PopupViews\DnaHelpPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PopupViews\SequenceValidationPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
