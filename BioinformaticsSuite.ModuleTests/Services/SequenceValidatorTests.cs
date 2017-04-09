@@ -27,18 +27,18 @@ namespace BioinformaticsSuite.ModuleTests.Services
             const int expectedProteinErrorIndex = 1;
             const string expectedProteinErrorContent = "Z";
 
-            Assert.IsTrue(sequenceValidator.ValidateSequence(validTestDna, SequenceType.Dna));
-            Assert.IsFalse(sequenceValidator.ValidateSequence(invalidTestDna, SequenceType.Dna));
+            Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestDna, SequenceType.Dna));
+            Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestDna, SequenceType.Dna));
             Assert.AreEqual(expectedDnaErrorIndex, sequenceValidator.ErrorIndex);
             Assert.AreEqual(expectedDnaErrorContent, sequenceValidator.ErrorContent);
 
-            Assert.IsTrue(sequenceValidator.ValidateSequence(validTestRna, SequenceType.Rna));
-            Assert.IsFalse(sequenceValidator.ValidateSequence(invalidTestRna, SequenceType.Rna));
+            Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestRna, SequenceType.Rna));
+            Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestRna, SequenceType.Rna));
             Assert.AreEqual(expectedRnaErrorIndex, sequenceValidator.ErrorIndex);
             Assert.AreEqual(expectedRnaErrorContent, sequenceValidator.ErrorContent);
 
-            Assert.IsTrue(sequenceValidator.ValidateSequence(validTestProtein, SequenceType.Protein));
-            Assert.IsFalse(sequenceValidator.ValidateSequence(invalidTestProtein, SequenceType.Protein));
+            Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestProtein, SequenceType.Protein));
+            Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestProtein, SequenceType.Protein));
             Assert.AreEqual(expectedProteinErrorIndex, sequenceValidator.ErrorIndex);
             Assert.AreEqual(expectedProteinErrorContent, sequenceValidator.ErrorContent);
         }
