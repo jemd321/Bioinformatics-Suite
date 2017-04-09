@@ -14,7 +14,6 @@ namespace BioinformaticsSuite.ModuleTests.Models
         {
             var orfFinder = SetupMock();
             var testCase = new Dna(">test", "ATGACTGTATTAATGACTGTATTAACTGTATTATAG");
-            var expectedLabel = ">test";
             var expectedOrfs = new Dictionary<string, string>()
             {
                 {">test: 1-11 length: 11", "MTVLMTVLTVL"},

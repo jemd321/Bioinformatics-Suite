@@ -40,6 +40,6 @@
         </Grid>
 
         <Button Name="CloseButton" Width="75" HorizontalAlignment="Right" Margin="0,0,10,0" Content="Close"
-                    Click="CloseButton_Click" />
+                     />
     </StackPanel>
 </UserControl>

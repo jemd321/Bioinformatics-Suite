@@ -1,4 +1,5 @@
-﻿using BioinformaticsSuite.Module.Enums;
+﻿using System.Collections.Generic;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,43 +11,38 @@ namespace BioinformaticsSuite.ModuleTests.Services
         [TestMethod]
         public void ValidateSequenceTest()
         {
-            var sequenceValidator = CreateTestInstance();
+            var sequenceValidator = SetupMock();
 
-            const string validTestDna = "ACGT";
-            const string invalidTestDna = "ACXT";
-            const int expectedDnaErrorIndex = 3;
-            const string expectedDnaErrorContent = "X";
+            var validTestDna = new Dictionary<string, string>{ {">test", "ACGT"} };
+            var invalidTestDna = new Dictionary<string, string> { {">test", "ACXT" } };
+            var expectedDnaErrorMessage = new ValidationErrorMessage(SequenceType.Dna, ">test", 3, "X", "Invalid DNA base detected");
 
-            const string validTestRna = "ACGU";
-            const string invalidTestRna = "ACGY";
-            const int expectedRnaErrorIndex = 4;
-            const string expectedRnaErrorContent = "Y";
+            var validTestRna = new Dictionary<string, string> { {">test", "ACGU"} };
+            var invalidTestRna = new Dictionary<string, string> { {">test", "ACGY"} };
+            var expectedRnaErrorMessage = new ValidationErrorMessage(SequenceType.Rna, ">test", 4, "Y", "Invalid RNA base detected");
 
-            const string validTestProtein = "ACDEFGHIKLMNPQRSTVWY";
-            const string invalidTestProtein = "ZCDEFGHIKLMNPQRSTVWY";
-            const int expectedProteinErrorIndex = 1;
-            const string expectedProteinErrorContent = "Z";
+
+            var validTestProtein = new Dictionary<string, string> { {">test", "ACDEFGHIKLMNPQRSTVWY"} };
+            var invalidTestProtein = new Dictionary<string, string> { {">test", "ZCDEFGHIKLMNPQRSTVWY"} };
+            var expectedProteinErrorMessage = new ValidationErrorMessage(SequenceType.Protein, ">test", 1, "Z", "Invalid Amino acid detected");
+
 
             Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestDna, SequenceType.Dna));
             Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestDna, SequenceType.Dna));
-            Assert.AreEqual(expectedDnaErrorIndex, sequenceValidator.ErrorIndex);
-            Assert.AreEqual(expectedDnaErrorContent, sequenceValidator.ErrorContent);
+            Assert.AreEqual(expectedDnaErrorMessage, sequenceValidator.ErrorMessage);
 
             Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestRna, SequenceType.Rna));
             Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestRna, SequenceType.Rna));
-            Assert.AreEqual(expectedRnaErrorIndex, sequenceValidator.ErrorIndex);
-            Assert.AreEqual(expectedRnaErrorContent, sequenceValidator.ErrorContent);
+            Assert.AreEqual(expectedRnaErrorMessage, sequenceValidator.ErrorMessage);
 
             Assert.IsTrue(sequenceValidator.TryValidateSequence(validTestProtein, SequenceType.Protein));
             Assert.IsFalse(sequenceValidator.TryValidateSequence(invalidTestProtein, SequenceType.Protein));
-            Assert.AreEqual(expectedProteinErrorIndex, sequenceValidator.ErrorIndex);
-            Assert.AreEqual(expectedProteinErrorContent, sequenceValidator.ErrorContent);
+            Assert.AreEqual(expectedProteinErrorMessage, sequenceValidator.ErrorMessage);
         }
 
-        private static ISequenceValidator CreateTestInstance()
+        private static ISequenceValidator SetupMock()
         {
-            ISequenceValidator sequenceValidator = new SequenceValidator();
-            return sequenceValidator;
+            return new SequenceValidator();
         }
     }
 }

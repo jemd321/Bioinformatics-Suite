@@ -29,7 +29,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
+            // const SequenceType sequenceType = SequenceType.Dna;
             if (_emblParser.TryParseEmblFile(InputBoxText))
             {
                 List<string> emblRecords = _emblParser.EmblRecords;
