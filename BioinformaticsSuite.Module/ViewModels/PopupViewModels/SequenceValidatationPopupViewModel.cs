@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Popups;
+using BioinformaticsSuite.Module.Services;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -17,8 +18,7 @@ namespace BioinformaticsSuite.Module.ViewModels.PopupViewModels
 
         public SequenceValidatationPopupViewModel()
         {
-            SelectItemCommand = new DelegateCommand(AcceptSelectedItem);
-            CancelCommand = new DelegateCommand(CancelInteraction);
+            OkCommand = new DelegateCommand(OkInteraction);
         }
 
         public Action FinishInteraction { get; set; }
@@ -37,31 +37,12 @@ namespace BioinformaticsSuite.Module.ViewModels.PopupViewModels
             }
         }
 
-        public string SelectedItem { get; set; }
+        public ValidationErrorMessage ErrorMessage { get; set; }
+        
+        public ICommand OkCommand { get; private set; }
 
-        public ICommand SelectItemCommand { get; private set; }
-
-        public ICommand CancelCommand { get; private set; }
-
-        public void AcceptSelectedItem()
+        public void OkInteraction()
         {
-            if (_notification != null)
-            {
-                
-                _notification.Confirmed = true;
-            }
-
-            FinishInteraction();
-        }
-
-        public void CancelInteraction()
-        {
-            if (_notification != null)
-            {
-                
-                _notification.Confirmed = false;
-            }
-
             FinishInteraction();
         }
     }

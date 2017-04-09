@@ -17,8 +17,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _motifBoxText;
         private string _title = "Find Motifs";
 
-        public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IMotifFinder motifFinder) : base(sequenceFactory, fastaParser)
+        public DnaFindMotifViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IMotifFinder motifFinder) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _motifFinder = motifFinder;
             if (motifFinder == null) throw new ArgumentNullException(nameof(motifFinder));

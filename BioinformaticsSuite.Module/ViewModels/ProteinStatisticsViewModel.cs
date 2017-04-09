@@ -13,8 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
         private string _title = "Protein Statistics";
 
-        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
-            : base(sequenceFactory, fastaParser)
+        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
         }
 

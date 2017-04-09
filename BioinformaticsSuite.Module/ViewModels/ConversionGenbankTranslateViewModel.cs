@@ -12,8 +12,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IGenbankParser _genbankParser;
         private string _title = "Genbank Translate to protein FASTA";
 
-        public ConversionGenbankTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser)
+        public ConversionGenbankTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _genbankConverter = genbankConverter;
             _genbankParser = genbankParser;

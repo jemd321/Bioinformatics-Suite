@@ -10,8 +10,8 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "DNA Transcriber";
 
-        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
-            : base(sequenceFactory, fastaParser)
+        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
         }
 

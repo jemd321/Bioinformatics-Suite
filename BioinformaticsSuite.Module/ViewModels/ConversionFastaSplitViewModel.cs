@@ -13,8 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _sequenceLengthBoxText;
         private string _title = "Split FASTA sequences into mutliple sequences";
 
-        public ConversionFastaSplitViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser)
+        public ConversionFastaSplitViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _fastaManipulator = fastaManipulator;
             if (fastaManipulator == null)
@@ -40,10 +40,18 @@ namespace BioinformaticsSuite.Module.ViewModels
             const SequenceType sequenceType = SequenceType.Dna;
             int splitLength;
             if (!ValidateSequenceLengthBox(out splitLength)) return;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccessfully)
             {
                 Dictionary<string, string> parsedSequences = FastaParser.ParsedSequences;
+                if (ValidateSequences)
+                {
+                    v
+                }
+
+
+
                 int shortestSequenceLength = parsedSequences.Select(parsedSequence => parsedSequence.Value.Length).Min();
                 if (splitLength >= shortestSequenceLength)
                 {

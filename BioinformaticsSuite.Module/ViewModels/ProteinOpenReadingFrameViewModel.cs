@@ -13,9 +13,9 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IOpenReadingFrameFinder _openReadingFrameFinder;
         private string _title = "Open Reading Frames";
 
-        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
+        public ProteinOpenReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
             IOpenReadingFrameFinder openReadingFrameFinder)
-            : base(sequenceFactory, fastaParser)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _openReadingFrameFinder = openReadingFrameFinder;
             if (_openReadingFrameFinder == null) throw new ArgumentNullException(nameof(openReadingFrameFinder));

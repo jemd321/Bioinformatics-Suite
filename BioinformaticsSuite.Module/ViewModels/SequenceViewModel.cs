@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
+using BioinformaticsSuite.Module.Popups;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Win32;
 using NuGet;
@@ -33,14 +34,16 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
         }
 
-        public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
+        public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
         {
             FastaParser = fastaParser;
             SequenceFactory = sequenceFactory;
+            SequenceValidator = sequenceValidator;
             if (SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
             if (FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
+            if (SequenceValidator == null) throw new ArgumentNullException(nameof(sequenceValidator));
 
-            NotificationRequest = new InteractionRequest<INotification>();
+            SequenceValidationRequest = new InteractionRequest<SequenceValidationNotification>();
 
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
@@ -50,8 +53,9 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public ISequenceFactory SequenceFactory { get; }
         public IFastaParser FastaParser { get; }
+        public ISequenceValidator SequenceValidator { get; }
 
-        public InteractionRequest<INotification> NotificationRequest { get; }
+        public InteractionRequest<SequenceValidationNotification> SequenceValidationRequest { get; }
 
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
@@ -192,9 +196,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        protected void RaiseInvalidInputNotification(string errorMessage)
+        protected void RaiseInvalidInputNotification(ValidationErrorMessage errorMessage)
         {
-            NotificationRequest.Raise(new Notification {Title = "Invalid Data Input", Content = errorMessage});
+            SequenceValidationRequest.Raise(new SequenceValidationNotification(errorMessage));
         }
 
         public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)

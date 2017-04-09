@@ -18,8 +18,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _enzymeBox3Selection;
         private string _title = "Restriction Digest";
 
-        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser)
+        public DnaRestricitionDigestViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IRestrictionDigest restrictionDigest) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _restrictionDigest = restrictionDigest;
             if (restrictionDigest == null) throw new ArgumentNullException(nameof(restrictionDigest));

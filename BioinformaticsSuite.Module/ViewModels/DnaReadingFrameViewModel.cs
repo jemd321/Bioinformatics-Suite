@@ -13,8 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IReadingFrameFactory _readingFrameFactory;
         private string _title = "Find Reading Frames";
 
-        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser)
+        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _readingFrameFactory = readingFrameFactory;
             if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));

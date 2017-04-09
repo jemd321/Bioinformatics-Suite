@@ -12,8 +12,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IEmblParser _emblParser;
         private string _title = "EMBL to FASTA Protein converter";
 
-        public ConversionEmblTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser)
+        public ConversionEmblTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _emblConverter = emblConverter;
             _emblParser = emblParser;
