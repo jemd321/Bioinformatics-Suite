@@ -46,13 +46,14 @@ namespace BioinformaticsSuite.ModuleTests.Services
         {
             var sequenceParser = SetupMock();
             var testCase = "";
-            var expectedError = "No sequences entered";
+            var expectedError = new ParsingErrorMessage(0, "No input sequences entered");
 
             bool isSuccess = sequenceParser.TryParseInput(testCase);
             var actualError = sequenceParser.ErrorMessage;
 
             Assert.IsFalse(isSuccess);
-            Assert.AreEqual(expectedError, actualError);
+            Assert.AreEqual(expectedError.LineNumber, actualError.LineNumber);
+            Assert.AreEqual(expectedError.ErrorDescription, actualError.ErrorDescription);
         }
 
         [TestMethod]
@@ -144,39 +145,6 @@ namespace BioinformaticsSuite.ModuleTests.Services
         {
             var sequenceParser = SetupMock();
             var testCase = "ACTA\n>HelloWorld\nACTA";
-
-            bool isSuccess = sequenceParser.TryParseInput(testCase);
-
-            Assert.IsFalse(isSuccess);
-        }
-
-        [TestMethod]
-        public void ParseInvalidSingleSequence()
-        {
-            var sequenceParser = SetupMock();
-            var testCase = "ACTAP";
-
-            bool isSuccess = sequenceParser.TryParseInput(testCase);
-
-            Assert.IsFalse(isSuccess);
-        }
-
-        [TestMethod]
-        public void ParseLabelAndInvalidSequence()
-        {
-            var sequenceParser = SetupMock();
-            var testCase = ">HelloWorld\nACTAP";
-
-            bool isSuccess = sequenceParser.TryParseInput(testCase);
-
-            Assert.IsFalse(isSuccess);
-        }
-
-        [TestMethod]
-        public void ParseLabelAndInvalidMutliLineSequence()
-        {
-            var sequenceParser = SetupMock();
-            var testCase = ">HelloWorld\nACTA\nACTAP";
 
             bool isSuccess = sequenceParser.TryParseInput(testCase);
 
