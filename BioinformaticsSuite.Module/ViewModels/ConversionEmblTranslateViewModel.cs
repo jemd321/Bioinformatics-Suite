@@ -40,7 +40,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(_emblParser.ErrorMessage);
+                RaiseSimpleNotification("Invalid Embl Record", _emblParser.ErrorMessage);
                 _emblParser.ResetSequences();
                 return;
             }

@@ -24,10 +24,19 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Rna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccessfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
+                if (ValidateSequences)
+                {
+                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                    if (!isValid)
+                    {
+                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                        return;
+                    }
+                }
                 var translatedSequences = new Dictionary<string, string>();
                 foreach (var labelledSequence in parsedSequences)
                 {

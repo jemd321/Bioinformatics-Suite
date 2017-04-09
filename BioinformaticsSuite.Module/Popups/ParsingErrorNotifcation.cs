@@ -8,13 +8,13 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace BioinformaticsSuite.Module.Popups
 {
-    public class SequenceValidationNotification : Notification
+    public class ParsingErrorNotifcation : Notification
     {
-        public SequenceValidationNotification(ValidationErrorMessage errorMessage)
+        public ParsingErrorNotifcation(ParsingErrorMessage errorMessage)
         {
             ErrorMessage = errorMessage;
         }
 
-        public ValidationErrorMessage ErrorMessage { get; private set; }
+        public ParsingErrorMessage ErrorMessage { get; set; }
     }
 }

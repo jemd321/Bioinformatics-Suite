@@ -110,6 +110,7 @@
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
     <Compile Include="Models\RestrictionDigest.cs" />
+    <Compile Include="Popups\ParsingErrorNotifcation.cs" />
     <Compile Include="Popups\SequenceValidationNotification.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -152,6 +153,7 @@
     <Compile Include="Enums\MethodNames.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModel.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModel.cs" />
+    <Compile Include="ViewModels\PopupViewModels\ParsingErrorPopupViewModel.cs" />
     <Compile Include="ViewModels\PopupViewModels\SequenceValidatationPopupViewModel.cs" />
     <Compile Include="ViewModels\ProteinMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\ProteinOpenReadingFrameViewModel.cs" />
@@ -207,6 +209,9 @@
     </Compile>
     <Compile Include="Views\PopupViews\DnaHelpPopupView.xaml.cs">
       <DependentUpon>DnaHelpPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PopupViews\ParsingErrorPopupView.xaml.cs">
+      <DependentUpon>ParsingErrorPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PopupViews\SequenceValidationPopupView.xaml.cs">
       <DependentUpon>SequenceValidationPopupView.xaml</DependentUpon>
@@ -292,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PopupViews\DnaHelpPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PopupViews\ParsingErrorPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

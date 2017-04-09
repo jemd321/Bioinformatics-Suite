@@ -53,7 +53,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             string motif = MotifBoxText.ToUpper();
             if (string.IsNullOrWhiteSpace(motif))
             {
-                RaiseInvalidInputNotification("Please enter a valid motif in the box below.");
+                RaiseSimpleNotification("No Motif Entered", "Please enter a valid motif in the box below.");
                 return;
             }
 
@@ -61,10 +61,19 @@ namespace BioinformaticsSuite.Module.ViewModels
             bool isValidMotif = _motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
             if (isValidMotif)
             {
-                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
                 if (isParsedSuccessfully)
                 {
                     var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
                     List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                         sequenceType);
 
@@ -84,9 +93,11 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(
+                const string title = "Invalid Motif";
+                string message =
                     "A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" +
-                    _motifFinder.InvalidMotifMessage);
+                    _motifFinder.InvalidMotifMessage;
+                RaiseSimpleNotification(title, message);
             }
             FastaParser.ResetSequences();
         }

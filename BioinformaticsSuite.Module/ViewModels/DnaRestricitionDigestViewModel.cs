@@ -63,14 +63,23 @@ namespace BioinformaticsSuite.Module.ViewModels
 
             if (enzymes.Count == 0)
             {
-                RaiseInvalidInputNotification("Please select at least one Restriction Enzyme to digest with.");
+                RaiseSimpleNotification("No Enzymes Selected", "Please select at least one Restriction Enzyme to digest with.");
                 return;
             }
 
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccessfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
+                if (ValidateSequences)
+                {
+                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                    if (!isValid)
+                    {
+                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                        return;
+                    }
+                }
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     SequenceType.Dna);
                 var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes,

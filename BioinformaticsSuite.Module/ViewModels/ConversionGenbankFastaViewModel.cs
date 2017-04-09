@@ -40,7 +40,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(_genbankParser.ErrorMessage);
+                RaiseSimpleNotification("Invalid Genbank Record", _genbankParser.ErrorMessage);
                 _genbankParser.ResetSequences();
                 return;
             }

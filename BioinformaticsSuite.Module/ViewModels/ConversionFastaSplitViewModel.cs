@@ -44,25 +44,28 @@ namespace BioinformaticsSuite.Module.ViewModels
             bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccessfully)
             {
-                Dictionary<string, string> parsedSequences = FastaParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
                 if (ValidateSequences)
                 {
-                    v
+                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                    if (!isValid)
+                    {
+                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                        return;
+                    }
                 }
-
-
 
                 int shortestSequenceLength = parsedSequences.Select(parsedSequence => parsedSequence.Value.Length).Min();
                 if (splitLength >= shortestSequenceLength)
                 {
-                    RaiseInvalidInputNotification(
-                        "Desired sequence length cannot be longer than then shortest sequence entered (" +
-                        shortestSequenceLength + ")");
+                    const string title = "Invalid Sequence Length";
+                    string message = "Desired sequence length cannot be longer than then shortest sequence entered (" +
+                        shortestSequenceLength + ")";
+                    RaiseSimpleNotification(title, message);
                     return;
                 }
 
-
-                var labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     SequenceType.Dna);
 
                 var splitFastasList =
@@ -89,13 +92,13 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             if (SequenceLengthBoxText == "")
             {
-                RaiseInvalidInputNotification("Please set the length that your sequences should be split into");
+                RaiseSimpleNotification("No Split Length Entered", "Please set the length that your sequences should be split into");
                 splitLength = 0;
                 return false;
             }
             if (int.TryParse(SequenceLengthBoxText, out splitLength)) return true;
             {
-                RaiseInvalidInputNotification("Desired sequence length must be an integer");
+                RaiseSimpleNotification("Split Length Input Error", "Desired sequence length must be an integer");
                 return false;
             }
         }

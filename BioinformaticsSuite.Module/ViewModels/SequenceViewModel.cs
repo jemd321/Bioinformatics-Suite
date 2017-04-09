@@ -43,7 +43,9 @@ namespace BioinformaticsSuite.Module.ViewModels
             if (FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
             if (SequenceValidator == null) throw new ArgumentNullException(nameof(sequenceValidator));
 
+            NotificationRequest = new InteractionRequest<INotification>();
             SequenceValidationRequest = new InteractionRequest<SequenceValidationNotification>();
+            ParsingErrorRequest = new InteractionRequest<ParsingErrorNotifcation>();
 
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
@@ -55,7 +57,11 @@ namespace BioinformaticsSuite.Module.ViewModels
         public IFastaParser FastaParser { get; }
         public ISequenceValidator SequenceValidator { get; }
 
+        // Generic notification for simple messages
+        public InteractionRequest<INotification> NotificationRequest { get; }
+        // Custom complex Popup windows for input validation
         public InteractionRequest<SequenceValidationNotification> SequenceValidationRequest { get; }
+        public InteractionRequest<ParsingErrorNotifcation> ParsingErrorRequest { get; }
 
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
@@ -117,6 +123,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             set { SetProperty(ref _resultBoxText, value); }
         }
 
+        // Option for user to disable sequence validation to save proccessing time if they are know their sequences are correct.
         public bool ValidateSequences
         {
             get { return _validateSequences; }
@@ -196,9 +203,20 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
+        protected void RaiseSimpleNotification(string title, string message)
+        {
+
+            NotificationRequest.Raise(new Notification{ Title = title, Content = message});
+        }
+
         protected void RaiseInvalidInputNotification(ValidationErrorMessage errorMessage)
         {
             SequenceValidationRequest.Raise(new SequenceValidationNotification(errorMessage));
+        }
+
+        protected void RaiseInvalidInputNotification(ParsingErrorMessage errorMessage)
+        {
+            ParsingErrorRequest.Raise(new ParsingErrorNotifcation(errorMessage));
         }
 
         public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)

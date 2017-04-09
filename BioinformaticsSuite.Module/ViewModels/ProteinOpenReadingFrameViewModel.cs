@@ -30,10 +30,19 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            var isParsedSuccesfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+            var isParsedSuccesfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccesfully)
             {
                 var parsedSequences = FastaParser.ParsedSequences;
+                if (ValidateSequences)
+                {
+                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                    if (!isValid)
+                    {
+                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                        return;
+                    }
+                }
                 List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     sequenceType);
                 foreach (var labelledSequence in labelledSequences)
