@@ -20,9 +20,10 @@ namespace BioinformaticsSuite.Module.Services
     {
         private readonly Regex _lineParser = new Regex("\n", RegexOptions.Compiled);
         private readonly StringBuilder _sequenceBuilder = new StringBuilder();
+        private Dictionary<string, string> _parsedSequences = new Dictionary<string, string>();
 
         public ParsingErrorMessage ErrorMessage { get; private set; }
-        public Dictionary<string, string> ParsedSequences { get; private set; }
+        public Dictionary<string, string> ParsedSequences => _parsedSequences;
 
         public bool TryParseInput(string input)
         {
@@ -52,7 +53,7 @@ namespace BioinformaticsSuite.Module.Services
         public void ResetSequences()
         {
             ErrorMessage = null;
-            ParsedSequences = new Dictionary<string, string>();
+            _parsedSequences = new Dictionary<string, string>();
         }
 
         // Parses only one sequence if it has no label
@@ -68,7 +69,7 @@ namespace BioinformaticsSuite.Module.Services
                 string parsedSequence = _sequenceBuilder.ToString().ToUpper();
                 _sequenceBuilder.Clear();
 
-                ParsedSequences.Add(">Unlabelled_Sequence", parsedSequence);
+                _parsedSequences.Add(">Unlabelled_Sequence", parsedSequence);
                 return true;
             }
             catch (Exception)
@@ -146,7 +147,7 @@ namespace BioinformaticsSuite.Module.Services
                                 return false;
                             }
 
-                            ParsedSequences.Add(label, sequence);
+                            _parsedSequences.Add(label, sequence);
                             label = line;
                             break;
 
@@ -171,7 +172,7 @@ namespace BioinformaticsSuite.Module.Services
                 }
 
                 // All parsed successfully
-                ParsedSequences.Add(label, sequence);
+                _parsedSequences.Add(label, sequence);
                 _sequenceBuilder.Clear();
                 return true;
             }
