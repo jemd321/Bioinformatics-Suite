@@ -22,6 +22,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _inputBoxText;
         private string _resultBoxText;
         private SelectedTab _selectedTab;
+        private bool _validateSequences = true;
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
 
@@ -110,6 +111,12 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             get { return _resultBoxText; }
             set { SetProperty(ref _resultBoxText, value); }
+        }
+
+        public bool ValidateSequences
+        {
+            get { return _validateSequences; }
+            set { SetProperty(ref _validateSequences, value); }
         }
 
         // The following events and methods are a copy of the bindable base PRISM class, which allows viewmodels to inherit the dependency

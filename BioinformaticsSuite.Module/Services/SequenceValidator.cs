@@ -9,7 +9,7 @@ namespace BioinformaticsSuite.Module.Services
     public interface ISequenceValidator
     {
         ValidationErrorMessage ErrorMessage { get; }
-        bool TryValidateSequence(string sequence, SequenceType sequenceType);
+        bool TryValidateSequence(Dictionary<string, string> sequences, SequenceType sequenceType);
     }
 
     // Sequence Validator matches invalid sequence chars and logs the error content and location as properties.
