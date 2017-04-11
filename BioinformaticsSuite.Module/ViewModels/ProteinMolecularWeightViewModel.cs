@@ -28,34 +28,40 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Protein;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                const SequenceType sequenceType = SequenceType.Protein;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
                     {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
                     }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    foreach (var labelledSequence in labelledSequences)
+                    {
+                        _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                    }
+                    ResultBoxText = BuildDisplayString(labelledSequences);
+                    SelectedTab = SelectedTab.Result;
                 }
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                foreach (var labelledSequence in labelledSequences)
+                else
                 {
-                    _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
                 }
-                ResultBoxText = BuildDisplayString(labelledSequences);
-                SelectedTab = SelectedTab.Result;
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }           
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

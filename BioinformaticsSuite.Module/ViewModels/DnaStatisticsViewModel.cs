@@ -26,39 +26,45 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
                     {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
                     }
-                }
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                foreach (var labelledSequence in labelledSequences)
-                {
-                    decimal sequenceLength = labelledSequence.Sequence.Length;
-                    int[] baseCount = labelledSequence.Sequence.CountDnaBases();
-                    decimal[] basePercent = CalculateBasePercentage(baseCount, sequenceLength);
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    foreach (var labelledSequence in labelledSequences)
+                    {
+                        decimal sequenceLength = labelledSequence.Sequence.Length;
+                        int[] baseCount = labelledSequence.Sequence.CountDnaBases();
+                        decimal[] basePercent = CalculateBasePercentage(baseCount, sequenceLength);
 
-                    BuildDisplayString(labelledSequence, sequenceLength, baseCount, basePercent);
+                        BuildDisplayString(labelledSequence, sequenceLength, baseCount, basePercent);
+                    }
+                    ResultBoxText = _displayStringBuilder.ToString();
+                    _displayStringBuilder.Clear();
+                    SelectedTab = SelectedTab.Result;
                 }
-                ResultBoxText = _displayStringBuilder.ToString();
-                _displayStringBuilder.Clear();
-                SelectedTab = SelectedTab.Result;
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }           
         }
 
         private static decimal[] CalculateBasePercentage(int[] baseCount, decimal sequenceLength)

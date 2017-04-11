@@ -29,37 +29,43 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            var isParsedSuccesfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccesfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                var isParsedSuccesfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccesfully)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
                     {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
                     }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    foreach (var labelledSequence in labelledSequences)
+                    {
+                        Dictionary<string, string> labelledOrfs =
+                            _openReadingFrameFinder.FindOpenReadingFrames((Dna)labelledSequence);
+                        BuildDisplayString(labelledSequence.Label, labelledOrfs);
+                    }
+                    ResultBoxText = _displayStringBuilder.ToString();
+                    _displayStringBuilder.Clear();
+                    SelectedTab = SelectedTab.Result;
                 }
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                foreach (var labelledSequence in labelledSequences)
+                else
                 {
-                    Dictionary<string, string> labelledOrfs =
-                        _openReadingFrameFinder.FindOpenReadingFrames((Dna) labelledSequence);
-                    BuildDisplayString(labelledSequence.Label, labelledOrfs);
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
                 }
-                ResultBoxText = _displayStringBuilder.ToString();
-                _displayStringBuilder.Clear();
-                SelectedTab = SelectedTab.Result;
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }            
         }
 
         private void BuildDisplayString(string label, Dictionary<string, string> labelledOrfs)

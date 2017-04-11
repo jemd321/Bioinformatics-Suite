@@ -49,57 +49,63 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            string motif = MotifBoxText.ToUpper();
-            if (string.IsNullOrWhiteSpace(motif))
+            try
             {
-                RaiseSimpleNotification("No Motif Entered", "Please enter a valid motif in the box below.");
-                return;
-            }
-
-            string parsedMotif;
-            bool isValidMotif = _motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
-            if (isValidMotif)
-            {
-                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-                if (isParsedSuccessfully)
+                const SequenceType sequenceType = SequenceType.Dna;
+                string motif = MotifBoxText.ToUpper();
+                if (string.IsNullOrWhiteSpace(motif))
                 {
-                    var parsedSequences = FastaParser.ParsedSequences;
-                    if (ValidateSequences)
-                    {
-                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                        if (!isValid)
-                        {
-                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                            return;
-                        }
-                    }
-                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                        sequenceType);
+                    RaiseSimpleNotification("No Motif Entered", "Please enter a valid motif in the box below.");
+                    return;
+                }
 
-                    var labelledMatches = new Dictionary<string, MatchCollection>();
-                    foreach (var labelledSequence in labelledSequences)
+                string parsedMotif;
+                bool isValidMotif = _motifFinder.TryParseMotif(motif, sequenceType, out parsedMotif);
+                if (isValidMotif)
+                {
+                    bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                    if (isParsedSuccessfully)
                     {
-                        var matches = _motifFinder.FindMotif(parsedMotif, labelledSequence);
-                        labelledMatches.Add(labelledSequence.Label, matches);
+                        var parsedSequences = FastaParser.ParsedSequences;
+                        if (ValidateSequences)
+                        {
+                            bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                            if (!isValid)
+                            {
+                                RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                                return;
+                            }
+                        }
+                        List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                            sequenceType);
+
+                        var labelledMatches = new Dictionary<string, MatchCollection>();
+                        foreach (var labelledSequence in labelledSequences)
+                        {
+                            var matches = _motifFinder.FindMotif(parsedMotif, labelledSequence);
+                            labelledMatches.Add(labelledSequence.Label, matches);
+                        }
+                        ResultBoxText = BuildDisplayString(labelledMatches);
+                        SelectedTab = SelectedTab.Result;
                     }
-                    ResultBoxText = BuildDisplayString(labelledMatches);
-                    SelectedTab = SelectedTab.Result;
+                    else
+                    {
+                        RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                    }
                 }
                 else
                 {
-                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                    const string title = "Invalid Motif";
+                    string message =
+                        "A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" +
+                        _motifFinder.InvalidMotifMessage;
+                    RaiseSimpleNotification(title, message);
                 }
             }
-            else
+            finally
             {
-                const string title = "Invalid Motif";
-                string message =
-                    "A DNA motif may only contain IUPAC base codes, click the 'Help/IUPAC Codes' button for more information \n\n" +
-                    _motifFinder.InvalidMotifMessage;
-                RaiseSimpleNotification(title, message);
+                 FastaParser.ResetSequences();
             }
-            FastaParser.ResetSequences();
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

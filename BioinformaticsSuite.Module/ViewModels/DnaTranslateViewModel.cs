@@ -23,37 +23,43 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
                     {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
                     }
+                    var translatedSequences = new Dictionary<string, string>();
+                    foreach (var labelledSequence in parsedSequences)
+                    {
+                        string dnaSequence = labelledSequence.Value;
+                        string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
+                        translatedSequences.Add(labelledSequence.Key, proteinSequence);
+                    }
+                    List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences,
+                        SequenceType.Protein);
+                    ResultBoxText = BuildDisplayString(labelledProteins);
+                    SelectedTab = SelectedTab.Result;
                 }
-                var translatedSequences = new Dictionary<string, string>();
-                foreach (var labelledSequence in parsedSequences)
+                else
                 {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranslateDnaToProtein(dnaSequence);
-                    translatedSequences.Add(labelledSequence.Key, proteinSequence);
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
                 }
-                List<LabelledSequence> labelledProteins = SequenceFactory.CreateLabelledSequences(translatedSequences,
-                    SequenceType.Protein);
-                ResultBoxText = BuildDisplayString(labelledProteins);
-                SelectedTab = SelectedTab.Result;
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }           
         }
     }
 }

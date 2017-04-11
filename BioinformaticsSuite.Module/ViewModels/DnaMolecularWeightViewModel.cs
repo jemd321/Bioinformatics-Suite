@@ -64,8 +64,6 @@ namespace BioinformaticsSuite.Module.ViewModels
             {
                 FastaParser.ResetSequences();
             }
-
-
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

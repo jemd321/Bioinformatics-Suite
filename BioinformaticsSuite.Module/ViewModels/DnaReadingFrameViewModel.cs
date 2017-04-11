@@ -28,31 +28,37 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
                     {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
                     }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    var readingFrames = CreateReadingFrames(labelledSequences);
+                    ResultBoxText = BuildDisplayString(readingFrames);
+                    SelectedTab = SelectedTab.Result;
                 }
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
-                SelectedTab = SelectedTab.Result;
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }          
         }
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)

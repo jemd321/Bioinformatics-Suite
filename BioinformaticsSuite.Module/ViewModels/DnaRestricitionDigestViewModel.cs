@@ -58,40 +58,46 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            var enzymes = CollateEnzymeSelections();
-
-            if (enzymes.Count == 0)
+            try
             {
-                RaiseSimpleNotification("No Enzymes Selected", "Please select at least one Restriction Enzyme to digest with.");
-                return;
-            }
+                const SequenceType sequenceType = SequenceType.Dna;
+                var enzymes = CollateEnzymeSelections();
 
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
-            if (isParsedSuccessfully)
-            {
-                var parsedSequences = FastaParser.ParsedSequences;
-                if (ValidateSequences)
+                if (enzymes.Count == 0)
                 {
-                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
-                    if (!isValid)
-                    {
-                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
-                        return;
-                    }
+                    RaiseSimpleNotification("No Enzymes Selected", "Please select at least one Restriction Enzyme to digest with.");
+                    return;
                 }
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    SequenceType.Dna);
-                var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes,
-                    labelledSequences);
-                ResultBoxText = BuildDisplayString(labelledDigestFragments);
-                SelectedTab = SelectedTab.Result;
+
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
+                {
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        SequenceType.Dna);
+                    var labelledDigestFragments = _restrictionDigest.FindRestrictionDigestFragments(enzymes,
+                        labelledSequences);
+                    ResultBoxText = BuildDisplayString(labelledDigestFragments);
+                    SelectedTab = SelectedTab.Result;
+                }
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }          
         }
 
         private void ImportEnzymes()
