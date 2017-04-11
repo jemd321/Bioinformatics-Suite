@@ -6,40 +6,47 @@
              xmlns:local="clr-namespace:BioinformaticsSuite.Module.Views.PopupViews"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel Background="#ECEFF1"
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto">
+        <StackPanel Background="#ECEFF1"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch">
-        <TextBlock FontSize="18"
+            <TextBlock FontSize="18"
                    Background="#607D8B"
                    Foreground="White"
                    Padding="10">
             Invalid Sequence Input
-        </TextBlock>
-        <Grid Margin="0,10,0,10"
-              VerticalAlignment="Stretch"
-              HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Expected Sequence Type:</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Sequence Label:</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Index:</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Character:</TextBlock>
+            </TextBlock>
+            <StackPanel Margin="20">
+                <TextBlock FontSize="14" TextWrapping="Wrap" FontWeight="SemiBold">Invalid sequence data was detected at:</TextBlock>
+                <Grid Margin="0,10,0,10"
+              HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" FontWeight="Bold">Expected Sequence Type:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" FontWeight="Bold">Sequence Label:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" FontWeight="Bold">Index:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" FontWeight="Bold">Character:</TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" FontWeight="Bold">Message:</TextBlock>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="5,0,0,0" Text="Hello"/>
-        </Grid>
+                    <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Notification.ExpectedSequenceType, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Notification.Label, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Notification.ErrorIndex, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Notification.ErrorContent, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Notification.ErrorDescription, Mode=OneWay}"/>
+                </Grid>
+            </StackPanel>
+            <Button Name="CloseButton" Width="75" HorizontalAlignment="Right" Margin="20" Content="Close" Command="{Binding OkCommand}"/>
+        </StackPanel>
+    </ScrollViewer>
 
-        <Button Name="CloseButton" Width="75" HorizontalAlignment="Right" Margin="0,0,10,0" Content="Close"
-                     />
-    </StackPanel>
 </UserControl>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Popups;
 using BioinformaticsSuite.Module.Services;
 using Prism.Commands;
@@ -22,6 +23,7 @@ namespace BioinformaticsSuite.Module.ViewModels.PopupViewModels
         }
 
         public Action FinishInteraction { get; set; }
+
 
         public INotification Notification
         {

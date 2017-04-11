@@ -12,10 +12,20 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <i:Interaction.Triggers>
-        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding SequenceValidationPopup, Mode=OneWay}">
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        </interactionRequest:InteractionRequestTrigger>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding SequenceValidationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction>
                 <interactionRequest:PopupWindowAction.WindowContent>
                     <popupViews:SequenceValidationPopupView/>
+                </interactionRequest:PopupWindowAction.WindowContent>
+            </interactionRequest:PopupWindowAction>
+        </interactionRequest:InteractionRequestTrigger>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding ParsingErrorRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction>
+                <interactionRequest:PopupWindowAction.WindowContent>
+                    <popupViews:ParsingErrorPopupView/>
                 </interactionRequest:PopupWindowAction.WindowContent>
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>

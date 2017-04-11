@@ -12,9 +12,11 @@ namespace BioinformaticsSuite.Module.Popups
     {
         public ParsingErrorNotifcation(ParsingErrorMessage errorMessage)
         {
-            ErrorMessage = errorMessage;
+            LineNumber = errorMessage.LineNumber;
+            ErrorDescription = errorMessage.ErrorDescription;
         }
 
-        public ParsingErrorMessage ErrorMessage { get; set; }
+        public int LineNumber { get; private set; }
+        public string ErrorDescription { get; private set; }
     }
 }

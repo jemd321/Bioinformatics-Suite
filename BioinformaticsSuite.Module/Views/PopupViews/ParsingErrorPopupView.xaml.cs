@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BioinformaticsSuite.Module.ViewModels.PopupViewModels;
 
 namespace BioinformaticsSuite.Module.Views.PopupViews
 {
@@ -22,6 +23,7 @@ namespace BioinformaticsSuite.Module.Views.PopupViews
     {
         public ParsingErrorPopupView()
         {
+            DataContext = new ParsingErrorPopupViewModel();
             InitializeComponent();
         }
     }

@@ -58,10 +58,10 @@ namespace BioinformaticsSuite.Module.ViewModels
         public ISequenceValidator SequenceValidator { get; }
 
         // Generic notification for simple messages
-        public InteractionRequest<INotification> NotificationRequest { get; }
+        public InteractionRequest<INotification> NotificationRequest { get; private set; }
         // Custom complex Popup windows for input validation
-        public InteractionRequest<SequenceValidationNotification> SequenceValidationRequest { get; }
-        public InteractionRequest<ParsingErrorNotifcation> ParsingErrorRequest { get; }
+        public InteractionRequest<SequenceValidationNotification> SequenceValidationRequest { get; private set; }
+        public InteractionRequest<ParsingErrorNotifcation> ParsingErrorRequest { get; private set; }
 
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
@@ -205,18 +205,19 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         protected void RaiseSimpleNotification(string title, string message)
         {
-
             NotificationRequest.Raise(new Notification{ Title = title, Content = message});
         }
 
         protected void RaiseInvalidInputNotification(ValidationErrorMessage errorMessage)
         {
-            SequenceValidationRequest.Raise(new SequenceValidationNotification(errorMessage));
+            var notification = new SequenceValidationNotification(errorMessage) {Title = "Invalid Input"};
+            SequenceValidationRequest.Raise(notification);
         }
 
         protected void RaiseInvalidInputNotification(ParsingErrorMessage errorMessage)
         {
-            ParsingErrorRequest.Raise(new ParsingErrorNotifcation(errorMessage));
+            var notification = new ParsingErrorNotifcation(errorMessage) {Title = "Invalid Input"};
+            ParsingErrorRequest.Raise(notification);
         }
 
         public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)
