@@ -340,7 +340,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\UnlabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\UnlabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">
@@ -349,28 +349,35 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SingleLabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\SingleLabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MultipleLabelledSequences.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\MultipleLabelledSequences.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\InvalidLabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\InvalidLabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Enzymes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SampleEmblFile.txt" />
+    <None Include="Resources\Sample Sequences\Other Formats\SampleEmblFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SampleGenbankFile.txt" />
+    <None Include="Resources\Sample Sequences\Other Formats\SampleGenbankFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RnaSingleSequence.txt" />
+    <None Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaSingleSequence.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RnaMultipleSequences.txt" />
+    <None Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaMultipleSequences.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinInvalidSequence.txt" />
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinMultipleSequences.txt" />
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinSingleSequence.txt" />
+    <Content Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaInvalidSequence.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
