@@ -11,8 +11,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IFastaManipulator _fastaManipulator;
         private string _title = "Combine multiple FASTA sequences into a single sequence";
 
-        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser)
+        public ConversionFastaCombineViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IFastaManipulator fastaManipulator) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _fastaManipulator = fastaManipulator;
             if (fastaManipulator == null)
@@ -30,10 +30,19 @@ namespace BioinformaticsSuite.Module.ViewModels
         public override void OnRun()
         {
             const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
+            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
             if (isParsedSuccessfully)
             {
-                Dictionary<string, string> parsedSequences = FastaParser.ParsedSequences;
+                var parsedSequences = FastaParser.ParsedSequences;
+                if (ValidateSequences)
+                {
+                    bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                    if (!isValid)
+                    {
+                        RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                        return;
+                    }
+                }
                 List<LabelledSequence> labelledFastas = SequenceFactory.CreateLabelledSequences(parsedSequences,
                     SequenceType.Dna);
                 var combinedFastas =

@@ -14,7 +14,9 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _title = "DNA Molecular Weight";
 
         public DnaMolecularWeightViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IMolecularWeightCalculator molecularWeightCalculator) : base(sequenceFactory, fastaParser)
+            ISequenceValidator sequenceValidator,
+            IMolecularWeightCalculator molecularWeightCalculator)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _molecularWeightCalculator = molecularWeightCalculator;
             if (molecularWeightCalculator == null) throw new ArgumentNullException(nameof(molecularWeightCalculator));
@@ -28,25 +30,40 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                foreach (var labelledSequence in labelledSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    foreach (var labelledSequence in labelledSequences)
+                    {
+                        _molecularWeightCalculator.CalculateMolecularWeight(labelledSequence);
+                    }
+                    ResultBoxText = BuildDisplayString(labelledSequences);
+                    SelectedTab = SelectedTab.Result;
                 }
-                ResultBoxText = BuildDisplayString(labelledSequences);
-                SelectedTab = SelectedTab.Result;
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                FastaParser.ResetSequences();
             }
-            FastaParser.ResetSequences();
         }
 
         // Concatenates labels and sequences for display in the sequence text box.

@@ -13,8 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IReadingFrameFactory _readingFrameFactory;
         private string _title = "Find Reading Frames";
 
-        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser)
+        public DnaReadingFrameViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IReadingFrameFactory readingFrameFactory) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _readingFrameFactory = readingFrameFactory;
             if (readingFrameFactory == null) throw new ArgumentNullException(nameof(readingFrameFactory));
@@ -28,22 +28,37 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                var readingFrames = CreateReadingFrames(labelledSequences);
-                ResultBoxText = BuildDisplayString(readingFrames);
-                SelectedTab = SelectedTab.Result;
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
+                {
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    var readingFrames = CreateReadingFrames(labelledSequences);
+                    ResultBoxText = BuildDisplayString(readingFrames);
+                    SelectedTab = SelectedTab.Result;
+                }
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }          
         }
 
         private List<ReadingFrame> CreateReadingFrames(List<LabelledSequence> labelledSequences)

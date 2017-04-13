@@ -12,8 +12,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IGenbankParser _genbankParser;
         private string _title = "Genbank to FASTA DNA converter";
 
-        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser)
+        public ConversionGenbankFastaViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IGenbankConverter genbankConverter, IGenbankParser genbankParser) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _genbankConverter = genbankConverter;
             _genbankParser = genbankParser;
@@ -40,7 +40,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(_genbankParser.ErrorMessage);
+                RaiseSimpleNotification("Invalid Genbank Record", _genbankParser.ErrorMessage);
                 _genbankParser.ResetSequences();
                 return;
             }

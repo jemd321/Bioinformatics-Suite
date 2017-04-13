@@ -7,12 +7,27 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="clr-namespace:BioinformaticsSuite.Module.Behaviours"
              xmlns:interactionRequest="http://prismlibrary.com/"
+             xmlns:popupViews="clr-namespace:BioinformaticsSuite.Module.Views.PopupViews"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="Auto" Width="Auto">
     <i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        </interactionRequest:InteractionRequestTrigger>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding SequenceValidationRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction>
+                <interactionRequest:PopupWindowAction.WindowContent>
+                    <popupViews:SequenceValidationPopupView/>
+                </interactionRequest:PopupWindowAction.WindowContent>
+            </interactionRequest:PopupWindowAction>
+        </interactionRequest:InteractionRequestTrigger>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding ParsingErrorRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction>
+                <interactionRequest:PopupWindowAction.WindowContent>
+                    <popupViews:ParsingErrorPopupView/>
+                </interactionRequest:PopupWindowAction.WindowContent>
+            </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 

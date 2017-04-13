@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Input;
 using BioinformaticsSuite.Module.Enums;
 using BioinformaticsSuite.Module.Models;
+using BioinformaticsSuite.Module.Popups;
 using BioinformaticsSuite.Module.Services;
 using Microsoft.Win32;
 using NuGet;
@@ -22,6 +23,7 @@ namespace BioinformaticsSuite.Module.ViewModels
         private string _inputBoxText;
         private string _resultBoxText;
         private SelectedTab _selectedTab;
+        private bool _validateSequences = true;
         // This class serves as the base class for all view models in the sequence view region,
         // to allow them to inherit commands, shared services, events and the INotifyPropertyChanged logic.
 
@@ -32,14 +34,18 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
         }
 
-        public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
+        public SequenceViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
         {
             FastaParser = fastaParser;
             SequenceFactory = sequenceFactory;
+            SequenceValidator = sequenceValidator;
             if (SequenceFactory == null) throw new ArgumentNullException(nameof(sequenceFactory));
             if (FastaParser == null) throw new ArgumentNullException(nameof(fastaParser));
+            if (SequenceValidator == null) throw new ArgumentNullException(nameof(sequenceValidator));
 
             NotificationRequest = new InteractionRequest<INotification>();
+            SequenceValidationRequest = new InteractionRequest<SequenceValidationNotification>();
+            ParsingErrorRequest = new InteractionRequest<ParsingErrorNotifcation>();
 
             RunCommand = new DelegateCommand(OnRun);
             ClearCommand = new DelegateCommand(OnClear);
@@ -49,8 +55,13 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public ISequenceFactory SequenceFactory { get; }
         public IFastaParser FastaParser { get; }
+        public ISequenceValidator SequenceValidator { get; }
 
-        public InteractionRequest<INotification> NotificationRequest { get; }
+        // Generic notification for simple messages
+        public InteractionRequest<INotification> NotificationRequest { get; private set; }
+        // Custom complex Popup windows for input validation
+        public InteractionRequest<SequenceValidationNotification> SequenceValidationRequest { get; private set; }
+        public InteractionRequest<ParsingErrorNotifcation> ParsingErrorRequest { get; private set; }
 
         public ICommand RunCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
@@ -110,6 +121,13 @@ namespace BioinformaticsSuite.Module.ViewModels
         {
             get { return _resultBoxText; }
             set { SetProperty(ref _resultBoxText, value); }
+        }
+
+        // Option for user to disable sequence validation to save proccessing time if they are know their sequences are correct.
+        public bool ValidateSequences
+        {
+            get { return _validateSequences; }
+            set { SetProperty(ref _validateSequences, value); }
         }
 
         // The following events and methods are a copy of the bindable base PRISM class, which allows viewmodels to inherit the dependency
@@ -185,9 +203,21 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
         }
 
-        protected void RaiseInvalidInputNotification(string errorMessage)
+        protected void RaiseSimpleNotification(string title, string message)
         {
-            NotificationRequest.Raise(new Notification {Title = "Invalid Data Input", Content = errorMessage});
+            NotificationRequest.Raise(new Notification{ Title = title, Content = message});
+        }
+
+        protected void RaiseInvalidInputNotification(ValidationErrorMessage errorMessage)
+        {
+            var notification = new SequenceValidationNotification(errorMessage) {Title = "Invalid Input"};
+            SequenceValidationRequest.Raise(notification);
+        }
+
+        protected void RaiseInvalidInputNotification(ParsingErrorMessage errorMessage)
+        {
+            var notification = new ParsingErrorNotifcation(errorMessage) {Title = "Invalid Input"};
+            ParsingErrorRequest.Raise(notification);
         }
 
         public virtual string BuildDisplayString(List<LabelledSequence> labelledSequences)

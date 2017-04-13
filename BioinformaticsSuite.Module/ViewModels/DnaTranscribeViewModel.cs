@@ -10,8 +10,8 @@ namespace BioinformaticsSuite.Module.ViewModels
     {
         private string _title = "DNA Transcriber";
 
-        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
-            : base(sequenceFactory, fastaParser)
+        public DnaTranscribeViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
         }
 
@@ -23,28 +23,43 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                var transcribedSequences = new Dictionary<string, string>();
-                foreach (var labelledSequence in parsedSequences)
+                const SequenceType sequenceType = SequenceType.Dna;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    string dnaSequence = labelledSequence.Value;
-                    string proteinSequence = Translation.TranscribeDnaToRna(dnaSequence);
-                    transcribedSequences.Add(labelledSequence.Key, proteinSequence);
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
+                    var transcribedSequences = new Dictionary<string, string>();
+                    foreach (var labelledSequence in parsedSequences)
+                    {
+                        string dnaSequence = labelledSequence.Value;
+                        string proteinSequence = Translation.TranscribeDnaToRna(dnaSequence);
+                        transcribedSequences.Add(labelledSequence.Key, proteinSequence);
+                    }
+                    List<LabelledSequence> labelledRna = SequenceFactory.CreateLabelledSequences(transcribedSequences,
+                        SequenceType.Rna);
+                    ResultBoxText = BuildDisplayString(labelledRna);
+                    SelectedTab = SelectedTab.Result;
                 }
-                List<LabelledSequence> labelledRna = SequenceFactory.CreateLabelledSequences(transcribedSequences,
-                    SequenceType.Rna);
-                ResultBoxText = BuildDisplayString(labelledRna);
-                SelectedTab = SelectedTab.Result;
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }         
         }
     }
 }

@@ -110,6 +110,8 @@
     <Compile Include="Models\MolecularWeightCalculator.cs" />
     <Compile Include="Models\MotifFinder.cs" />
     <Compile Include="Models\RestrictionDigest.cs" />
+    <Compile Include="Popups\ParsingErrorNotifcation.cs" />
+    <Compile Include="Popups\SequenceValidationNotification.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,6 +119,7 @@
     </Compile>
     <Compile Include="Services\EmblParser.cs" />
     <Compile Include="Services\GenbankParser.cs" />
+    <Compile Include="Services\ParsingErrorMessage.cs" />
     <Compile Include="Services\SequenceFactory.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="Models\Dna.cs" />
@@ -126,6 +129,7 @@
     <Compile Include="Models\OpenReadingFrameFinder.cs" />
     <Compile Include="Models\Protein.cs" />
     <Compile Include="Models\ReadingFrame.cs" />
+    <Compile Include="Services\ValidationErrorMessage.cs" />
     <Compile Include="Utility\SequenceCount.cs" />
     <Compile Include="Utility\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +153,8 @@
     <Compile Include="Enums\MethodNames.cs" />
     <Compile Include="ViewModels\MethodSelectionViewModel.cs" />
     <Compile Include="ViewModels\DnaReadingFrameViewModel.cs" />
+    <Compile Include="ViewModels\PopupViewModels\ParsingErrorPopupViewModel.cs" />
+    <Compile Include="ViewModels\PopupViewModels\SequenceValidatationPopupViewModel.cs" />
     <Compile Include="ViewModels\ProteinMolecularWeightViewModel.cs" />
     <Compile Include="ViewModels\ProteinOpenReadingFrameViewModel.cs" />
     <Compile Include="ViewModels\ProteinStatisticsViewModel.cs" />
@@ -203,6 +209,12 @@
     </Compile>
     <Compile Include="Views\PopupViews\DnaHelpPopupView.xaml.cs">
       <DependentUpon>DnaHelpPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PopupViews\ParsingErrorPopupView.xaml.cs">
+      <DependentUpon>ParsingErrorPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PopupViews\SequenceValidationPopupView.xaml.cs">
+      <DependentUpon>SequenceValidationPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProteinMolecularWeightView.xaml.cs">
       <DependentUpon>ProteinMolecularWeightView.xaml</DependentUpon>
@@ -288,6 +300,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PopupViews\ParsingErrorPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PopupViews\SequenceValidationPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProteinMolecularWeightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,7 +340,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\UnlabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\UnlabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">
@@ -329,28 +349,35 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SingleLabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\SingleLabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MultipleLabelledSequences.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\MultipleLabelledSequences.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\InvalidLabelledSequence.txt" />
+    <None Include="Resources\Sample Sequences\Dna %28FASTA%29\InvalidLabelledSequence.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Enzymes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SampleEmblFile.txt" />
+    <None Include="Resources\Sample Sequences\Other Formats\SampleEmblFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SampleGenbankFile.txt" />
+    <None Include="Resources\Sample Sequences\Other Formats\SampleGenbankFile.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RnaSingleSequence.txt" />
+    <None Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaSingleSequence.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RnaMultipleSequences.txt" />
+    <None Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaMultipleSequences.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinInvalidSequence.txt" />
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinMultipleSequences.txt" />
+    <Content Include="Resources\Sample Sequences\Protein %28FASTA%29\ProteinSingleSequence.txt" />
+    <Content Include="Resources\Sample Sequences\Rna %28FASTA%29\RnaInvalidSequence.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

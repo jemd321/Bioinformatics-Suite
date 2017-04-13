@@ -13,8 +13,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly StringBuilder _displayStringBuilder = new StringBuilder();
         private string _title = "Protein Statistics";
 
-        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser)
-            : base(sequenceFactory, fastaParser)
+        public ProteinStatisticsViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator)
+            : base(sequenceFactory, fastaParser, sequenceValidator)
         {
         }
 
@@ -26,29 +26,44 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Protein;
-            bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText, sequenceType);
-            if (isParsedSuccessfully)
+            try
             {
-                var parsedSequences = FastaParser.ParsedSequences;
-                List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
-                    sequenceType);
-                foreach (var protein in labelledSequences)
+                const SequenceType sequenceType = SequenceType.Protein;
+                bool isParsedSuccessfully = FastaParser.TryParseInput(InputBoxText);
+                if (isParsedSuccessfully)
                 {
-                    Dictionary<char, int> aminoAcidCount = protein.Sequence.CountAminoAcids();
+                    var parsedSequences = FastaParser.ParsedSequences;
+                    if (ValidateSequences)
+                    {
+                        bool isValid = SequenceValidator.TryValidateSequence(parsedSequences, sequenceType);
+                        if (!isValid)
+                        {
+                            RaiseInvalidInputNotification(SequenceValidator.ErrorMessage);
+                            return;
+                        }
+                    }
+                    List<LabelledSequence> labelledSequences = SequenceFactory.CreateLabelledSequences(parsedSequences,
+                        sequenceType);
+                    foreach (var protein in labelledSequences)
+                    {
+                        Dictionary<char, int> aminoAcidCount = protein.Sequence.CountAminoAcids();
 
-                    _displayStringBuilder.AppendLine(protein.Label);
-                    BuildDisplayString(aminoAcidCount, protein.Sequence.Length);
+                        _displayStringBuilder.AppendLine(protein.Label);
+                        BuildDisplayString(aminoAcidCount, protein.Sequence.Length);
+                    }
+                    SelectedTab = SelectedTab.Result;
+                    ResultBoxText = _displayStringBuilder.ToString();
+                    _displayStringBuilder.Clear();
                 }
-                SelectedTab = SelectedTab.Result;
-                ResultBoxText = _displayStringBuilder.ToString();
-                _displayStringBuilder.Clear();
+                else
+                {
+                    RaiseInvalidInputNotification(FastaParser.ErrorMessage);
+                }
             }
-            else
+            finally
             {
-                RaiseInvalidInputNotification(FastaParser.ErrorMessage);
-            }
-            FastaParser.ResetSequences();
+                FastaParser.ResetSequences();
+            }           
         }
 
         private void BuildDisplayString(Dictionary<char, int> aminoAcidCount, int proteinLength)

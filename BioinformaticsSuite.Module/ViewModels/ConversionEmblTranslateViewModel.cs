@@ -12,8 +12,8 @@ namespace BioinformaticsSuite.Module.ViewModels
         private readonly IEmblParser _emblParser;
         private string _title = "EMBL to FASTA Protein converter";
 
-        public ConversionEmblTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser,
-            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser)
+        public ConversionEmblTranslateViewModel(ISequenceFactory sequenceFactory, IFastaParser fastaParser, ISequenceValidator sequenceValidator,
+            IEmblConverter emblConverter, IEmblParser emblParser) : base(sequenceFactory, fastaParser, sequenceValidator)
         {
             _emblConverter = emblConverter;
             _emblParser = emblParser;
@@ -29,7 +29,7 @@ namespace BioinformaticsSuite.Module.ViewModels
 
         public override void OnRun()
         {
-            const SequenceType sequenceType = SequenceType.Dna;
+            // const SequenceType sequenceType = SequenceType.Dna;
             if (_emblParser.TryParseEmblFile(InputBoxText))
             {
                 List<string> emblRecords = _emblParser.EmblRecords;
@@ -40,7 +40,7 @@ namespace BioinformaticsSuite.Module.ViewModels
             }
             else
             {
-                RaiseInvalidInputNotification(_emblParser.ErrorMessage);
+                RaiseSimpleNotification("Invalid Embl Record", _emblParser.ErrorMessage);
                 _emblParser.ResetSequences();
                 return;
             }
