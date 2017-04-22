@@ -50,7 +50,7 @@
                            Content="{Binding Path=Title}" />
                 </Border>
 
-                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <Border Grid.Row="0">
                     <TabControl
                         SelectedIndex="{Binding Path=SelectedTextBoxIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Background="White">
@@ -120,7 +120,7 @@
                             </avalonEdit:TextEditor>
                         </TabItem>
                     </TabControl>
-                </ScrollViewer>
+                </Border>
 
                 <Border Grid.Row="1" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                         Background="#ECEFF1">
