@@ -82,10 +82,3 @@ Planned Features
   tool windows while working.
 - Explore possibility of graphical sequence annotation
 - More format conversion, and more extensive format validators for non-FASTA format files.
-
-
-Author
--------
-
-Jem Davis
-jemd321+programming@gmail.com
